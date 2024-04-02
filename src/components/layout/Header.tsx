@@ -6,7 +6,7 @@ import SearchInput from '../atoms/SearchInput';
 export default function Header() {
   // 헤더 280px 기준으로 min-width padding 양쪽 20px씩 빼고 240px로 설정
   return (
-    <header className="fixed flex w-full min-h-[50px] h-[136px] items-center flex-col px-5 py-4 gap-4 border min-w-[240px]">
+    <header className="fixed flex w-full min-h-[50px] h-[160px] items-center flex-col px-5 pt-5 pb-8 gap-4 border-b min-w-[240px] bg-white">
       <div className="flex w-full min-h-[50px] h-[96px] justify-between items-center">
         <h1 className="w-16 h-16">
           <Link to="/">
@@ -20,7 +20,7 @@ export default function Header() {
           로그인
         </Link>
       </div>
-      <div>
+      <div className="flex justify-center w-full">
         <SearchInput />
       </div>
     </header>

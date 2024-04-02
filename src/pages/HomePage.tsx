@@ -1,5 +1,6 @@
 import React from 'react';
 import { IoBookmarkSharp } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 // 지도영역 카카오 API 불러오기
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기
@@ -18,6 +19,12 @@ export default function HomePage() {
         </p>
         <IoBookmarkSharp className="absolute top-[-4px] right-[20px] w-8 h-9 text-yellow-300" />
       </div>
+      <Link
+        to="/post/new"
+        className="absolute bottom-[180px] right-14 flex items-center justify-center w-10 h-10 border border-black rounded-[50%] bg-black text-white"
+      >
+        +
+      </Link>
     </div>
   );
 }

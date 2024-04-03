@@ -1,13 +1,17 @@
 import React from 'react';
 import { IoBookmarkSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import KakaoMapScriptLoader from '../map/KakaoMapScriptLoader';
+import Map from '../map/Map';
 
 // 지도영역 카카오 API 불러오기
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기
 export default function HomePage() {
   return (
-    <div className="pt-40 w-full h-screen bg-gray-500">
-      <p>지도영역</p>
+    <div className="pt-40 w-full h-screen">
+      <KakaoMapScriptLoader>
+        <Map />
+      </KakaoMapScriptLoader>
       <div className="absolute bottom-[60px] left-[50%] translate-x-[-50%] flex flex-col gap-2 w-11/12 px-7 py-4 border border-black rounded-2xl bg-white">
         <strong>게시글 제목</strong>
         <p className="text-sm">서울특별시 강남구 테헤란로 7길 21</p>

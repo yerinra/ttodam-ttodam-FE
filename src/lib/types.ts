@@ -1,1 +1,3 @@
-export type category = 'life' | 'kitchen' | 'food' | 'fashion' | 'health' | 'stationery' | 'animal' | 'etc';
+import { CATEGORIES } from './data';
+
+export type category = (typeof CATEGORIES)[number]['type'];

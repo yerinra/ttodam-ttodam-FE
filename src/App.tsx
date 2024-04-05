@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import CategoryPage from './pages/CategoryPage';
+import PostListPage from './pages/PostListPage';
 
 export default function App() {
   return (
@@ -13,6 +15,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/category" element={<CategoryPage />} />
+              <Route path="/post" element={<PostListPage />} />
             </Route>
           </Routes>
         </Router>

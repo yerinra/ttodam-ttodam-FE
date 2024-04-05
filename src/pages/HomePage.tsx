@@ -5,17 +5,18 @@ import KakaoMapScriptLoader from '../map/KakaoMapScriptLoader';
 import Map from '../map/Map';
 import MapSearchInput from '../map/MapSearchInput';
 import { PlaceType } from '../lib/types';
+import MapMarkerController from '../map/MapMarkerController';
 
 // 지도영역 카카오 API 불러오기
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기
 export default function HomePage() {
   const [places, setPlaces] = useState<PlaceType[]>([]);
-  console.log(places);
 
   return (
     <div className="pt-40 w-full h-screen">
       <KakaoMapScriptLoader>
         <Map>
+          <MapMarkerController places={places} />
           <MapSearchInput
             onUpdatePlaces={places => {
               setPlaces(places);

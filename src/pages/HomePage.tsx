@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoBookmarkSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import KakaoMapScriptLoader from '../map/KakaoMapScriptLoader';
 import Map from '../map/Map';
+import MapSearchInput from '../map/MapSearchInput';
+import { PlaceType } from '../lib/types';
 
 // 지도영역 카카오 API 불러오기
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기
 export default function HomePage() {
+  const [places, setPlaces] = useState<PlaceType[]>([]);
+  console.log(places);
+
   return (
     <div className="pt-40 w-full h-screen">
       <KakaoMapScriptLoader>
-        <Map />
+        <Map>
+          <MapSearchInput
+            onUpdatePlaces={places => {
+              setPlaces(places);
+            }}
+          />
+        </Map>
       </KakaoMapScriptLoader>
       <div className="absolute bottom-[60px] left-[50%] translate-x-[-50%] flex flex-col gap-2 w-11/12 px-7 py-4 border border-black rounded-2xl bg-white">
         <strong>게시글 제목</strong>

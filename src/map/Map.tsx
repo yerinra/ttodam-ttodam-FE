@@ -1,8 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { KakaoMapContext } from './useMap';
 
-export default function Map() {
+interface MapProps {
+  children: ReactNode;
+}
+
+//TODO: 지도 이동 기능 추가
+export default function Map(props: MapProps) {
+  const [map, setMap] = useState<kakao.maps.Map | null>();
   const kakaoMapRef = useRef<HTMLDivElement | null>(null);
-  console.log(kakaoMapRef, 'kakaoMapRef');
 
   useEffect(() => {
     // 예외처리
@@ -16,12 +22,17 @@ export default function Map() {
       level: 3,
     };
 
-    new window.kakao.maps.Map(kakaoMapRef.current, options);
+    setMap(new window.kakao.maps.Map(kakaoMapRef.current, options));
   }, []);
 
   return (
-    <div className="absolute left-[-50%] bottom-0 translate-x-2/4 w-full h-full border">
+    <div className="absolute left-[-50%] top-0 translate-x-2/4 w-full h-full border">
       <div className="static w-full h-full" ref={kakaoMapRef} />
+      {map ? (
+        <KakaoMapContext.Provider value={map}>{props.children}</KakaoMapContext.Provider>
+      ) : (
+        <div>지도 정보를 가져오는데 실패하였습니다.</div>
+      )}
     </div>
   );
 }

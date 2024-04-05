@@ -4,6 +4,7 @@ import { useMap } from './useMap';
 
 interface MapSearchInputProps {
   onUpdatePlaces: (places: PlaceType[]) => void;
+  onSelect: (placeId: string) => void;
 }
 
 // 더미 데이터 만들기 전까지는 지역으로 검색 가능. 추후에 데이터 생성 후 게시글 키워드로 수정
@@ -41,7 +42,6 @@ export default function MapSearchInput(props: MapSearchInputProps) {
     // 장소 검색 완료시 호출
     placeService.current.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        console.log(data);
         const placeInfos = data.map(placeSearchResultItem => {
           return {
             id: placeSearchResultItem.id,
@@ -75,13 +75,14 @@ export default function MapSearchInput(props: MapSearchInputProps) {
     setSearch(e.target.value);
 
     // 검색어 입력 여부 상태를 검색어 값의 유무에 따라 설정, 리스트 영역 토글
-    setIsSearchInput(!!e.target.value.trim());
+    setIsSearchInput(!!e.target.value);
   };
 
   // 리스트 클릭시 위치 이동
   const handleItemClick = (place: PlaceType) => {
     map.setCenter(place.position);
     map.setLevel(4);
+    props.onSelect(place.id);
   };
 
   return (

@@ -28,18 +28,9 @@ export default function HomePage() {
           />
         </Map>
       </KakaoMapScriptLoader>
-      {/* <div className="absolute bottom-[60px] left-[50%] translate-x-[-50%] flex flex-col gap-2 w-11/12 px-7 py-4 border border-black rounded-2xl bg-white">
-        <strong>게시글 제목</strong>
-        <p className="text-sm">서울특별시 강남구 테헤란로 7길 21</p>
-        <p className="text-sm font-bold">
-          모집 상태
-          <span className="text-sm ml-1">모집중</span>
-        </p>
-        <IoBookmarkSharp className="absolute top-[-4px] right-[20px] w-8 h-9 text-yellow-300" />
-      </div> */}
       <Link
         to="/post/new"
-        className="absolute bottom-[180px] right-14 flex items-center justify-center w-10 h-10 border border-black rounded-[50%] bg-black text-white"
+        className="absolute bottom-[100px] right-14 flex items-center justify-center w-10 h-10 border border-black rounded-[50%] bg-black text-white"
       >
         +
       </Link>

@@ -8,7 +8,7 @@ export type postPreview = {
   content: string;
   category: category;
   product_name: string[];
-  price: string;
+  price: number;
   original_price: number;
   participants: number;
   recruit_status: 'RECRUITING' | 'RECRUITED';

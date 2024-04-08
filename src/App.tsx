@@ -8,7 +8,7 @@ import PostListPage from './pages/PostListPage';
 
 export default function App() {
   return (
-    <div className="bg-light-gray">
+    <div className="bg-secondary">
       <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
         <Router>
           <Routes>

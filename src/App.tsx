@@ -16,7 +16,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/category" element={<CategoryPage />} />
-              <Route path="/post" element={<PostListPage />} />
+              <Route path="/post/:categoryName" element={<PostListPage />} />
             </Route>
           </Routes>
         </Router>

@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CategoryPage from './pages/CategoryPage';
 import PostListPage from './pages/PostListPage';
+import PostDetailPage from './pages/PostDetailPage';
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/category" element={<CategoryPage />} />
-              <Route path="/post/:selectedCategory" element={<PostListPage />} />
+              <Route path="/posts/:selectedCategory" element={<PostListPage />} />
+              <Route path="/post/:postId" element={<PostDetailPage />} />
             </Route>
           </Routes>
         </Router>

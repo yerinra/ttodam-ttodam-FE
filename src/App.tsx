@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CategoryPage from './pages/CategoryPage';
 import PostListPage from './pages/PostListPage';
+import PostNewPage from './pages/PostNewPage';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/category" element={<CategoryPage />} />
               <Route path="/post/:categoryName" element={<PostListPage />} />
+              <Route path="/post/new" element={<PostNewPage />} />
             </Route>
           </Routes>
         </Router>

@@ -5,10 +5,11 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import CategoryPage from './pages/CategoryPage';
 import PostListPage from './pages/PostListPage';
+import PostDetailPage from './pages/PostDetailPage';
 
 export default function App() {
   return (
-    <div className="bg-light-gray">
+    <div className="bg-secondary">
       <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
         <Router>
           <Routes>
@@ -16,7 +17,8 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/category" element={<CategoryPage />} />
-              <Route path="/post/:categoryName" element={<PostListPage />} />
+              <Route path="/posts/:selectedCategory" element={<PostListPage />} />
+              <Route path="/post/:postId" element={<PostDetailPage />} />
             </Route>
           </Routes>
         </Router>

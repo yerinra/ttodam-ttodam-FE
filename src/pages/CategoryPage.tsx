@@ -6,7 +6,7 @@ export default function CategoryPage() {
   const navigate = useNavigate();
 
   const handleCategoryClick = (category: category) => {
-    navigate(`/post/${category}`);
+    navigate(`/posts/${category}`);
   };
 
   return (
@@ -15,8 +15,8 @@ export default function CategoryPage() {
         {CATEGORIES.map(category => (
           <li
             key={category.type}
-            onClick={() => handleCategoryClick(category.type)}
             className="flex flex-col items-center justify-center h-[100px]"
+            onClick={() => handleCategoryClick(category.type)}
           >
             <button className="flex flex-col items-center gap-y-2 group">
               <div className="text-4xl tablet:text-5xl group-hover:scale-110 group-hover:text-primary transition-all">

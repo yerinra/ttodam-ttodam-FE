@@ -15,11 +15,11 @@ export default function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/post/new" element={<PostNewPage />} />
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/category" element={<CategoryPage />} />
               <Route path="/post/:categoryName" element={<PostListPage />} />
-              <Route path="/post/new" element={<PostNewPage />} />
               <Route path="/post/:postId" element={<PostDetailPage />} />
             </Route>
           </Routes>

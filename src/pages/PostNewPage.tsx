@@ -3,10 +3,32 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CATEGORIES } from '@/lib/data';
+import React, { useState } from 'react';
 
 export default function PostNewPage() {
+  // 카테고리 오픈
+  const [openCategory, setOpenCategory] = useState(false);
+
+  // 카테고리 선택
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  // 카테고리 리스트 토글
+  const [toggle, setToggle] = useState<boolean>(false);
+
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setOpenCategory(!openCategory);
+    setToggle(true);
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setOpenCategory(false);
+    setSelectedCategory(category);
+    setToggle(false);
+  };
+
   return (
-    <section className="pb-20">
+    <section className="mt-24 pb-20">
       <div className="flex items-center justify-between border-b border-black h-[60px]">
         <div className="flex items-center gap-2.5">
           <Link to="/">
@@ -20,19 +42,25 @@ export default function PostNewPage() {
       </div>
       <div>
         <div className="flex items-center justify-between py-4 border-b relative">
-          <button type="button" className="font-semibold w-11/12 text-left">
-            카테고리
+          <button type="button" onClick={handleButtonClick} className="font-semibold w-11/12 text-left">
+            {selectedCategory || '카테고리'}
           </button>
           <button type="button">
             <RiArrowDownSLine className="w-6 h-6" />
           </button>
-          <ul className="w-full absolute left-0 top-[57px] bg-white border-x rounded-b-2xl border-b pb-2.5">
-            {CATEGORIES.map(category => (
-              <li key={category.type} className="w-full py-4 px-2.5 hover:bg-slate-100">
-                <button className="w-full text-left">{category.name}</button>
-              </li>
-            ))}
-          </ul>
+          {toggle && (
+            <ul className="w-full absolute left-0 top-[57px] bg-white border-x rounded-b-2xl border-b pb-2.5">
+              {CATEGORIES.map(category => (
+                <li
+                  key={category.type}
+                  onClick={() => handleCategoryClick(category.name)}
+                  className="w-full py-4 px-2.5 hover:bg-slate-100"
+                >
+                  <button className="w-full text-left">{category.name}</button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <form>
           <input type="text" placeholder="게시글 제목" className="w-full outline-none py-4 border-b" />

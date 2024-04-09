@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import SocialLogin from '../components/Login/SocialLogin';
 
 interface FormValues {
   email: string;
@@ -19,9 +20,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <img src="/src/assets/logo.png" alt="Logo" className="w-40 h-40 mb-8" />
-      <h1 className="text-3xl font-bold mb-8">로그인</h1>
-
+      <img src="/src/assets/logo.png" alt="Logo" className="w-48 h-48 mb-8" />
+      <h1 className="text-4xl font-bold mb-8">로그인</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
         <input
           type="email"
@@ -33,12 +33,11 @@ export default function LoginPage() {
               message: '이메일 형식이 올바르지 않습니다.',
             },
           })}
-          className={`border-b border-gray-500 focus:outline-none w-[320px] py-2 mb-4 ${
+          className={`border-b border-gray-500 focus:outline-none w-96 py-4 mb-6 ${
             errors.email ? 'border-red-500' : ''
           }`}
         />
         {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
-        {!errors.email && <span className="invisible h-5 text-transparent">Placeholder</span>}
 
         <input
           type="password"
@@ -50,14 +49,13 @@ export default function LoginPage() {
               message: '비밀번호는 최소 8자 이상이어야 합니다.',
             },
           })}
-          className={`border-b border-gray-500 focus:outline-none w-[320px] py-2 mb-6 ${
+          className={`border-b border-gray-500 focus:outline-none w-96 py-4 mb-6 ${
             errors.password ? 'border-red-500' : ''
           }`}
         />
-        {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
-        {!errors.password && <span className="invisible h-5 text-transparent">Placeholder</span>}
+        {errors.password && <span className="text-red-500 text-sm mb-4">{errors.password.message}</span>}
 
-        <div className="flex justify-between w-[320px] mb-6">
+        <div className="flex justify-between w-96 mb-6">
           <a href="/" className="text-sm text-gray-500">
             비밀번호 찾기
           </a>
@@ -66,17 +64,11 @@ export default function LoginPage() {
           </a>
         </div>
 
-        <button type="submit" className="bg-primary text-white px-6 py-2 rounded w-[320px] mb-2">
+        <button type="submit" className="bg-primary text-white px-10 py-4 rounded w-96 mb-3">
           로그인
         </button>
       </form>
-
-      <div className="flex flex-col space-y-2">
-        <button className="bg-yellow text-black px-6 py-2 rounded w-[320px]">카카오톡 로그인</button>
-        <button className="bg-white border-black text-black border border-solid px-6 py-2 rounded w-[320px]">
-          구글 로그인
-        </button>
-      </div>
+      <SocialLogin />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { RiArrowDownSLine } from 'react-icons/ri';
+import { RiArrowUpSLine } from 'react-icons/ri';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CATEGORIES } from '@/lib/data';
@@ -45,9 +46,15 @@ export default function PostNewPage() {
           <button type="button" onClick={handleButtonClick} className="font-semibold w-11/12 text-left">
             {selectedCategory || '카테고리'}
           </button>
-          <button type="button">
-            <RiArrowDownSLine className="w-6 h-6" />
-          </button>
+          {toggle ? (
+            <button type="button">
+              <RiArrowUpSLine className="w-6 h-6" />
+            </button>
+          ) : (
+            <button type="button">
+              <RiArrowDownSLine className="w-6 h-6" />
+            </button>
+          )}
           {toggle && (
             <ul className="w-full absolute left-0 top-[57px] bg-white border-x rounded-b-2xl border-b pb-2.5">
               {CATEGORIES.map(category => (

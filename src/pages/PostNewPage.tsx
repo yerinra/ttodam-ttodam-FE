@@ -6,7 +6,7 @@ import { CATEGORIES } from '@/lib/data';
 
 export default function PostNewPage() {
   return (
-    <section className="mt-24 pb-20">
+    <section className="pb-20">
       <div className="flex items-center justify-between border-b border-black h-[60px]">
         <div className="flex items-center gap-2.5">
           <Link to="/">

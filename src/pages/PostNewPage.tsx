@@ -28,7 +28,7 @@ export default function PostNewPage() {
   };
 
   return (
-    <section className="mt-24 pb-20">
+    <section className="px-5">
       <div className="flex items-center justify-between border-b border-black h-[60px]">
         <div className="flex items-center gap-2.5">
           <Link to="/">
@@ -36,7 +36,7 @@ export default function PostNewPage() {
           </Link>
           <h3 className="font-semibold">모집글 쓰기</h3>
         </div>
-        <button type="submit" className="py-0.5 px-3 bg-[#4696D3] rounded-md text-white">
+        <button type="submit" className="py-0.5 px-3 bg-primary rounded-md text-white">
           등록
         </button>
       </div>

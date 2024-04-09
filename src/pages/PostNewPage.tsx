@@ -31,7 +31,7 @@ export default function PostNewPage() {
     <section className="px-5">
       <div className="flex items-center justify-between border-b border-black h-[60px]">
         <div className="flex items-center gap-2.5">
-          <Link to="/">
+          <Link to="/post/:categoryName">
             <FaLongArrowAltLeft className="w-5 h-5" />
           </Link>
           <h3 className="font-semibold">모집글 쓰기</h3>

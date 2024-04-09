@@ -1,5 +1,5 @@
 import { CATEGORIES } from '../lib/data';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import type { category, postPreview } from '../lib/types';
 
 import { cn } from '../lib/utils';
@@ -15,15 +15,6 @@ import {
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
-  const navigate = useNavigate();
-
-  const handleCategoryChange = (newCategory: category) => {
-    navigate(`/posts/${newCategory}`);
-  };
-
-  const handlePostClick = (id: number) => {
-    navigate(`/post/${id}`);
-  };
 
   const postData: postPreview[] = [
     {
@@ -54,15 +45,15 @@ export default function PostListPage() {
     <>
       <section className="flex flex-wrap gap-2">
         {CATEGORIES.map(category => (
-          <button
+          <Link
             key={category.type}
-            onClick={() => handleCategoryChange(category.type)}
+            to={`/posts/${category.type}`}
             className={cn('text-sm px-3 py-1 bg-secondary rounded-3xl', {
               'bg-primary text-white': category.type === selectedCategory,
             })}
           >
             {category.name}
-          </button>
+          </Link>
         ))}
       </section>
 
@@ -76,10 +67,10 @@ export default function PostListPage() {
               }
             })
             .map((post: postPreview) => (
-              <div
-                onClick={() => handlePostClick(post.id)}
+              <Link
+                to={`/post/${post.id}`}
                 key={post.id}
-                className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary cursor-pointer gap-y-2"
+                className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2"
               >
                 <div className="flex items-center gap-x-2">
                   <p
@@ -105,7 +96,7 @@ export default function PostListPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </section>
         <section className="mt-2">

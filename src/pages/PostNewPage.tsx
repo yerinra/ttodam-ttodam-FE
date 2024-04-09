@@ -2,6 +2,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { RiArrowUpSLine } from 'react-icons/ri';
 import { FaPlus } from 'react-icons/fa';
+import { FaMinus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CATEGORIES } from '@/lib/data';
 import React, { useState } from 'react';
@@ -16,6 +17,8 @@ export default function PostNewPage() {
   // 카테고리 리스트 토글
   const [toggle, setToggle] = useState<boolean>(false);
 
+  const [productNames, setProductNames] = useState(['']);
+
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setOpenCategory(!openCategory);
@@ -26,6 +29,26 @@ export default function PostNewPage() {
     setOpenCategory(false);
     setSelectedCategory(category);
     setToggle(false);
+  };
+
+  // 새로운 입력 필드 추가
+  const handleAddProductsName = () => {
+    setProductNames([...productNames, '']);
+  };
+
+  // 입력 필드 삭제
+  const handleRemoveProductsName = (index: number) => {
+    const newProductNames = [...productNames];
+    newProductNames.splice(index, 1);
+    setProductNames(newProductNames);
+  };
+
+  const handleProductNameChange = (index: number, value: string) => {
+    const newProductNames = [...productNames];
+
+    // 해당 인덱스의 상품 이름 변경
+    newProductNames[index] = value;
+    setProductNames(newProductNames);
   };
 
   return (
@@ -71,14 +94,28 @@ export default function PostNewPage() {
         </div>
         <form>
           <input type="text" placeholder="게시글 제목" className="w-full outline-none py-4 border-b" />
+          {productNames.map((productName, index) => (
+            <div key={index} className="flex items-center justify-between py-4 border-b text-black">
+              <input
+                type="text"
+                placeholder="상품 이름"
+                value={productName}
+                onChange={e => handleProductNameChange(index, e.target.value)}
+                className="w-full outline-none"
+              />
+              {index === productNames.length - 1 ? (
+                <button type="button" onClick={handleAddProductsName}>
+                  <FaPlus className="w-3 h-3 mr-1" />
+                </button>
+              ) : (
+                <button type="button" onClick={() => handleRemoveProductsName(index)}>
+                  <FaMinus className="w-3 h-3 mr-1" />
+                </button>
+              )}
+            </div>
+          ))}
           <div className="flex items-center justify-between py-4 border-b text-black">
-            <input type="text" placeholder="상품 이름" className="outline-none" />
-            <button type="button">
-              <FaPlus className="w-3 h-3 mr-1" />
-            </button>
-          </div>
-          <div className="flex items-center justify-between py-4 border-b text-black">
-            <input type="text" placeholder="상품 링크" className="outline-none" />
+            <input type="text" placeholder="상품 링크" className="w-full outline-none" />
             <button type="button">
               <FaPlus className="w-3 h-3 mr-1" />
             </button>

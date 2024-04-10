@@ -17,8 +17,9 @@ export default function PostNewPage() {
   // 카테고리 리스트 토글
   const [toggle, setToggle] = useState<boolean>(false);
 
-  const [productNames, setProductNames] = useState(['']);
-  const [productLinks, setProductLinks] = useState(['']);
+  const [products, setProducts] = useState<{ productName: string; purchaseLink: string }[]>([
+    { productName: '', purchaseLink: '' },
+  ]);
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -34,35 +35,28 @@ export default function PostNewPage() {
 
   // 새로운 입력 필드 추가
   const handleAddProducts = () => {
-    setProductNames([...productNames, '']);
-    setProductLinks([...productLinks, '']);
+    setProducts([...products, { productName: '', purchaseLink: '' }]);
   };
 
   // 입력 필드 삭제
   const handleRemoveProducts = (index: number) => {
-    // 상품 이름
-    const newProductNames = [...productNames];
-    newProductNames.splice(index, 1);
-    setProductNames(newProductNames);
-
-    // 상품 링크
-    const newProductLinks = [...productLinks];
-    newProductLinks.splice(index, 1);
-    setProductLinks(newProductLinks);
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
   };
 
-  const handleProductChange = (index: number, value: string) => {
-    const newProductNames = [...productNames];
+  // 상품 이름 변경
+  const handleProductNameChange = (index: number, value: string) => {
+    const newProducts = [...products];
+    newProducts[index].productName = value;
+    setProducts(newProducts);
+  };
 
-    // 해당 인덱스의 상품 이름 변경
-    newProductNames[index] = value;
-    setProductNames(newProductNames);
-
-    const newProductLinks = [...productLinks];
-
-    // 해당 인덱스의 상품 링크 변경
-    newProductLinks[index] = value;
-    setProductLinks(newProductLinks);
+  // 상품 링크 변경
+  const handleProductLinkChange = (index: number, value: string) => {
+    const newProducts = [...products];
+    newProducts[index].purchaseLink = value;
+    setProducts(newProducts);
   };
 
   return (
@@ -108,17 +102,17 @@ export default function PostNewPage() {
         </div>
         <form>
           <input type="text" placeholder="게시글 제목" className="w-full outline-none py-4 border-b" />
-          {productNames.map((productName, index) => (
-            <>
-              <div key={index} className="flex items-center justify-between py-4 border-b text-black">
+          {products.map((product, index) => (
+            <div key={index}>
+              <div className="flex items-center justify-between py-4 border-b text-black">
                 <input
                   type="text"
                   placeholder="상품 이름"
-                  value={productName}
-                  onChange={e => handleProductChange(index, e.target.value)}
+                  value={product.productName}
+                  onChange={e => handleProductNameChange(index, e.target.value)}
                   className="w-full outline-none"
                 />
-                {index === productNames.length - 1 ? (
+                {index === products.length - 1 ? (
                   <button type="button" onClick={handleAddProducts}>
                     <FaPlus className="w-3 h-3 mr-1" />
                   </button>
@@ -128,15 +122,15 @@ export default function PostNewPage() {
                   </button>
                 )}
               </div>
-              <div key={index} className="flex items-center justify-between py-4 border-b text-black">
+              <div className="flex items-center justify-between py-4 border-b text-black">
                 <input
                   type="text"
                   placeholder="상품 링크"
-                  value={productName}
-                  onChange={e => handleProductChange(index, e.target.value)}
+                  value={product.purchaseLink}
+                  onChange={e => handleProductLinkChange(index, e.target.value)}
                   className="w-full outline-none"
                 />
-                {index === productLinks.length - 1 ? (
+                {index === products.length - 1 ? (
                   <button type="button" onClick={handleAddProducts}>
                     <FaPlus className="w-3 h-3 mr-1" />
                   </button>
@@ -146,7 +140,7 @@ export default function PostNewPage() {
                   </button>
                 )}
               </div>
-            </>
+            </div>
           ))}
           <input type="text" placeholder="희망 거래 장소" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />

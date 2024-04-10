@@ -32,41 +32,32 @@ export default function PostNewPage() {
     setToggle(false);
   };
 
-  // 새로운 상품 이름 입력 필드 추가
-  const handleAddProductsName = () => {
+  // 새로운 입력 필드 추가
+  const handleAddProducts = () => {
     setProductNames([...productNames, '']);
-  };
-
-  // 상품 이름 입력 필드 삭제
-  const handleRemoveProductsName = (index: number) => {
-    const newProductNames = [...productNames];
-    newProductNames.splice(index, 1);
-    setProductNames(newProductNames);
-  };
-
-  // 상품 이름 변경
-  const handleProductNameChange = (index: number, value: string) => {
-    const newProductNames = [...productNames];
-
-    // 해당 인덱스의 상품 이름 변경
-    newProductNames[index] = value;
-    setProductNames(newProductNames);
-  };
-
-  // 상품 링크 입력 필드 추가
-  const handleAddProductsLink = () => {
     setProductLinks([...productLinks, '']);
   };
 
-  // 상품 링크 입력 필드 삭제
-  const handleRemoveProductsLink = (index: number) => {
+  // 입력 필드 삭제
+  const handleRemoveProducts = (index: number) => {
+    // 상품 이름
+    const newProductNames = [...productNames];
+    newProductNames.splice(index, 1);
+    setProductNames(newProductNames);
+
+    // 상품 링크
     const newProductLinks = [...productLinks];
     newProductLinks.splice(index, 1);
     setProductLinks(newProductLinks);
   };
 
-  // 상품 링크 변경
-  const handleProductLinkChange = (index: number, value: string) => {
+  const handleProductChange = (index: number, value: string) => {
+    const newProductNames = [...productNames];
+
+    // 해당 인덱스의 상품 이름 변경
+    newProductNames[index] = value;
+    setProductNames(newProductNames);
+
     const newProductLinks = [...productLinks];
 
     // 해당 인덱스의 상품 링크 변경
@@ -118,44 +109,44 @@ export default function PostNewPage() {
         <form>
           <input type="text" placeholder="게시글 제목" className="w-full outline-none py-4 border-b" />
           {productNames.map((productName, index) => (
-            <div key={index} className="flex items-center justify-between py-4 border-b text-black">
-              <input
-                type="text"
-                placeholder="상품 이름"
-                value={productName}
-                onChange={e => handleProductNameChange(index, e.target.value)}
-                className="w-full outline-none"
-              />
-              {index === productNames.length - 1 ? (
-                <button type="button" onClick={handleAddProductsName}>
-                  <FaPlus className="w-3 h-3 mr-1" />
-                </button>
-              ) : (
-                <button type="button" onClick={() => handleRemoveProductsName(index)}>
-                  <FaMinus className="w-3 h-3 mr-1" />
-                </button>
-              )}
-            </div>
-          ))}
-          {productLinks.map((productLink, index) => (
-            <div key={index} className="flex items-center justify-between py-4 border-b text-black">
-              <input
-                type="text"
-                placeholder="상품 링크"
-                value={productLink}
-                onChange={e => handleProductLinkChange(index, e.target.value)}
-                className="w-full outline-none"
-              />
-              {index === productLinks.length - 1 ? (
-                <button type="button" onClick={handleAddProductsLink}>
-                  <FaPlus className="w-3 h-3 mr-1" />
-                </button>
-              ) : (
-                <button type="button" onClick={() => handleRemoveProductsLink(index)}>
-                  <FaMinus className="w-3 h-3 mr-1" />
-                </button>
-              )}
-            </div>
+            <>
+              <div key={index} className="flex items-center justify-between py-4 border-b text-black">
+                <input
+                  type="text"
+                  placeholder="상품 이름"
+                  value={productName}
+                  onChange={e => handleProductChange(index, e.target.value)}
+                  className="w-full outline-none"
+                />
+                {index === productNames.length - 1 ? (
+                  <button type="button" onClick={handleAddProducts}>
+                    <FaPlus className="w-3 h-3 mr-1" />
+                  </button>
+                ) : (
+                  <button type="button" onClick={() => handleRemoveProducts(index)}>
+                    <FaMinus className="w-3 h-3 mr-1" />
+                  </button>
+                )}
+              </div>
+              <div key={index} className="flex items-center justify-between py-4 border-b text-black">
+                <input
+                  type="text"
+                  placeholder="상품 링크"
+                  value={productName}
+                  onChange={e => handleProductChange(index, e.target.value)}
+                  className="w-full outline-none"
+                />
+                {index === productLinks.length - 1 ? (
+                  <button type="button" onClick={handleAddProducts}>
+                    <FaPlus className="w-3 h-3 mr-1" />
+                  </button>
+                ) : (
+                  <button type="button" onClick={() => handleRemoveProducts(index)}>
+                    <FaMinus className="w-3 h-3 mr-1" />
+                  </button>
+                )}
+              </div>
+            </>
           ))}
           <input type="text" placeholder="희망 거래 장소" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />

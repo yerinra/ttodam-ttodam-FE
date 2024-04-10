@@ -17,8 +17,15 @@ export default function PostNewPage() {
   // 카테고리 리스트 토글
   const [toggle, setToggle] = useState<boolean>(false);
 
-  const [products, setProducts] = useState<{ productName: string; purchaseLink: string }[]>([
-    { productName: '', purchaseLink: '' },
+  const [products, setProducts] = useState<
+    { productName: string; purchaseLink: string; price: number; count: number }[]
+  >([
+    {
+      productName: '',
+      purchaseLink: '',
+      price: 0,
+      count: 0,
+    },
   ]);
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,9 +40,15 @@ export default function PostNewPage() {
     setToggle(false);
   };
 
-  // 새로운 입력 필드 추가
+  /**
+   * 새로운 입력 필드 추가
+   * 새로운 입력 필드가 추가될 때 호출되며, 새로운 상품 객체를 기존 상품 리스트에 추가함.
+   * 새로운 상품 객체의 기본 값은 빈문자열('')로 설정.
+   * price와 count 필드는 parseInt('')를 통해 초기화되며,
+   * 이는 새로운 입력 필드가 추가되었을 때 1이 표지되지 않도록 하기 위함.
+   */
   const handleAddProducts = () => {
-    setProducts([...products, { productName: '', purchaseLink: '' }]);
+    setProducts([...products, { productName: '', purchaseLink: '', price: parseInt(''), count: parseInt('') }]);
   };
 
   // 입력 필드 삭제
@@ -56,6 +69,40 @@ export default function PostNewPage() {
   const handleProductLinkChange = (index: number, value: string) => {
     const newProducts = [...products];
     newProducts[index].purchaseLink = value;
+    setProducts(newProducts);
+  };
+
+  /**
+   * 상품 수량 변경
+   * @param index 해당 상품의 인덱스
+   * @param value 입력된 값 (문자열)
+   * 문자열인 value를 숫자로 변환하여 상품의 수량을 업데이트
+   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
+   */
+  const handleProductCountChange = (index: number, value: string) => {
+    // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
+    const newValue = isNaN(parseInt(value)) ? '' : value;
+    const newProducts = [...products];
+
+    // 상품의 수량 업데이트
+    newProducts[index].count = parseInt(newValue);
+    setProducts(newProducts);
+  };
+
+  /**
+   * 상품 기존 가격 변경
+   * @param index 해당 상품의 인덱스
+   * @param value 입력된 값 (문자열)
+   * 문자열인 value를 숫자로 변환하여 상품의 가격을 업데이트
+   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
+   */
+  const handleProductPriceChange = (index: number, value: string) => {
+    // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
+    const newValue = isNaN(parseInt(value)) ? '' : value;
+    const newProducts = [...products];
+
+    // 상품의 가격 업데이트
+    newProducts[index].price = parseInt(newValue);
     setProducts(newProducts);
   };
 
@@ -130,22 +177,30 @@ export default function PostNewPage() {
                   onChange={e => handleProductLinkChange(index, e.target.value)}
                   className="w-full outline-none"
                 />
-                {index === products.length - 1 ? (
-                  <button type="button" onClick={handleAddProducts}>
-                    <FaPlus className="w-3 h-3 mr-1" />
-                  </button>
-                ) : (
-                  <button type="button" onClick={() => handleRemoveProducts(index)}>
-                    <FaMinus className="w-3 h-3 mr-1" />
-                  </button>
-                )}
+              </div>
+              <div className="flex items-center justify-between py-4 border-b text-black">
+                <input
+                  type="number"
+                  placeholder="수량"
+                  value={product.count === 0 ? '' : String(product.count)}
+                  onChange={e => handleProductCountChange(index, e.target.value)}
+                  className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+              </div>
+              <div className="flex items-center justify-between py-4 border-b text-black">
+                <input
+                  type="number"
+                  placeholder="원래 가격"
+                  value={product.price === 0 ? '' : String(product.price)}
+                  onChange={e => handleProductPriceChange(index, e.target.value)}
+                  className="w-full outline-none"
+                />
               </div>
             </div>
           ))}
+          <input type="text" placeholder="인당 가격" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 거래 장소" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />
-          <input type="text" placeholder="원래 가격" className="w-full outline-none py-4 border-b" />
-          <input type="text" placeholder="인당 가격" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="마감일" className="w-full outline-none py-4 border-b" />
           <textarea
             cols={30}

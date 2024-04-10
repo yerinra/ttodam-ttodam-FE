@@ -5,9 +5,8 @@ export const handlers = [
   http.get('/post', () => {
     return HttpResponse.json(allPosts);
   }),
-  http.get('/post/:categoryName', ({ request }) => {
-    const url = request.url.split('/');
-    const categoryName = url[url.length - 1];
+  http.get('/post/:categoryName', ({ params }) => {
+    const categoryName = params.categoryName;
     const filteredPosts = allPosts.filter(post => post.category === categoryName);
     return HttpResponse.json(filteredPosts);
   }),

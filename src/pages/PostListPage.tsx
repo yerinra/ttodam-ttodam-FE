@@ -3,11 +3,11 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import type { post } from '../lib/types';
-import { CATEGORIES } from '../lib/data';
 import { cn } from '../lib/utils';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import CategorySelector from '@/components/postListPage/CategorySelector';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -25,8 +25,8 @@ export default function PostListPage() {
       }
     };
 
-    setCurrentPage(1);
     setStartPage(1);
+    setCurrentPage(1);
     fetchData();
   }, [selectedCategory]);
 
@@ -66,20 +66,7 @@ export default function PostListPage() {
 
   return (
     <>
-      <section className="flex flex-wrap gap-2">
-        {CATEGORIES.map(category => (
-          <Link
-            key={category.type}
-            to={`/posts/${category.type.toLowerCase()}`}
-            className={cn('text-sm px-3 py-1 bg-secondary rounded-3xl', {
-              'bg-primary text-white': category.type.toLowerCase() === selectedCategory,
-            })}
-          >
-            {category.name}
-          </Link>
-        ))}
-      </section>
-
+      <CategorySelector selectedCategory={selectedCategory} />
       <main className="mt-5">
         <section>
           {currentItems &&

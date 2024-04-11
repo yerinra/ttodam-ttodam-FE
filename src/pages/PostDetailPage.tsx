@@ -1,13 +1,27 @@
-import { postData } from '@/lib/data';
-import { postPreview } from '@/lib/types';
-
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import type { post } from '@/lib/types';
+import axios from 'axios';
+
 export default function PostDetailPage() {
   const { postId } = useParams();
-  const post: postPreview = postData.filter(p => postId && p.id == +postId)[0];
-  return (
-    <div>
-      postId : {postId} 글<div>{post.title}</div>
-    </div>
-  );
+  const [data, setData] = useState<post>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = `/post/${postId}`;
+
+        const response = await axios.get(apiUrl);
+
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, [postId]);
+
+  return <section>{data && data?.title}</section>;
 }

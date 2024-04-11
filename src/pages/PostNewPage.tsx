@@ -184,7 +184,7 @@ export default function PostNewPage() {
                   placeholder="수량"
                   value={product.count === 0 ? '' : String(product.count)}
                   onChange={e => handleProductCountChange(index, e.target.value)}
-                  className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-full outline-none"
                 />
               </div>
               <div className="flex items-center justify-between py-4 border-b text-black">
@@ -193,7 +193,7 @@ export default function PostNewPage() {
                   placeholder="원래 가격"
                   value={product.price === 0 ? '' : String(product.price)}
                   onChange={e => handleProductPriceChange(index, e.target.value)}
-                  className="w-full outline-none"
+                  className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
             </div>

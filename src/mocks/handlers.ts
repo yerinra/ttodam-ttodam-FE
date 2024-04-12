@@ -9,7 +9,7 @@ export const handlers = [
   http.get('/post/:param', ({ params }) => {
     const { param } = params;
 
-    // `param`이 숫자인지 확인하여 `postId`와 `categoryName` 구분
+    // `param`이 숫자인지 확인하여 `postId`와 `categoryName` 구분.
     const postId = parseInt(param as string);
 
     if (!isNaN(postId)) {

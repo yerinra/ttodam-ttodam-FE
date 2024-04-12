@@ -14,8 +14,8 @@ export default function CategorySelector({ selectedCategory }: CategorySelectorP
           <li key={category.type}>
             <Link
               to={`/posts/${category.type.toLowerCase()}`}
-              className={cn('text-sm px-3 py-1 bg-secondary rounded-3xl', {
-                'bg-primary text-white': category.type.toLowerCase() === selectedCategory,
+              className={cn('text-sm px-3 py-1 bg-secondary rounded-3xl hover:bg-slate-300 transition-all', {
+                'bg-primary text-white hover:bg-primary/80': category.type.toLowerCase() === selectedCategory,
               })}
             >
               {category.name}

@@ -14,8 +14,7 @@ export type Post = {
   pLocationY: number;
   content: string;
   products: Product[];
-  discountRate?: number;
-  participants?: number;
+  participants: number;
   createAt: string;
   updateAt: string;
 };

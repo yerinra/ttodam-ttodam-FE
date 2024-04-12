@@ -1,5 +1,5 @@
-import { CATEGORIES } from './data';
-
+import { CATEGORIES, STATUS } from './data';
+export type StatusFilter = (typeof STATUS)[number]['type'];
 export type Category = (typeof CATEGORIES)[number]['type'];
 
 export type Post = {

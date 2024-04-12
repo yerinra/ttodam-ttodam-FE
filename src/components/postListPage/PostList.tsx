@@ -15,7 +15,7 @@ export default function PostList({ currentPosts }: PostListProps) {
           <Link
             to={`/post/${post.Id}`}
             key={post.Id}
-            className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2"
+            className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2 transition-all"
           >
             <div className="flex items-center gap-x-2">
               <p

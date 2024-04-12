@@ -7,7 +7,7 @@ export type Post = {
   userId: number;
   title: string;
   deadline: string;
-  status: 'in_progress' | 'completed' | 'failed';
+  status: Status;
   category: Category;
   place: string;
   pLocationX: number;
@@ -19,6 +19,8 @@ export type Post = {
   createAt: string;
   updateAt: string;
 };
+
+export type Status = 'in_progress' | 'completed' | 'failed';
 
 export type Product = {
   productId: number;

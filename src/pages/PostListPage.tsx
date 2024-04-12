@@ -17,6 +17,8 @@ export default function PostListPage() {
   const navigate = useNavigate();
 
   const [data, setData] = useState<Post[] | []>([]);
+  const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('all');
+  const [sortOption, setSortOption] = useState<'createAt' | 'title'>('createAt');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +33,18 @@ export default function PostListPage() {
 
     setStartPage(1);
     setCurrentPage(1);
+    setSelectedFilter('all');
     fetchData();
   }, [selectedCategory]);
+
+  // status에 따른 filter
+  const STATUS = [
+    { type: 'all', name: '전체' },
+    { type: 'in_progress', name: '모집중' },
+    { type: 'completed', name: '모집완료' },
+    { type: 'failed', name: '모집실패' },
+  ] as const;
+  type StatusFilter = (typeof STATUS)[number]['type'];
 
   // sort
   const SORT_OPTIONS = [
@@ -41,13 +53,17 @@ export default function PostListPage() {
   ] as const;
 
   type optionType = (typeof SORT_OPTIONS)[number]['type'];
-  const [sortOption, setSortOption] = useState<'createAt' | 'title'>('createAt');
+
   const handleSortOptionClick = (type: optionType) => {
     setSortOption(type);
   };
-  const [sortedPosts, setSortedPosts] = useState(data);
+  const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
+
   useEffect(() => {
-    const sorted = [...data];
+    const sorted = [...data].filter(v => {
+      if (selectedFilter == 'all') return v;
+      else return v.status == selectedFilter;
+    });
     if (sortOption === 'title') {
       sorted.sort((x, y) => {
         if (x.title > y.title) return 1;
@@ -61,8 +77,8 @@ export default function PostListPage() {
         else return -1;
       });
     }
-    setSortedPosts(sorted);
-  }, [data, sortOption]);
+    setFilteredAndSortedPosts(sorted);
+  }, [data, sortOption, selectedFilter]);
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +86,7 @@ export default function PostListPage() {
   const [startPage, setStartPage] = useState(1);
   const itemsPerPage = 2;
   const pagesToShow = 5;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredAndSortedPosts.length / itemsPerPage);
 
   const handleNextPageGroup = () => {
     if (startPage + pagesToShow <= totalPages) {
@@ -90,7 +106,7 @@ export default function PostListPage() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPosts = sortedPosts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstItem, indexOfLastItem);
 
   // search
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -111,22 +127,40 @@ export default function PostListPage() {
         />
       </form>
       <CategorySelector selectedCategory={selectedCategory} />
-      <section className="flex items-center justify-center mt-2">
-        <ul className="flex gap-2 text-sm my-2 mt-4">
-          {SORT_OPTIONS.map(option => (
-            <li key={option.type}>
-              <button
-                className={cn('flex items-center', {
-                  'text-light-gray hover:text-dark-gray': option.type !== sortOption,
-                })}
-                onClick={() => handleSortOptionClick(option.type)}
-              >
-                <DotFilledIcon className={cn({ 'text-primary': option.type == sortOption })} />
-                {option.name}
-              </button>
-            </li>
-          ))}
-        </ul>
+
+      <section className="flex items-center justify-center mt-2 pt-2">
+        <div className="flex flex-col gap-y-1">
+          <ul className="flex gap-2 text-sm">
+            {STATUS.map(stat => (
+              <li key={stat.type}>
+                <button
+                  className={cn('flex items-center', {
+                    'text-light-gray hover:text-dark-gray': stat.type !== selectedFilter,
+                  })}
+                  onClick={() => setSelectedFilter(stat.type)}
+                >
+                  <DotFilledIcon className={cn({ 'text-primary': stat.type == selectedFilter })} />
+                  {stat.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <ul className="flex gap-2 text-sm">
+            {SORT_OPTIONS.map(option => (
+              <li key={option.type}>
+                <button
+                  className={cn('flex items-center', {
+                    'text-light-gray hover:text-dark-gray': option.type !== sortOption,
+                  })}
+                  onClick={() => handleSortOptionClick(option.type)}
+                >
+                  <DotFilledIcon className={cn({ 'text-primary': option.type == sortOption })} />
+                  {option.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
         <Link to="/post/new" className="ml-auto">
           <Button className="gap-1 bg-slate-600 hover:bg-slate-500 transition-all">
             <Pencil2Icon />

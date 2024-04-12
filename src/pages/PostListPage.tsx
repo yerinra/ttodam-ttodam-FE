@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import type { post } from '../lib/types';
@@ -10,9 +10,11 @@ import PostList from '@/components/postListPage/\bPostList';
 import { DotFilledIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
+  const navigate = useNavigate();
 
   const [data, setData] = useState<post[] | []>([]);
 
@@ -90,8 +92,24 @@ export default function PostListPage() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPosts = sortedPosts.slice(indexOfFirstItem, indexOfLastItem);
 
+  // search
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search/${searchKeyword}`);
+    setSearchKeyword('');
+  };
+
   return (
     <>
+      <form onSubmit={handleSearch}>
+        <Input
+          value={searchKeyword}
+          onChange={e => setSearchKeyword(e.target.value)}
+          className="mt-4 mb-6 placeholder:text-dark-gray"
+          placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
+        />
+      </form>
       <CategorySelector selectedCategory={selectedCategory} />
       <section className="flex items-center justify-center mt-2">
         <ul className="flex gap-2 text-sm my-2 mt-4">

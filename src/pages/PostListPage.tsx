@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Button } from '@/components/ui/button';
@@ -12,14 +12,17 @@ import CategorySelector from '@/components/postListPage/CategorySelector';
 import PostList from '@/components/postListPage/PostList';
 import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
 import SortOptions from '@/components/postListPage/SortOptions';
+import { Input } from '@/components/ui/input';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
+  const navigate = useNavigate();
 
   const [data, setData] = useState<Post[] | []>([]);
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('all');
   const [selectedSort, setSelectedSort] = useState<'createAt' | 'title'>('createAt');
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,8 +94,32 @@ export default function PostListPage() {
     setCurrentPage(newPage);
   };
 
+  // search
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const trimmedKeyword = searchKeyword.trim();
+
+    // 입력 값이 공백 또는 비어 있는 경우 경고 메시지 표시
+    if (trimmedKeyword === '' || trimmedKeyword.length < 2) {
+      alert('최소 두 글자 이상 입력해주세요.');
+      setSearchKeyword('');
+    } else {
+      navigate(`/search/${trimmedKeyword}`);
+      setSearchKeyword('');
+    }
+  };
+
   return (
     <>
+      <form onSubmit={handleSearch}>
+        <Input
+          value={searchKeyword}
+          onChange={e => setSearchKeyword(e.target.value)}
+          className="mt-4 mb-6 placeholder:text-dark-gray"
+          placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
+        />
+      </form>
       <CategorySelector selectedCategory={selectedCategory} />
 
       <section className="flex items-center justify-center mt-2 pt-2">

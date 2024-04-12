@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import type { Post } from '../lib/types';
+import type { Post, StatusFilter } from '../lib/types';
 
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
@@ -11,6 +11,7 @@ import { DotFilledIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import StatusFilterSection from '@/components/postListPage/\bStatusFilterSection';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -18,7 +19,7 @@ export default function PostListPage() {
 
   const [data, setData] = useState<Post[] | []>([]);
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('all');
-  const [sortOption, setSortOption] = useState<'createAt' | 'title'>('createAt');
+  const [selectedSort, setSelectedSort] = useState<'createAt' | 'title'>('createAt');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,15 +38,6 @@ export default function PostListPage() {
     fetchData();
   }, [selectedCategory]);
 
-  // status에 따른 filter
-  const STATUS = [
-    { type: 'all', name: '전체' },
-    { type: 'in_progress', name: '모집중' },
-    { type: 'completed', name: '모집완료' },
-    { type: 'failed', name: '모집실패' },
-  ] as const;
-  type StatusFilter = (typeof STATUS)[number]['type'];
-
   // sort
   const SORT_OPTIONS = [
     { type: 'createAt', name: '최신순' },
@@ -55,7 +47,7 @@ export default function PostListPage() {
   type optionType = (typeof SORT_OPTIONS)[number]['type'];
 
   const handleSortOptionClick = (type: optionType) => {
-    setSortOption(type);
+    setSelectedSort(type);
   };
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
 
@@ -64,7 +56,7 @@ export default function PostListPage() {
       if (selectedFilter == 'all') return v;
       else return v.status == selectedFilter;
     });
-    if (sortOption === 'title') {
+    if (selectedSort === 'title') {
       sorted.sort((x, y) => {
         if (x.title > y.title) return 1;
         else if (x.title === y.title) return 0;
@@ -78,7 +70,7 @@ export default function PostListPage() {
       });
     }
     setFilteredAndSortedPosts(sorted);
-  }, [data, sortOption, selectedFilter]);
+  }, [data, selectedSort, selectedFilter]);
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -130,31 +122,17 @@ export default function PostListPage() {
 
       <section className="flex items-center justify-center mt-2 pt-2">
         <div className="flex flex-col gap-y-1">
-          <ul className="flex gap-2 text-sm">
-            {STATUS.map(stat => (
-              <li key={stat.type}>
-                <button
-                  className={cn('flex items-center', {
-                    'text-light-gray hover:text-dark-gray': stat.type !== selectedFilter,
-                  })}
-                  onClick={() => setSelectedFilter(stat.type)}
-                >
-                  <DotFilledIcon className={cn({ 'text-primary': stat.type == selectedFilter })} />
-                  {stat.name}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <StatusFilterSection selectedFilter={selectedFilter} handleFilterSelect={setSelectedFilter} />
           <ul className="flex gap-2 text-sm">
             {SORT_OPTIONS.map(option => (
               <li key={option.type}>
                 <button
                   className={cn('flex items-center', {
-                    'text-light-gray hover:text-dark-gray': option.type !== sortOption,
+                    'text-light-gray hover:text-dark-gray': option.type !== selectedSort,
                   })}
                   onClick={() => handleSortOptionClick(option.type)}
                 >
-                  <DotFilledIcon className={cn({ 'text-primary': option.type == sortOption })} />
+                  <DotFilledIcon className={cn({ 'text-primary': option.type == selectedSort })} />
                   {option.name}
                 </button>
               </li>

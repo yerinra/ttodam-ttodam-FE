@@ -18,13 +18,20 @@ export default function PostNewPage() {
   const [toggle, setToggle] = useState<boolean>(false);
 
   const [products, setProducts] = useState<
-    { productName: string; purchaseLink: string; price: number; count: number }[]
+    {
+      productName: string;
+      purchaseLink: string;
+      price: number;
+      count: number;
+      productImgUrl: string;
+    }[]
   >([
     {
       productName: '',
       purchaseLink: '',
       price: 0,
       count: 0,
+      productImgUrl: '',
     },
   ]);
 
@@ -46,9 +53,19 @@ export default function PostNewPage() {
    * 새로운 상품 객체의 기본 값은 빈문자열('')로 설정.
    * price와 count 필드는 parseInt('')를 통해 초기화되며,
    * 이는 새로운 입력 필드가 추가되었을 때 1이 표지되지 않도록 하기 위함.
+   * productImgUrl 초기값으로 설정.
    */
   const handleAddProducts = () => {
-    setProducts([...products, { productName: '', purchaseLink: '', price: parseInt(''), count: parseInt('') }]);
+    setProducts([
+      ...products,
+      {
+        productName: '',
+        purchaseLink: '',
+        price: parseInt(''),
+        count: parseInt(''),
+        productImgUrl: '',
+      },
+    ]);
   };
 
   // 입력 필드 삭제
@@ -70,6 +87,7 @@ export default function PostNewPage() {
     const newProducts = [...products];
     newProducts[index].purchaseLink = value;
     setProducts(newProducts);
+    // fetchProductImage(index, value);
   };
 
   /**
@@ -209,11 +227,17 @@ export default function PostNewPage() {
             className="w-full outline-none py-4 border-b resize-none"
           ></textarea>
         </form>
-        <div className="flex gap-8 w-full py-4 border-b">
-          <p className="text-[#C4C4C4] font-semibold">사진</p>
-          <button type="button" className="w-[53px] h-[53px] border bg-gray-300">
-            +
-          </button>
+        <div className="flex w-full py-4 border-b">
+          <p className="text-[#C4C4C4] font-semibold mr-4">사진</p>
+          {products.map((product, index) => (
+            <div key={index} className="flex justify-center mr-3">
+              {product.productImgUrl ? (
+                <img src={product.productImgUrl} alt={product.productName} className="w-[53px] h-[53px] border" />
+              ) : (
+                <div className="flex items-center justify-center w-[53px] h-[53px] border bg-gray-300">+</div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ import type { Post } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type PostListProps = {
-  currentPosts: post[];
+  currentPosts: Post[];
 };
 
 export default function PostList({ currentPosts }: PostListProps) {
@@ -44,9 +44,21 @@ export default function PostList({ currentPosts }: PostListProps) {
                       </p>
                     </div>
                   </div> */}
+            <div className="flex">
+              <ul className="flex gap-2 text-sm items-center opacity-50">
+                개당가격
+                {post.products.map(product => (
+                  <li className="px-[6px] py-[2px]  bg-slate-200 rounded-sm">
+                    {(product.price / product.count).toLocaleString()}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Link>
         ))}
-      {!currentPosts && <p>글이 없습니다.</p>}
+      {(!currentPosts || currentPosts.length == 0) && (
+        <p className="flex justify-center items-center py-10">해당하는 글이 없습니다.</p>
+      )}
     </section>
   );
 }

@@ -1,6 +1,8 @@
-import { CATEGORIES, STATUS } from './data';
-export type StatusFilter = (typeof STATUS)[number]['type'];
+import { CATEGORIES, SORT_OPTIONS, STATUS } from './data';
+
 export type Category = (typeof CATEGORIES)[number]['type'];
+export type StatusFilter = (typeof STATUS)[number]['type'];
+export type OptionType = (typeof SORT_OPTIONS)[number]['type'];
 
 export type Post = {
   Id: number;

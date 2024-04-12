@@ -20,3 +20,8 @@ export const STATUS = [
   { type: 'completed', name: '모집완료' },
   { type: 'failed', name: '모집실패' },
 ] as const;
+
+export const SORT_OPTIONS = [
+  { type: 'createAt', name: '최신순' },
+  { type: 'title', name: '제목순' },
+] as const;

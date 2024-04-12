@@ -220,7 +220,6 @@ export default function PostNewPage() {
           <input type="text" placeholder="인당 가격" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 거래 장소" className="w-full outline-none py-4 border-b" />
           <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />
-          {/* <input type="text" placeholder="마감일" className="w-full outline-none py-4 border-b" /> */}
           <div className="w-full border-b py-4">
             <DatePicker />
           </div>

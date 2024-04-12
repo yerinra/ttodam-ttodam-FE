@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import type { post } from '../lib/types';
@@ -7,8 +7,9 @@ import type { post } from '../lib/types';
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
 import PostList from '@/components/postListPage/\bPostList';
-import { DotFilledIcon } from '@radix-ui/react-icons';
+import { DotFilledIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -92,12 +93,14 @@ export default function PostListPage() {
   return (
     <>
       <CategorySelector selectedCategory={selectedCategory} />
-      <section>
+      <section className="flex items-center justify-center mt-2">
         <ul className="flex gap-2 text-sm my-2 mt-4">
           {SORT_OPTIONS.map(option => (
             <li key={option.type}>
               <button
-                className={cn('flex items-center', { 'text-light-gray': option.type !== sortOption })}
+                className={cn('flex items-center', {
+                  'text-light-gray hover:text-dark-gray': option.type !== sortOption,
+                })}
                 onClick={() => handleSortOptionClick(option.type)}
               >
                 <DotFilledIcon className={cn({ 'text-primary': option.type == sortOption })} />
@@ -106,6 +109,12 @@ export default function PostListPage() {
             </li>
           ))}
         </ul>
+        <Link to="/post/new" className="ml-auto">
+          <Button className="gap-1 bg-slate-600 hover:bg-slate-500 transition-all">
+            <Pencil2Icon />
+            <p className="hidden md:inline">글쓰기</p>
+          </Button>
+        </Link>
       </section>
       <main className="mt-5">
         <PostList currentPosts={currentPosts} />

@@ -7,6 +7,8 @@ import type { post } from '../lib/types';
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
 import PostList from '@/components/postListPage/\bPostList';
+import { DotFilledIcon } from '@radix-ui/react-icons';
+import { cn } from '@/lib/utils';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -29,6 +31,37 @@ export default function PostListPage() {
     fetchData();
   }, [selectedCategory]);
 
+  // sort
+  const SORT_OPTIONS = [
+    { type: 'createAt', name: '최신순' },
+    { type: 'title', name: '제목순' },
+  ] as const;
+
+  type optionType = (typeof SORT_OPTIONS)[number]['type'];
+  const [sortOption, setSortOption] = useState<'createAt' | 'title'>('createAt');
+  const handleSortOptionClick = (type: optionType) => {
+    setSortOption(type);
+  };
+  const [sortedPosts, setSortedPosts] = useState(data);
+  useEffect(() => {
+    const sorted = [...data];
+    if (sortOption === 'title') {
+      sorted.sort((x, y) => {
+        if (x.title > y.title) return 1;
+        else if (x.title === y.title) return 0;
+        else return -1;
+      });
+    } else {
+      sorted.sort((x, y) => {
+        if (x.createAt > y.createAt) return 1;
+        else if (x.createAt === y.createAt) return 0;
+        else return -1;
+      });
+    }
+    setSortedPosts(sorted);
+  }, [data, sortOption]);
+
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
 
   const [startPage, setStartPage] = useState(1);
@@ -54,11 +87,26 @@ export default function PostListPage() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPosts = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentPosts = sortedPosts.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <>
       <CategorySelector selectedCategory={selectedCategory} />
+      <section>
+        <ul className="flex gap-2 text-sm my-2 mt-4">
+          {SORT_OPTIONS.map(option => (
+            <li key={option.type}>
+              <button
+                className={cn('flex items-center', { 'text-light-gray': option.type !== sortOption })}
+                onClick={() => handleSortOptionClick(option.type)}
+              >
+                <DotFilledIcon className={cn({ 'text-primary': option.type == sortOption })} />
+                {option.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
       <main className="mt-5">
         <PostList currentPosts={currentPosts} />
         <PaginationSection

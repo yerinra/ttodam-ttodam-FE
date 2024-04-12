@@ -1,6 +1,6 @@
-import { post } from '@/lib/types';
+import { Post } from '@/lib/types';
 
-export const allPosts: post[] = [
+export const allPosts: Post[] = [
   // DAILY
   {
     Id: 33,

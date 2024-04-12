@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { allPosts } from './mockData';
-import type { post } from '@/lib/types';
+import type { Post } from '@/lib/types';
 
 export const handlers = [
   http.get('/post', () => {
@@ -14,12 +14,12 @@ export const handlers = [
 
     if (!isNaN(postId)) {
       // `postId`가 숫자일 경우, 게시글 1개 반환
-      const post = allPosts.find((post: post) => post.Id === postId);
+      const post = allPosts.find((post: Post) => post.Id === postId);
       return HttpResponse.json(post);
     } else {
       // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
       const filteredPosts = allPosts.filter(
-        (post: post) => post.category.toLowerCase() === (param as string).toLowerCase(),
+        (post: Post) => post.category.toLowerCase() === (param as string).toLowerCase(),
       );
       return HttpResponse.json(filteredPosts);
     }

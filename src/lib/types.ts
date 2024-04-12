@@ -1,26 +1,26 @@
 import { CATEGORIES } from './data';
 
-export type category = (typeof CATEGORIES)[number]['type'];
+export type Category = (typeof CATEGORIES)[number]['type'];
 
-export type post = {
+export type Post = {
   Id: number;
   userId: number;
   title: string;
   deadline: string;
   status: 'in_progress' | 'completed' | 'failed';
-  category: category;
+  category: Category;
   place: string;
   pLocationX: number;
   pLocationY: number;
   content: string;
-  products: product[];
+  products: Product[];
   discountRate?: number;
   participants?: number;
   createAt: string;
   updateAt: string;
 };
 
-export type product = {
+export type Product = {
   productId: number;
   productName: string;
   price: number;

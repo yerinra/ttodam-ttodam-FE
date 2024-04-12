@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import type { post } from '@/lib/types';
+import type { Post } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type PostListProps = {
@@ -11,7 +11,7 @@ export default function PostList({ currentPosts }: PostListProps) {
   return (
     <section>
       {currentPosts &&
-        currentPosts.map((post: post) => (
+        currentPosts.map((post: Post) => (
           <Link
             to={`/post/${post.Id}`}
             key={post.Id}

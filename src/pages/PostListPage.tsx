@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import type { post } from '../lib/types';
+import type { Post } from '../lib/types';
 
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
@@ -16,7 +16,7 @@ export default function PostListPage() {
   const { selectedCategory } = useParams();
   const navigate = useNavigate();
 
-  const [data, setData] = useState<post[] | []>([]);
+  const [data, setData] = useState<Post[] | []>([]);
 
   useEffect(() => {
     const fetchData = async () => {

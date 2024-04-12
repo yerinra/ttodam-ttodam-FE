@@ -46,14 +46,9 @@ export default function PostList({ currentPosts }: PostListProps) {
                   </div> */}
             <div className="flex">
               <ul className="flex gap-2 text-sm items-center opacity-50">
-                개당가격
                 {post.products.map(product => (
-                  <li
-                    className="px-[6px] py-[2px]  bg-slate-200 rounded-sm"
-                    key={product.productId}
-                    title={product.productName}
-                  >
-                    {(product.price / product.count).toLocaleString()}
+                  <li className="px-[6px] py-[2px]  bg-slate-200 rounded-sm" key={product.productId}>
+                    {`${product.productName} ${(product.price / product.count).toLocaleString()}`}
                   </li>
                 ))}
               </ul>

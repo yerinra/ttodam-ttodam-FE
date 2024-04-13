@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { CATEGORIES } from '@/lib/data';
 import React, { useState } from 'react';
 import { DatePicker } from '@/components/atoms/DatePicker';
+import DaumPost from '@/components/atoms/DaumPost';
 
 export default function PostNewPage() {
   // 카테고리 오픈
@@ -220,9 +221,7 @@ export default function PostNewPage() {
           <input type="text" placeholder="인당 가격" className="w-full outline-none py-4 border-b" />
           <div className="flex items-center justify-between border-b">
             <input type="text" placeholder="희망 거래 장소" className="w-full outline-none py-4" />
-            <button className="w-[90px] py-1 px-3 bg-primary border-none rounded-md text-white outline-0">
-              주소 찾기
-            </button>
+            <DaumPost />
           </div>
           <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />
           <div className="w-full border-b py-4">

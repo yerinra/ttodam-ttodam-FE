@@ -9,8 +9,15 @@
   "eslint.alwaysShowStatus": true,
   "files.autoSave": "onFocusChange",
   "cSpell.words": [
+    "clsx",
+    "daum",
     "kakao",
+    "kakaomap",
+    "lucide",
     "Parens",
-    "tailwindcss"
+    "shadcn",
+    "tailwindcss",
+    "tanstack",
+    "zustand"
   ]
 }

@@ -26,6 +26,7 @@ export default function PostNewPage() {
       price: number;
       count: number;
       productImgUrl: string;
+      participants: number;
     }[]
   >([
     {
@@ -34,6 +35,7 @@ export default function PostNewPage() {
       price: 0,
       count: 0,
       productImgUrl: '',
+      participants: 0,
     },
   ]);
 
@@ -66,6 +68,7 @@ export default function PostNewPage() {
         price: parseInt(''),
         count: parseInt(''),
         productImgUrl: '',
+        participants: parseInt(''),
       },
     ]);
   };
@@ -118,12 +121,43 @@ export default function PostNewPage() {
    */
   const handleProductPriceChange = (index: number, value: string) => {
     // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
-    const newValue = isNaN(parseInt(value)) ? '' : value;
+    const newValue = value.trim() === '' ? '0' : value;
     const newProducts = [...products];
 
     // 상품의 가격 업데이트
     newProducts[index].price = parseInt(newValue);
     setProducts(newProducts);
+  };
+
+  /**
+   * 희망 모집 인원 변경
+   * @param index 해당 상품의 인덱스
+   * @param value 입력된 값 (문자열)
+   * 문자열인 value를 숫자로 변환하여 희망 모집 인원 업데이트
+   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
+   */
+  const handleParticipantsChange = (index: number, value: string) => {
+    const newValue = isNaN(parseInt(value)) ? '' : value;
+    const newProducts = [...products];
+
+    newProducts[index].participants = parseInt(newValue);
+    setProducts(newProducts);
+
+    // updatePrePersonPrice();
+  };
+
+  /**
+   * 인당 가격 계산 함수
+   * @param price 원래 가격
+   * @param participants 모집 인원
+   * 참여자 수가 0이면 빈 문자열을 반환
+   * 가격을 참여자 수로 나누어 인당 가격 계산
+   * 인당 가격이 숫자가 아니면 빈 문자열 반환
+   */
+  const calculatePerPersonPrice = (price: number, participants: number): string => {
+    if (participants === 0) return '';
+    const perPersonPrice = price / participants;
+    return isNaN(perPersonPrice) ? '' : String(perPersonPrice) + '원';
   };
 
   return (
@@ -218,9 +252,27 @@ export default function PostNewPage() {
               </div>
             </div>
           ))}
-          <input type="text" placeholder="인당 가격" className="w-full outline-none py-4 border-b" />
+          {products.map((product, index) => (
+            <input
+              type="text"
+              key={index}
+              placeholder="인당 가격"
+              value={calculatePerPersonPrice(product.price, product.participants)}
+              readOnly
+              className="w-full outline-none py-4 border-b"
+            />
+          ))}
           <DaumPost />
-          <input type="text" placeholder="희망 모집 인원" className="w-full outline-none py-4 border-b" />
+          {products.map((product, index) => (
+            <input
+              type="number"
+              key={index}
+              placeholder="희망 모집 인원"
+              value={product.participants === 0 ? '' : String(product.participants)}
+              onChange={e => handleParticipantsChange(index, e.target.value)}
+              className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+          ))}
           <div className="w-full border-b py-4">
             <DatePicker />
           </div>

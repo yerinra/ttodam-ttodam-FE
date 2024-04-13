@@ -19,6 +19,7 @@ export default function PostNewPage() {
   // 카테고리 리스트 토글
   const [toggle, setToggle] = useState<boolean>(false);
 
+  //TODO: type 불러오기
   const [products, setProducts] = useState<
     {
       productName: string;

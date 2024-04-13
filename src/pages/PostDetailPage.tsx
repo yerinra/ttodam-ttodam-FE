@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { post } from '@/lib/types';
+import type { Post } from '@/lib/types';
 import axios from 'axios';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
-  const [data, setData] = useState<post>();
+  const [data, setData] = useState<Post>();
 
   useEffect(() => {
     const fetchData = async () => {

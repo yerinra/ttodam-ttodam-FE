@@ -142,8 +142,6 @@ export default function PostNewPage() {
 
     newProducts[index].participants = parseInt(newValue);
     setProducts(newProducts);
-
-    // updatePrePersonPrice();
   };
 
   /**

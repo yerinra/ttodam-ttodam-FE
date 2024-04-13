@@ -1,6 +1,15 @@
 import React from 'react';
 
 import { LuGrip, LuDog, LuWatch, LuUtensils, LuSalad, LuPencilRuler, LuLamp, LuClover, LuPill } from 'react-icons/lu';
+import { CiHome, CiShoppingBasket, CiChat1, CiBullhorn, CiUser } from 'react-icons/ci';
+
+export const NAVIGATION = [
+  { path: '/', label: '홈', icon: React.createElement(CiHome) },
+  { path: '/posts/all', label: '또담공구', icon: React.createElement(CiShoppingBasket) },
+  { path: '/chat', label: '채팅', icon: React.createElement(CiChat1) },
+  { path: '/notification', label: '알림', icon: React.createElement(CiBullhorn) },
+  { path: '/my', label: '대시보드', icon: React.createElement(CiUser) },
+] as const;
 
 export const CATEGORIES = [
   { type: 'ALL', name: '전체', icon: React.createElement(LuGrip) },

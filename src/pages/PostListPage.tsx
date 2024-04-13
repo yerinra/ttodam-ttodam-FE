@@ -12,7 +12,7 @@ import CategorySelector from '@/components/postListPage/CategorySelector';
 import PostList from '@/components/postListPage/PostList';
 import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
 import SortOptions from '@/components/postListPage/SortOptions';
-import { Input } from '@/components/ui/input';
+import SearchForm from '@/components/atoms/SearchForm';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -109,17 +109,17 @@ export default function PostListPage() {
       setSearchKeyword('');
     }
   };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchKeyword(e.target.value);
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <Input
-          value={searchKeyword}
-          onChange={e => setSearchKeyword(e.target.value)}
-          className="mt-4 mb-6 placeholder:text-dark-gray"
-          placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
-        />
-      </form>
+      <SearchForm
+        onFormSubmit={handleSearch}
+        value={searchKeyword}
+        onValueChange={handleChange}
+        placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
+        className="mt-4 mb-6 placeholder:text-dark-gray"
+      />
       <CategorySelector selectedCategory={selectedCategory} />
 
       <section className="flex items-center justify-center mt-2 pt-2">

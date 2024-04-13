@@ -105,7 +105,7 @@ export default function PostListPage() {
       alert('최소 두 글자 이상 입력해주세요.');
       setSearchKeyword('');
     } else {
-      navigate(`/search/${trimmedKeyword}`);
+      navigate(`/search?keyword=${trimmedKeyword}`);
       setSearchKeyword('');
     }
   };

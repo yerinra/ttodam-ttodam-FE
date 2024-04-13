@@ -1,6 +1,6 @@
-import { post } from '@/lib/types';
+import { Post } from '@/lib/types';
 
-export const allPosts: post[] = [
+export const allPosts: Post[] = [
   // DAILY
   {
     Id: 33,
@@ -39,7 +39,6 @@ export const allPosts: post[] = [
     Id: 35,
     userId: 36,
     title: '운동화 구매 부탁드립니다',
-    participants: 3,
     deadline: '2024-06-25 16:30:00',
     status: 'in_progress',
     category: 'DAILY',
@@ -47,6 +46,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5178625,
     pLocationY: 127.0417354,
     content: '운동을 위해 신발을 구매해주세요.',
+    participants: 3,
     products: [
       {
         productId: 33,
@@ -79,6 +79,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5283169,
     pLocationY: 126.9294254,
     content: '향도 좋은 물티슈를 구매해주세요!',
+    participants: 4,
     products: [
       {
         productId: 35,
@@ -103,28 +104,29 @@ export const allPosts: post[] = [
   {
     Id: 2,
     userId: 3,
-    title: '식료품 구매 대행 부탁드립니다',
+    title: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
     deadline: '2024-04-11 12:00:00',
     status: 'in_progress',
     category: 'DAILY',
     place: '서울특별시 강남구 테헤란로 427',
     pLocationX: 37.4979254,
     pLocationY: 127.0275656,
-    content: '식료품을 구매해주실 분을 찾습니다.',
+    content: '칫솔은 10개씩 나누고 휴지는 1팩씩 가져요~',
+    participants: 3,
     products: [
       {
         productId: 3,
-        productName: '과일세트',
-        price: 30000,
-        count: 1,
+        productName: '크리오덴티메이트 칫솔',
+        price: 10830,
+        count: 30,
         purchaseLink: 'https://smartstore.naver.com/groceryshop/products/123456789',
         productImgUrl: 'https://example.com/images/product789.jpg',
       },
       {
         productId: 4,
-        productName: '우유',
-        price: 2500,
-        count: 2,
+        productName: '하얀티슈 프리미엄',
+        price: 30930,
+        count: 3,
         purchaseLink: 'https://www.naver.com',
         productImgUrl: 'https://example.com/images/product101112.jpg',
       },
@@ -144,6 +146,7 @@ export const allPosts: post[] = [
     pLocationX: 37.3949096,
     pLocationY: 127.1113331,
     content: '주방용품을 새로 구매하려고 합니다.',
+    participants: 2,
     products: [
       {
         productId: 5,
@@ -177,6 +180,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5466678,
     pLocationY: 126.9462928,
     content: '다이어트를 위해 식사를 대신할 식품을 구매해주세요.',
+    participants: 3,
     products: [
       {
         productId: 7,
@@ -210,6 +214,7 @@ export const allPosts: post[] = [
     pLocationX: 37.6155861,
     pLocationY: 127.0252771,
     content: '애완동물 간식을 구매해주세요.',
+    participants: 4,
     products: [
       {
         productId: 9,
@@ -243,6 +248,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5248944,
     pLocationY: 127.0288156,
     content: '최신 트렌드의 의류를 구매하려고 합니다.',
+    participants: 3,
     products: [
       {
         productId: 11,
@@ -251,14 +257,6 @@ export const allPosts: post[] = [
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/111222333',
         productImgUrl: 'https://example.com/images/product313233.jpg',
-      },
-      {
-        productId: 12,
-        productName: '셔츠',
-        price: 35000,
-        count: 2,
-        purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product343536.jpg',
       },
     ],
     createAt: '2024-04-10 13:20:00',
@@ -275,6 +273,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5725203,
     pLocationY: 126.9766572,
     content: '비가 오는 날을 대비하여 우비를 구매해주세요.',
+    participants: 2,
     products: [
       {
         productId: 13,
@@ -283,6 +282,14 @@ export const allPosts: post[] = [
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/444555666',
         productImgUrl: 'https://example.com/images/product373839.jpg',
+      },
+      {
+        productId: 12,
+        productName: '셔츠',
+        price: 35000,
+        count: 2,
+        purchaseLink: 'https://www.naver.com',
+        productImgUrl: 'https://example.com/images/product343536.jpg',
       },
       {
         productId: 14,
@@ -307,12 +314,13 @@ export const allPosts: post[] = [
     pLocationX: 37.5325361,
     pLocationY: 126.8974856,
     content: '운동을 위한 편안한 트레이닝복을 구매하려고 합니다.',
+    participants: 5,
     products: [
       {
         productId: 15,
         productName: '트레이닝 상의',
         price: 25000,
-        count: 1,
+        count: 10,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/777888999',
         productImgUrl: 'https://example.com/images/product434445.jpg',
       },
@@ -320,7 +328,7 @@ export const allPosts: post[] = [
         productId: 16,
         productName: '운동 바지',
         price: 20000,
-        count: 1,
+        count: 10,
         purchaseLink: 'https://www.naver.com',
         productImgUrl: 'https://example.com/images/product464748.jpg',
       },
@@ -339,6 +347,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5120559,
     pLocationY: 127.1041015,
     content: '여름에 입기 좋은 시원한 원피스를 구매하려고 합니다.',
+    participants: 2,
     products: [
       {
         productId: 17,
@@ -371,6 +380,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5583062,
     pLocationY: 126.8608397,
     content: '운동을 위한 필수 용품을 구매해주세요.',
+    participants: 2,
     products: [
       {
         productId: 21,
@@ -403,6 +413,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5006686,
     pLocationY: 127.0243035,
     content: '사무실에서 사용할 필수용품을 구매해주세요.',
+    participants: 2,
     products: [
       {
         productId: 23,
@@ -435,6 +446,7 @@ export const allPosts: post[] = [
     pLocationX: 37.5905592,
     pLocationY: 127.0802329,
     content: '기타 생활 용품을 구매해주세요.',
+    participants: 3,
     products: [
       {
         productId: 25,

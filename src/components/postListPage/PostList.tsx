@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 
-import type { post } from '@/lib/types';
+import type { Post } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type PostListProps = {
-  currentPosts: post[];
+  currentPosts: Post[];
 };
 
 export default function PostList({ currentPosts }: PostListProps) {
   return (
     <section>
       {currentPosts &&
-        currentPosts.map((post: post) => (
+        currentPosts.map((post: Post) => (
           <Link
             to={`/post/${post.Id}`}
             key={post.Id}
-            className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2"
+            className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2 transition-all"
           >
             <div className="flex items-center gap-x-2">
               <p
@@ -44,9 +44,20 @@ export default function PostList({ currentPosts }: PostListProps) {
                       </p>
                     </div>
                   </div> */}
+            <div className="flex">
+              <ul className="flex gap-2 text-sm items-center opacity-50">
+                {post.products.map(product => (
+                  <li className="px-[6px] py-[2px]  bg-slate-200 rounded-sm" key={product.productId}>
+                    {`${product.productName} ${(product.price / product.count).toLocaleString()}원`}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Link>
         ))}
-      {!currentPosts && <p>글이 없습니다.</p>}
+      {(!currentPosts || currentPosts.length == 0) && (
+        <p className="flex justify-center items-center py-10">해당하는 글이 없습니다.</p>
+      )}
     </section>
   );
 }

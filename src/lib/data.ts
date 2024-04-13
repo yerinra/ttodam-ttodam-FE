@@ -13,3 +13,15 @@ export const CATEGORIES = [
   { type: 'PET', name: '반려동물', icon: React.createElement(LuDog) },
   { type: 'OTHER', name: '기타', icon: React.createElement(LuClover) },
 ] as const;
+
+export const STATUS = [
+  { type: 'all', name: '전체' },
+  { type: 'in_progress', name: '모집중' },
+  { type: 'completed', name: '모집완료' },
+  { type: 'failed', name: '모집실패' },
+] as const;
+
+export const SORT_OPTIONS = [
+  { type: 'createAt', name: '최신순' },
+  { type: 'title', name: '제목순' },
+] as const;

@@ -1,11 +1,32 @@
 import SearchForm from '@/components/atoms/SearchForm';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Post } from '@/lib/types';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function SearchResultPage() {
-  const { searchKeyword } = useParams();
+  const [searchParams] = useSearchParams();
+  const searchKeyword = searchParams.get('keyword');
+
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
+  const [data, setData] = useState<Post[] | []>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = `/post/search?keyword=${searchKeyword}`;
+        const response = await axios.get(apiUrl);
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    // setStartPage(1);
+    // setCurrentPage(1);
+    // setSelectedFilter('all');
+    fetchData();
+  }, [searchKeyword]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,7 +37,7 @@ export default function SearchResultPage() {
       alert('최소 두 글자 이상 입력해주세요.');
       setKeyword('');
     } else {
-      navigate(`/search/${trimmedKeyword}`);
+      navigate(`/search?keyword=${trimmedKeyword}`);
       setKeyword('');
     }
   };
@@ -32,7 +53,8 @@ export default function SearchResultPage() {
         onValueChange={handleKeywordChange}
         className="mt-4 mb-6 placeholder:text-dark-gray"
       />
-      {searchKeyword} 에 대한 검색 결과.
+      <p>{searchKeyword} 에 대한 검색 결과.</p>
+      <div>{data && data.map(d => d.title)}</div>
     </section>
   );
 }

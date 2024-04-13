@@ -19,7 +19,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/posts/:selectedCategory" element={<PostListPage />} />
               <Route path="/post/:postId" element={<PostDetailPage />} />
-              <Route path="/search/:searchKeyword" element={<SearchResultPage />} />
+              <Route path="/search" element={<SearchResultPage />} />
             </Route>
           </Routes>
         </Router>

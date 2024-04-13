@@ -1,4 +1,5 @@
 import SearchForm from '@/components/atoms/SearchForm';
+import PostPreview from '@/components/postListPage/PostPreview';
 import { Post } from '@/lib/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -46,15 +47,24 @@ export default function SearchResultPage() {
     setKeyword(e.target.value);
   };
   return (
-    <section>
+    <div>
       <SearchForm
         onFormSubmit={handleSubmit}
         value={keyword as string}
         onValueChange={handleKeywordChange}
         className="mt-4 mb-6 placeholder:text-dark-gray"
       />
-      <p>{searchKeyword} 에 대한 검색 결과.</p>
-      <div>{data && data.map(d => d.title)}</div>
-    </section>
+      <section>
+        {data && (
+          <>
+            <div className="mb-4 text-sm ml-5">
+              <p className="inline text-primary">{searchKeyword}</p>에 대한 <b>{data.length}</b>개의 검색 결과가
+              있습니다.
+            </div>
+            <div>{data && data.map(post => <PostPreview key={post.Id} post={post} />)}</div>
+          </>
+        )}
+      </section>
+    </div>
   );
 }

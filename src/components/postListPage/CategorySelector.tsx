@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
 import { CATEGORIES } from '@/lib/data';
+import { Category } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 type CategorySelectorProps = {
-  selectedCategory: string | undefined;
+  selectedCategory: Category;
 };
 
 export default function CategorySelector({ selectedCategory }: CategorySelectorProps) {
@@ -25,20 +26,4 @@ export default function CategorySelector({ selectedCategory }: CategorySelectorP
       </ul>
     </nav>
   );
-}
-
-{
-  /* <section className="flex flex-wrap gap-2">
-        {CATEGORIES.map(category => (
-          <Link
-            key={category.type}
-            to={`/posts/${category.type.toLowerCase()}`}
-            className={cn('text-sm px-3 py-1 bg-secondary rounded-3xl', {
-              'bg-primary text-white': category.type.toLowerCase() === selectedCategory,
-            })}
-          >
-            {category.name}
-          </Link>
-        ))}
-      </section> */
 }

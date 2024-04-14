@@ -69,6 +69,8 @@ export default function PostListPage() {
       });
     }
     setFilteredAndSortedPosts(sorted);
+    setCurrentPage(1);
+    setStartPage(1);
   }, [data, selectedSort, selectedFilter]);
 
   // sort

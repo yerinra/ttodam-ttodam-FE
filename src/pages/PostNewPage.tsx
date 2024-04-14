@@ -240,7 +240,18 @@ export default function PostNewPage() {
                   className="w-full outline-none"
                 />
               </div>
-              <div className="flex items-center justify-between py-4 border-b text-black">
+              {index === products.length -1 ? (
+                <div className="flex items-center justify-between py-4 border-b text-black">
+                  <input
+                    type="number"
+                    placeholder="원래 가격"
+                    value={product.price === 0 ? '' : String(product.price)}
+                    onChange={e => handleProductPriceChange(index, e.target.value)}
+                    className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-between py-4 border-b-2 border-stone-300 text-black">
                 <input
                   type="number"
                   placeholder="원래 가격"
@@ -249,6 +260,7 @@ export default function PostNewPage() {
                   className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
+              )}
             </div>
           ))}
           {products.map((product, index) => (

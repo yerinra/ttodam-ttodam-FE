@@ -32,6 +32,19 @@ export type Product = {
   productImgUrl: string;
 };
 
+export type PostNew = {
+  title: string;
+  deadline: string;
+  participants : number;
+  place: string;
+  productName: string;
+  price: number;
+  count: number;
+  purchaseLink: string;
+  productImgUrl: string;
+  content: string;
+}
+
 // 카카오 지도 place 타입
 export interface PlaceType {
   id: string;

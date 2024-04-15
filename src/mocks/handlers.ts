@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { allPosts } from './mockData';
+import { allPosts, users } from './mockData';
 import type { Post } from '@/lib/types';
 
 export const handlers = [
@@ -23,5 +23,27 @@ export const handlers = [
       );
       return HttpResponse.json(filteredPosts);
     }
+
+
+  }),
+  http.post('/login', (req, res, ctx) => {
+    const { email, password } = req.body;
+
+    const user = users.find((user) => user.email === email && user.password === password);
+
+    // 로그인 메세지 반환 -> 회원가입 인증 연동시 수정
+    if (user) {
+      return res(
+        ctx.status(200),
+        ctx.json({ message: '로그인에 성공했습니다.' })
+      );
+    } else {
+      return res(
+        ctx.status(401),
+        ctx.json({ message: '로그인에 실패했습니다.' })
+      );
+    }
   }),
 ];
+
+

@@ -118,11 +118,15 @@ export const allPosts: Post[] = [
     Id: 2,
     user: {
       id: 1,
-      nickname: '홍길동',
-      profileImgUrl: '',
+      nickname: '익명의유저2',
+      profileImgUrl:
+        'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D',
       manners: 5,
     },
-    productImgUrl: [],
+    productImgUrl: [
+      'https://photo3.enuri.info/data/images/service/dnw/master/110388000/110388713.jpg',
+      'https://photo3.enuri.info/data/images/service/dnw/master/14984000/14984034.jpg',
+    ],
     title: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
     deadline: '2024-04-11 12:00:00',
     status: 'in_progress',

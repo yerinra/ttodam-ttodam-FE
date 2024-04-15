@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { allPosts } from './mockData';
 import type { Post } from '@/lib/types';
+import { allPosts } from '@/mocks/mockData';
 
 export const handlers = [
   http.get('/post', () => {
@@ -36,10 +36,4 @@ export const handlers = [
       return HttpResponse.json(filteredPosts);
     }
   }),
-
-  // http.post('/request/:postId/:userId', async ({ params, request }) => {
-  //   const data = await request.json();
-  //   const { postId, requestId } = params;
-  //   return HttpResponse.json(allPosts);
-  // }),
 ];

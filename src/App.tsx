@@ -1,9 +1,7 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import CategoryPage from './pages/CategoryPage';
 import PostListPage from './pages/PostListPage';
 import PostNewPage from './pages/PostNewPage';
 import PostDetailPage from './pages/PostDetailPage';
@@ -18,7 +16,6 @@ export default function App() {
             <Route path="/post/new" element={<PostNewPage />} />
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/category" element={<CategoryPage />} />
               <Route path="/posts/:selectedCategory" element={<PostListPage />} />
               <Route path="/post/:postId" element={<PostDetailPage />} />
             </Route>

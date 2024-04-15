@@ -1,40 +1,34 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { MdHome } from 'react-icons/md';
-import { IoMenu } from 'react-icons/io5';
-import { BsChatTextFill } from 'react-icons/bs';
-import { FaBell } from 'react-icons/fa';
-import { IoPersonSharp } from 'react-icons/io5';
+import { Link, useLocation } from 'react-router-dom';
+import { NAVIGATION } from '@/lib/data';
+import { cn } from '@/lib/utils';
 
 export default function NavBar() {
+  const { pathname } = useLocation();
+
+  const isMatchingPath = (path: string) => {
+    if (pathname === '/') {
+      return pathname === path;
+    } else if (pathname.startsWith('/post')) {
+      return path == '/posts/all';
+    } else return pathname.includes(path);
+  };
+
   return (
-    <nav className="w-full h-[55px] fixed max-w-[940px] bottom-0 bg-light-gray">
-      <ul className="flex justify-between items-center w-full h-full px-5">
-        <li>
-          <Link to="/">
-            <MdHome className="w-6 h-6" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/category">
-            <IoMenu className="w-6 h-6" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/chat">
-            <BsChatTextFill className="w-6 h-5" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/notification">
-            <FaBell className="w-6 h-5" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/user">
-            <IoPersonSharp className="w-6 h-5" />
-          </Link>
-        </li>
+    <nav className="w-full h-[65px] fixed max-w-[940px] bottom-0 border border-t-1 border-x-0 border-b-0 bg-slate-200">
+      <ul className="flex justify-between items-center w-full h-full px-10">
+        {NAVIGATION.map(nav => (
+          <li key={nav.path}>
+            <Link
+              to={nav.path}
+              className={cn('flex flex-col items-center hover:scale-105 hover:font-bold transition-all', {
+                'text-primary font-bold': isMatchingPath(nav.path),
+              })}
+            >
+              <div className="text-2xl">{nav.icon}</div>
+              <div className="text-sm">{nav.label}</div>
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );

@@ -2,26 +2,21 @@ import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { DatePicker } from "../atoms/DatePicker";
 import DaumPost from "../atoms/DaumPost";
+import { PostNew } from "@/lib/types";
 
 export default function Form() {
-  //TODO: type 불러오기
-  const [products, setProducts] = useState<
+  const [products, setProducts] = useState<PostNew[]>([
     {
-      productName: string;
-      purchaseLink: string;
-      price: number;
-      count: number;
-      productImgUrl: string;
-      participants: number;
-    }[]
-  >([
-    {
+      title: '',
+      deadline: '',
+      participants : 0,
+      place: '',
       productName: '',
-      purchaseLink: '',
       price: 0,
       count: 0,
+      purchaseLink: '',
       productImgUrl: '',
-      participants: 0,
+      content: '',
     },
   ]);
 
@@ -43,6 +38,10 @@ export default function Form() {
         count: parseInt(''),
         productImgUrl: '',
         participants: parseInt(''),
+        title: '',
+        deadline: '',
+        place: '',
+        content: ''
       },
     ]);
   };
@@ -127,7 +126,7 @@ export default function Form() {
    * 가격을 참여자 수로 나누어 인당 가격 계산
    * 인당 가격이 숫자가 아니면 빈 문자열 반환
    */
-  const calculatePerPersonPrice = (price: number, participants: number): string => {
+  const calculatePerPersonPrice = ({price, participants}: PostNew): string => {
     if (participants === 0) return '';
     const perPersonPrice = price / participants;
     return isNaN(perPersonPrice) ? '' : (perPersonPrice).toLocaleString() + '원';
@@ -202,7 +201,7 @@ export default function Form() {
           type="text"
           key={index}
           placeholder="인당 가격"
-          value={calculatePerPersonPrice(product.price, product.participants)}
+          value={calculatePerPersonPrice(product)}
           readOnly
           className="w-full outline-none py-4 border-b"
         />

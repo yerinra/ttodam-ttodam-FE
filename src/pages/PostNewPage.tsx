@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Category from '@/components/postNewPage/Category';
 import Form from '@/components/postNewPage/Form';
 
-
 export default function PostNewPage() {
   return (
     <section className="px-5 w-full">

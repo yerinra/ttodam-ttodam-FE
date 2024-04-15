@@ -66,7 +66,7 @@ export default function PostNewPage() {
       {
         productName: '',
         purchaseLink: '',
-        price: parseInt(''),
+        price: 0,
         count: parseInt(''),
         productImgUrl: '',
         participants: parseInt(''),
@@ -122,9 +122,10 @@ export default function PostNewPage() {
    */
   const handleProductPriceChange = (index: number, value: string) => {
     // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
-    const newValue = value.trim() === '' ? '0' : value;
+    const newValue = value.trim() === '' ? '0' : value.replaceAll(',', '').replace('원', '');
+  
     const newProducts = [...products];
-
+  
     // 상품의 가격 업데이트
     newProducts[index].price = parseInt(newValue);
     setProducts(newProducts);
@@ -156,7 +157,7 @@ export default function PostNewPage() {
   const calculatePerPersonPrice = (price: number, participants: number): string => {
     if (participants === 0) return '';
     const perPersonPrice = price / participants;
-    return isNaN(perPersonPrice) ? '' : String(perPersonPrice) + '원';
+    return isNaN(perPersonPrice) ? '' : (perPersonPrice).toLocaleString() + '원';
   };
 
   return (
@@ -243,23 +244,23 @@ export default function PostNewPage() {
               {index === products.length -1 ? (
                 <div className="flex items-center justify-between py-4 border-b text-black">
                   <input
-                    type="number"
+                    type="text"
                     placeholder="원래 가격"
-                    value={product.price === 0 ? '' : String(product.price)}
-                    onChange={e => handleProductPriceChange(index, e.target.value)}
+                    value={(product.price) === 0 ? '' : (product.price).toLocaleString()}
+                    onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
                     className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  />
+                  />원
                 </div>
               ) : (
                 <div className="flex items-center justify-between py-4 border-b-2 border-stone-300 text-black">
-                <input
-                  type="number"
-                  placeholder="원래 가격"
-                  value={product.price === 0 ? '' : String(product.price)}
-                  onChange={e => handleProductPriceChange(index, e.target.value)}
-                  className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
-              </div>
+                  <input
+                    type="text"
+                    placeholder="원래 가격"
+                    value={(product.price) === 0 ? '' : (product.price).toLocaleString()}
+                    onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
+                    className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />원
+                </div>
               )}
             </div>
           ))}

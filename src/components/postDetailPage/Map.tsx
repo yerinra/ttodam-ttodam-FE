@@ -27,8 +27,8 @@ export default function Map({ lat, lng }: MapProps) {
   }, [lat, lng]);
 
   return (
-    <div className="w-full h-[300px] mt-5">
-      <div className="w-full h-[300px] rounded-2xl -z-0" ref={kakaoMapRef} />
+    <div className="w-full h-[300px] mt-10">
+      <div className="w-full h-[240px] md:h-[300px] rounded-2xl -z-0" ref={kakaoMapRef} />
       {map ? (
         <KakaoMapContext.Provider value={map}></KakaoMapContext.Provider>
       ) : (

@@ -1,7 +1,8 @@
+import { PostNew } from '@/lib/types';
 import { ChangeEvent, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 
-export default function DaumPost() {
+export default function DaumPost({ onAddressChange }: { onAddressChange: (address: PostNew['place']) => void}) {
   // 주소, 모달 열림 여부, 상세 주소 상태 관리
   const [address, setAddress] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -10,7 +11,9 @@ export default function DaumPost() {
   // 주소 검색 완료 시 호출되는 콜백 함수
   const handleComplete = (data: { address: string }) => {
     const { address } = data;
+    setIsOpen(false);
     setAddress(address);
+    onAddressChange(address);
 
     // 데이터 확인
     console.log(data, 'data');

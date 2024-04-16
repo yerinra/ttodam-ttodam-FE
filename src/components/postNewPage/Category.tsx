@@ -2,7 +2,11 @@ import { CATEGORIES } from "@/lib/data";
 import { useState } from "react";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
-export default function Category() {
+interface CategoryProps {
+  onSelectCategory: (category: string) => void;
+}
+
+export default function Category({ onSelectCategory }: CategoryProps) {
   // 카테고리 오픈
   const [openCategory, setOpenCategory] = useState(false);
 
@@ -22,6 +26,7 @@ export default function Category() {
     setOpenCategory(false);
     setSelectedCategory(category);
     setToggle(false);
+    onSelectCategory(category);
   };
 
   return (
@@ -46,7 +51,7 @@ export default function Category() {
               onClick={() => handleCategoryClick(category.name)}
               className="w-full py-4 px-2.5 hover:bg-slate-100"
             >
-              <button className="w-full text-left">{category.name}</button>
+              <button type="submit" className="w-full text-left">{category.name}</button>
             </li>
           ))}
         </ul>

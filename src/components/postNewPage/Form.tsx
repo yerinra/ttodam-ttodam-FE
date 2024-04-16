@@ -152,10 +152,12 @@ export default function Form() {
     return isNaN(perPersonPrice) ? '' : (perPersonPrice).toLocaleString() + '원';
   };
 
+  // 주소 변경
   const handleAddressChange = (address: string) => {
     setSelectedAddress(address)
   }
 
+  // 날짜 선택
   const handleDateSelect = (selectedDate: Date) => {
     // 선택된 날짜를 상태에 업데이트
     setDeadline(selectedDate);

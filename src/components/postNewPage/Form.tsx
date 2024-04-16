@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { DatePicker } from "../atoms/DatePicker";
+import { format } from 'date-fns';
 import DaumPost from "../atoms/DaumPost";
 import { PostNew } from "@/lib/types";
+import Category from "./Category";
 
 export default function Form() {
   const [products, setProducts] = useState<PostNew[]>([
     {
       title: '',
       deadline: '',
-      participants : 0,
+      participants: 0,
       place: '',
       productName: '',
       price: 0,
@@ -17,8 +19,20 @@ export default function Form() {
       purchaseLink: '',
       productImgUrl: '',
       content: '',
+      category: "ALL"
     },
   ]);
+
+  const [title, setTitle] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [totalParticipants, setTotalParticipants] = useState('');
+  const [content, setContent] = useState('');
+  const [selectedAddress, setSelectedAddress] = useState('');
+  const [deadline, setDeadline] = useState<Date>(new Date());
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+  }
 
   /**
    * 새로운 입력 필드 추가
@@ -41,7 +55,8 @@ export default function Form() {
         title: '',
         deadline: '',
         place: '',
-        content: ''
+        content: '',
+        category: "ALL"
       },
     ]);
   };
@@ -52,6 +67,11 @@ export default function Form() {
     newProducts.splice(index, 1);
     setProducts(newProducts);
   };
+
+  // 게시글 변경
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  }
 
   // 상품 이름 변경
   const handleProductNameChange = (index: number, value: string) => {
@@ -110,12 +130,12 @@ export default function Form() {
    * 문자열인 value를 숫자로 변환하여 희망 모집 인원 업데이트
    * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
    */
-  const handleParticipantsChange = (index: number, value: string) => {
-    const newValue = isNaN(parseInt(value)) ? '' : value;
-    const newProducts = [...products];
-
-    newProducts[index].participants = parseInt(newValue);
+  const handleParticipantsChangeAllProducts = (value: string) => {
+    const newProducts = products.map(product => {
+      return { ...product, participants: parseInt(value) };
+    });
     setProducts(newProducts);
+    setTotalParticipants(value);
   };
 
   /**
@@ -132,9 +152,33 @@ export default function Form() {
     return isNaN(perPersonPrice) ? '' : (perPersonPrice).toLocaleString() + '원';
   };
 
+  const handleAddressChange = (address: string) => {
+    setSelectedAddress(address)
+  }
+
+  const handleDateSelect = (selectedDate: Date) => {
+    // 선택된 날짜를 상태에 업데이트
+    setDeadline(selectedDate);
+  };
+
+  // 상세정보 변경
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const product = products[0];
+    const formattedDeadline = deadline ? format(new Date(deadline), 'yyyy-MM-dd') : '';
+    const { productName, purchaseLink, count, price, participants } = product;
+    alert(`title: ${title}, name: ${productName}, link: ${purchaseLink}, count: ${count}, price: ${price}, participants: ${participants}, place: ${selectedAddress}, deadline: ${formattedDeadline}, content: ${content}, category: ${selectedCategory}`);
+  }
+
   return (
-    <form>
-      <input type="text" placeholder="게시글 제목" className="w-full outline-none py-4 border-b" />
+    <form onSubmit={handleSubmit}>
+      <input type="submit" value={'등록'} className="absolute right-0 top-0 py-0.5 px-3 bg-primary rounded-md text-white my-[15px] mr-5" />
+      <Category onSelectCategory={handleCategorySelect} />
+      <input type="text" placeholder="게시글 제목" value={title} onChange={handleTitleChange} className="w-full outline-none py-4 border-b" />
       {products.map((product, index) => (
         <div key={index}>
           <div className="flex items-center justify-between py-4 border-b text-black">
@@ -173,59 +217,56 @@ export default function Form() {
               className="w-full outline-none"
             />
           </div>
-          {index === products.length -1 ? (
-            <div className="flex items-center justify-between py-4 border-b text-black">
-              <input
-                type="text"
-                placeholder="원래 가격"
-                value={(product.price) === 0 ? '' : (product.price).toLocaleString()}
-                onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
-                className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              />원
-            </div>
+          <div className="flex items-center justify-between py-4 border-b text-black">
+            <input
+              type="text"
+              placeholder="원래 가격"
+              value={(product.price) === 0 ? '' : (product.price).toLocaleString()}
+              onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
+              className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />원
+          </div>
+          {index === products.length - 1 ? (
+            <input
+            type="text"
+            key={index}
+            placeholder="인당 가격"
+            value={calculatePerPersonPrice(product)}
+            readOnly
+            className="w-full outline-none py-4 border-b"
+            />
           ) : (
-            <div className="flex items-center justify-between py-4 border-b-2 border-stone-300 text-black">
-              <input
-                type="text"
-                placeholder="원래 가격"
-                value={(product.price) === 0 ? '' : (product.price).toLocaleString()}
-                onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
-                className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              />원
-            </div>
+            <input
+            type="text"
+            key={index}
+            placeholder="인당 가격"
+            value={calculatePerPersonPrice(product)}
+            readOnly
+            className="w-full outline-none py-4 border-b-2 border-stone-300 text-black"
+            />
           )}
         </div>
       ))}
-      {products.map((product, index) => (
-        <input
-          type="text"
-          key={index}
-          placeholder="인당 가격"
-          value={calculatePerPersonPrice(product)}
-          readOnly
-          className="w-full outline-none py-4 border-b"
-        />
-      ))}
-      <DaumPost />
-      {products.map((product, index) => (
-        <input
-          type="number"
-          key={index}
-          placeholder="희망 모집 인원"
-          value={product.participants === 0 ? '' : String(product.participants)}
-          onChange={e => handleParticipantsChange(index, e.target.value)}
-          className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
-      ))}
+      <DaumPost onAddressChange={handleAddressChange} />
+      <input
+        type="number"
+        placeholder="희망 모집 인원"
+        value={totalParticipants}
+        onChange={e => handleParticipantsChangeAllProducts(e.target.value)}
+        className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+      />
       <div className="w-full border-b py-4">
-        <DatePicker />
+        <DatePicker onDateChange={handleDateSelect}  />
       </div>
       <textarea
         cols={30}
         rows={10}
         placeholder="상세 정보"
+        name="content"
+        value={content}
+        onChange={handleContentChange}
         className="w-full outline-none py-4 border-b resize-none"
-      ></textarea>
+      />
       <div className="flex w-full py-4 border-b">
         <p className="text-[#C4C4C4] font-semibold mr-4">사진</p>
         {products.map((product, index) => (

@@ -41,8 +41,9 @@ export type Product = {
 
 export type PostNew = {
   title: string;
+  category: Category;
   deadline: string;
-  participants : number;
+  participants: number;
   place: string;
   productName: string;
   price: number;

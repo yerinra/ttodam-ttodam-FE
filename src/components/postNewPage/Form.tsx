@@ -170,10 +170,28 @@ export default function Form() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // 기본 폼 데이터 
     const product = products[0];
+    // const { title, selectedAddress, content, selectedCategory, participants } = products;
     const formattedDeadline = deadline ? format(new Date(deadline), 'yyyy-MM-dd') : '';
-    const { productName, purchaseLink, count, price, participants } = product;
-    alert(`title: ${title}, name: ${productName}, link: ${purchaseLink}, count: ${count}, price: ${price}, participants: ${participants}, place: ${selectedAddress}, deadline: ${formattedDeadline}, content: ${content}, category: ${selectedCategory}`);
+
+    // 추가된 상품 데이터만 포함하는 배열
+    const addedProductsData = products.map(product => ({
+      productName: product.productName,
+      purchaseLink: product.purchaseLink,
+      count: product.count,
+      price: product.price,
+    }));
+
+    // 추가된 상품이 있는 경우, 해당 데이터를 포함하여 처리
+    if (addedProductsData.length > 0) {
+      // 추가된 상품 데이터와 나머지 폼 데이터를 포함한 얼럿 메세지
+      alert(`title: ${title}, products: ${JSON.stringify(addedProductsData)}, place: ${selectedAddress}, content: ${content}, category: ${selectedCategory}`)
+    } else {
+      // 추가된 상품이 없는 경우, 기존 폼 데이터만 포함한 얼럿 메세지
+      alert(`title: ${title}, name: ${product.productName}, link: ${product.purchaseLink}, count: ${product.count}, price: ${product.price}, participants: ${product.participants}, place: ${selectedAddress}, deadline: ${formattedDeadline}, content: ${content}, category: ${selectedCategory}`);
+    }
   }
 
   return (

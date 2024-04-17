@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Form from '@/components/postNewPage/Form';
 
 export default function PostNewPage() {
-
   return (
     <section className="px-5 w-full">
       <div className="flex items-center justify-between border-b border-black h-[60px]">

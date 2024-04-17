@@ -6,7 +6,7 @@ export default function EditProfile() {
           <img src="" alt="" className="w-[100px] h-[100px] bg-gray-500 rounded-[50%]" />
           <label
             htmlFor={`edit-image`}
-            className="w-[80px] h-8 flex items-center justify-center py-0.5 px-3 bg-primary rounded-md text-white"
+            className="w-[80px] h-8 flex items-center justify-center py-0.5 px-3 bg-primary rounded-md text-white cursor-pointer"
           >
             사진변경
           </label>

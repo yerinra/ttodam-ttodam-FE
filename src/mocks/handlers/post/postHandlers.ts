@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type { Post } from '@/lib/types';
-import { allPosts } from '@/mocks/mockData';
+import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 export const getAllPosts = http.get('/post', () => {
   return HttpResponse.json(allPosts);

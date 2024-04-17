@@ -13,7 +13,6 @@ export default function PostNewPage() {
           </Link>
           <h3 className="font-semibold">모집글 쓰기</h3>
         </div>
-        
       </div>
       <div>
         <Form />

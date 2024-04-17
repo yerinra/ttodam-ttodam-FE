@@ -9,6 +9,7 @@ import PostDetailPage from './pages/PostDetailPage';
 import MyPage from './pages/MyPage';
 import BookMarkPage from './pages/BookMarkPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ProfilePage from './pages/MyProfilePage';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ export default function App() {
                 <Route path="/post/:postId" element={<PostDetailPage />} />
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
+                <Route path="/my/profile" element={<ProfilePage />} />
               </Route>
             </Routes>
           </Router>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { DatePicker } from "../atoms/DatePicker";
 import { format } from 'date-fns';
@@ -168,13 +168,13 @@ export default function Form() {
     setContent(e.target.value)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // 기본 폼 데이터 
     const product = products[0];
     // const { title, selectedAddress, content, selectedCategory, participants } = products;
-    const formattedDeadline = deadline ? format(new Date(deadline), 'yyyy-MM-dd') : '';
+    const formattedDeadline = deadline ? format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss') : '';
 
     // 추가된 상품 데이터만 포함하는 배열
     const addedProductsData = products.map(product => ({
@@ -182,6 +182,7 @@ export default function Form() {
       purchaseLink: product.purchaseLink,
       count: product.count,
       price: product.price,
+      productImgUrl: product.productImgUrl
     }));
 
     // 추가된 상품이 있는 경우, 해당 데이터를 포함하여 처리
@@ -190,12 +191,41 @@ export default function Form() {
       alert(`title: ${title}, products: ${JSON.stringify(addedProductsData)}, place: ${selectedAddress}, content: ${content}, category: ${selectedCategory}`)
     } else {
       // 추가된 상품이 없는 경우, 기존 폼 데이터만 포함한 얼럿 메세지
-      alert(`title: ${title}, name: ${product.productName}, link: ${product.purchaseLink}, count: ${product.count}, price: ${product.price}, participants: ${product.participants}, place: ${selectedAddress}, deadline: ${formattedDeadline}, content: ${content}, category: ${selectedCategory}`);
+      alert(`title: ${title}, name: ${product.productName}, link: ${product.purchaseLink}, count: ${product.count}, price: ${product.price}, participants: ${product.participants}, place: ${selectedAddress}, deadline: ${formattedDeadline}, content: ${content}, category: ${selectedCategory} productImgUrl: ${product.productImgUrl}`);
     }
   }
+  
+  // TODO: 'multipart/form-data' 사용해서 이미지 업로드하기
+  const [imageFile, setImageFiles] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState('');
+
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log('file', file);
+
+    const formData = new FormData();
+    imageFile && formData.append('image', imageFile);
+    console.log('formData', ...formData);
+
+    if (file) {
+      setImageFiles(file);
+      
+      const productImgUrl = URL.createObjectURL(file);
+      setImagePreview(productImgUrl);
+      console.log('productImgUrl', productImgUrl);
+    };
+    
+  };
+
+  // 메모리 누수 방지 - 이미지 업로드 후 Blob URL 해제
+  useEffect(() => {
+    if (imagePreview) {
+      return () => URL.revokeObjectURL(imagePreview);
+    }
+  }, [imagePreview]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
       <input type="submit" value={'등록'} className="absolute right-0 top-0 py-0.5 px-3 bg-primary rounded-md text-white my-[15px] mr-5" />
       <Category onSelectCategory={handleCategorySelect} />
       <input type="text" placeholder="게시글 제목" value={title} onChange={handleTitleChange} className="w-full outline-none py-4 border-b" />
@@ -289,15 +319,17 @@ export default function Form() {
       />
       <div className="flex w-full py-4 border-b">
         <p className="text-[#C4C4C4] font-semibold mr-4">사진</p>
-        {products.map((product, index) => (
-          <div key={index} className="flex justify-center mr-3">
-            {product.productImgUrl ? (
+        {/* {products.map((product, index) => ( */}
+          <div className="flex justify-center mr-3">
+            {/* {product.productImgUrl ? (
               <img src={product.productImgUrl} alt={product.productName} className="w-[53px] h-[53px] border" />
               ) : (
               <div className="flex items-center justify-center w-[53px] h-[53px] border bg-gray-300">+</div>
-              )}
+            )} */}
+            <img src={imagePreview} alt='상품이미지' />
+            <input type="file" accept="'image/*" onChange={uploadImage} />
           </div>
-        ))}
+        {/* ))} */}
       </div>
     </form>
   )

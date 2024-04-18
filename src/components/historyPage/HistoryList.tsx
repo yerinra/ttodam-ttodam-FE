@@ -8,7 +8,7 @@ export default function HistoryList() {
         className="w-full flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] hover:bg-secondary gap-y-2 transition-all p-4"
       >
         <div className="flex items-center gap-x-2">
-          <h2 className="font-bold text-xl">칫솔과 휴지를 함께 사실 분을 모집합니다!</h2>
+          <h2 className="font-bold text-lg">칫솔과 휴지를 함께 사실 분을 모집합니다!</h2>
         </div>
         <div className="flex">
           <ul className="flex flex-col gap-2 text-sm opacity-50">
@@ -35,7 +35,7 @@ export default function HistoryList() {
         className="w-full flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] hover:bg-secondary gap-y-2 transition-all p-4"
       >
         <div className="flex items-center gap-x-2">
-          <h2 className="font-bold text-xl">칫솔과 휴지를 함께 사실 분을 모집합니다!</h2>
+          <h2 className="font-bold text-lg">칫솔과 휴지를 함께 사실 분을 모집합니다!</h2>
         </div>
         <div className="flex">
           <ul className="flex flex-col gap-2 text-sm opacity-50">

@@ -14,12 +14,18 @@ export type BookMark = {
   title: string;
 };
 
-export const postBookmark = http.post('/post/:postId', async ({ request }) => {
+export const postBookmarkHandler = http.post('/post/:postId/bookmark', async ({ request }) => {
   // const data = await request.json();
   // bookmarks.list = [...bookmarks.list, data]
   return new HttpResponse(null, { status: 201 });
 });
 
-export const getBookmarks = http.get('/users/bookmarks', () => {
+export const getBookmarksHandler = http.get('/post/bookmark', () => {
   return HttpResponse.json(bookmarks);
+});
+
+export const deleteBookmarkHandler = http.delete(`/post/bookmark/:bookmarkId`, () => {
+  return HttpResponse.json({
+    message: '북마크가 취소되었습니다.',
+  });
 });

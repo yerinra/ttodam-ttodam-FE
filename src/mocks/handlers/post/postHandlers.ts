@@ -2,11 +2,11 @@ import { http, HttpResponse } from 'msw';
 import type { Post } from '@/lib/types';
 import { allPosts } from '@/mocks/mockData/post/allPosts';
 
-export const getAllPosts = http.get('/post', () => {
+export const getAllPostsHandler = http.get('/post', () => {
   return HttpResponse.json(allPosts);
 });
 
-export const getPostByParam = http.get('/post/:param', ({ params, request }) => {
+export const getPostByParamHandler = http.get('/post/:param', ({ params, request }) => {
   const { param } = params;
 
   // `param`이 숫자인지 확인하여 `postId`와 `categoryName` 구분.

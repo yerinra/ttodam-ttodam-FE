@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import type { Post } from '@/lib/types';
 import { allPosts } from '@/mocks/mockData/post/allPosts';
+import { bookmarks } from '@/mocks/mockData/mypage/bookmarks';
 
 export const getAllPostsHandler = http.get('/post', () => {
   return HttpResponse.json(allPosts);
@@ -28,6 +29,8 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
       );
     });
     return HttpResponse.json(searchResults);
+  } else if (param === 'bookmark') {
+    return HttpResponse.json(bookmarks);
   } else {
     // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
     const filteredPosts = allPosts.filter(

@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '../ui/button';
 import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
 import { ClockIcon } from '@radix-ui/react-icons';
+import { Link } from 'react-router-dom';
 
 export default function HistoryDetailPage() {
   return (
@@ -30,12 +31,12 @@ export default function HistoryDetailPage() {
           <div className="ml-6 my-6">
             <section className="grid grid-cols-1 gap-5 ">
               <li className="flex gap-5">
-                <div className="text-dark-gray font-bold w-24 flex-shrink-0">제품명</div>
-                <div className="h-fit">휴지</div>
+                <div className="text-dark-gray font-bold w-24 flex-shrink-0">함께 산 상품</div>
+                <div className="h-fit">크리오덴티메이트 칫솔</div>
               </li>
               <li className="flex gap-5">
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">제품링크</div>
-                <div className="h-fit">http</div>
+                <div className="h-fit">https://zero-base.co.kr/</div>
               </li>
               <li className="flex items-center gap-5">
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">함께한 참여자</div>
@@ -64,9 +65,14 @@ export default function HistoryDetailPage() {
           </div>
         </ul>
       </div>
-      <Button className="w-[150px] mt-4 mb-20" variant={'outline'}>
-        매너점수 평가하기
-      </Button>
+      <div className="flex gap-2">
+        <Button className="w-[150px] mt-4 mb-20" variant={'outline'}>
+          매너점수 평가하기
+        </Button>
+        <Button className="ml-auto mt-4 mb-20" variant={'outline'}>
+          <Link to="/my/history">목록으로</Link>
+        </Button>
+      </div>
     </section>
   );
 }

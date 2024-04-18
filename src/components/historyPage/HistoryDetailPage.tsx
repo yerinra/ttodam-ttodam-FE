@@ -2,7 +2,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '../ui/button';
 import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
-import { ClockIcon } from '@radix-ui/react-icons';
 import { Link } from 'react-router-dom';
 
 export default function HistoryDetailPage() {
@@ -34,10 +33,6 @@ export default function HistoryDetailPage() {
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">함께 산 상품</div>
                 <div className="h-fit">크리오덴티메이트 칫솔</div>
               </li>
-              <li className="flex gap-5">
-                <div className="text-dark-gray font-bold w-24 flex-shrink-0">제품링크</div>
-                <div className="h-fit">https://zero-base.co.kr/</div>
-              </li>
               <li className="flex items-center gap-5">
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">함께한 참여자</div>
                 <div className="h-fit">유저 1</div>
@@ -46,13 +41,6 @@ export default function HistoryDetailPage() {
                 <Button variant={'outline'} size={'lg'}>
                   채팅
                 </Button>
-              </li>
-              <li className="flex gap-5">
-                <div className="text-dark-gray font-bold w-24 flex-shrink-0">마감일</div>
-                <div className="flex justify-center items-center gap-1 h-fit">
-                  <ClockIcon />
-                  2024-04-18
-                </div>
               </li>
               <li className="flex gap-5">
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">만남장소</div>

@@ -8,7 +8,7 @@ export const NAVIGATION = [
   { path: '/posts/all', label: '또담공구', icon: React.createElement(CiShoppingBasket) },
   { path: '/chat', label: '채팅', icon: React.createElement(CiChat1) },
   { path: '/notification', label: '알림', icon: React.createElement(CiBullhorn) },
-  { path: '/my', label: '대시보드', icon: React.createElement(CiUser) },
+  { path: '/my/profile', label: '대시보드', icon: React.createElement(CiUser) },
 ] as const;
 
 export const CATEGORIES = [

@@ -7,6 +7,7 @@ import PaginationSection from '@/components/postListPage/PaginationSection';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { AxiosResponse } from 'axios';
 import { Bookmark, BookmarkResponse } from '@/mocks/mockData/mypage/bookmarks';
+import StatusBadge from '@/components/postListPage/StatusBadge';
 
 export default function BookMarkPage() {
   const { data, error, isLoading } = useQuery<AxiosResponse<BookmarkResponse>>({
@@ -47,8 +48,8 @@ export default function BookMarkPage() {
           >
             <Link to={`/post/${bm.postInfo.Id}`} className="flex ">
               <div className="flex flex-col justify-center gap-2">
-                <div className="">
-                  {/* <StatusBadge status={post.status} /> */}
+                <div className="flex gap-2">
+                  <StatusBadge status={bm.postInfo.status} />
                   <h2 className="font-bold">{bm.postInfo.title}</h2>
                 </div>
                 <p className="text-sm">{bm.postInfo.content}</p>

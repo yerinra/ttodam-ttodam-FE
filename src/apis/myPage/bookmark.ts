@@ -20,6 +20,7 @@ export const deleteBookmark = async (postId: number) => {
       method: 'delete',
       url: `post/bookmark/${postId}`,
     });
+
     return res;
   } catch (error) {
     throw error;

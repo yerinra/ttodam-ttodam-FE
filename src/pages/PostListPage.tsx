@@ -13,7 +13,9 @@ import PostList from '@/components/postListPage/PostList';
 import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
 import SortOptions from '@/components/postListPage/SortOptions';
 import SearchForm from '@/components/atoms/SearchForm';
+
 import usePagination from '@/hooks/usePagination';
+
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
@@ -23,6 +25,7 @@ export default function PostListPage() {
   const [selectedSort, setSelectedSort] = useState<'createAt' | 'title'>('createAt');
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
   const [searchKeyword, setSearchKeyword] = useState('');
+
   const {
     startPage,
     setStartPage,

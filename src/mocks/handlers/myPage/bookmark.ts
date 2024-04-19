@@ -1,5 +1,7 @@
+
 import { bookmarks } from '@/mocks/mockData/mypage/bookmarks';
 import { http, HttpResponse } from 'msw';
+
 
 export type BookMark = {
   id: number;

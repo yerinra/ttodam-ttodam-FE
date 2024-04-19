@@ -1,3 +1,4 @@
+
 import { deleteBookmark, getBookmarks } from '@/apis/myPage/bookmark';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -10,6 +11,7 @@ import H1 from '@/components/atoms/H1';
 
 export default function BookMarkPage() {
   const { data, error, isLoading } = useQuery<Bookmark[]>({
+
     queryKey: ['bookmarks'],
     queryFn: () => {
       return getBookmarks();
@@ -91,5 +93,6 @@ export default function BookMarkPage() {
         handleNextPageGroup={handleNextPageGroup}
       />
     </>
+
   );
 }

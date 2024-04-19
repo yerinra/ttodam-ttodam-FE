@@ -1,4 +1,5 @@
 import { Post } from '@/lib/types';
+
 import { Link } from 'react-router-dom';
 import StatusBadge from './StatusBadge';
 import { Cross1Icon } from '@radix-ui/react-icons';
@@ -21,6 +22,7 @@ export default function PostPreview({ post, removeBtn, onDelete, bookmarkId }: P
     >
       <div className="flex items-center gap-x-2">
         <StatusBadge status={post.status} />
+
         <Link to={`/post/${post.Id}`} className="font-bold">
           {post.title}
         </Link>
@@ -40,6 +42,8 @@ export default function PostPreview({ post, removeBtn, onDelete, bookmarkId }: P
           ))}
         </ul>
       </div>
+
     </li>
+
   );
 }

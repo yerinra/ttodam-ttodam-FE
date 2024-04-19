@@ -39,7 +39,9 @@ export const axiosAccessFn = () => {
 
   axiosAccess.interceptors.response.use(
     response => {
+
       return response;
+
     },
     error => {
       const axiosError = error as AxiosError;

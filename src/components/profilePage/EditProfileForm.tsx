@@ -1,11 +1,28 @@
 import { getEditProfiles } from '@/apis/myPage/profiles';
 import { EditProfile } from '@/mocks/handlers/myPage/profile';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 
 export default function EditProfileForm() {
   const [profiles, setProfiles] = useState<EditProfile[]>([]);
+  const profileImgFileInput = useRef(null);
+  const [imageFile, setImageFiles] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [location, setLocation] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  console.log(
+    '이미지 파일 정보 확인',
+    imageFile,
+    'nickname: ',
+    nickname,
+    'location: ',
+    location,
+    'phoneNumber: ',
+    phoneNumber,
+  );
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles/update'],
@@ -14,21 +31,55 @@ export default function EditProfileForm() {
     },
   });
 
-  const profileImgFileInput = useRef(null);
-  const [imageFile, setImageFiles] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState('');
-  console.log('이미지 파일 정보 확인', imageFile);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     console.log('file', file);
 
     if (file) {
-      const productImgUrl = URL.createObjectURL(file);
+      const profileImgUrl = URL.createObjectURL(file);
       setImageFiles(file);
-      setImagePreview(productImgUrl);
-      console.log('productImgUrl', productImgUrl);
+      setImagePreview(profileImgUrl);
+      console.log('productImgUrl', profileImgUrl);
     }
+  };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('nickname', nickname);
+    formData.append('location', location);
+    formData.append('phoneNumber', phoneNumber);
+    if (imageFile) {
+      const profileImgUrl = URL.createObjectURL(imageFile);
+      formData.append('profileImg', profileImgUrl);
+    }
+
+    try {
+      const response = await axios.post('/users/:userId/profiles/update', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('응답: ', response.data);
+    } catch (error) {
+      console.error('에러 발생: ', error);
+    }
+
+    alert(`nickname: ${nickname}, location: ${location}, phoneNumber: ${phoneNumber}`);
   };
 
   useEffect(() => {
@@ -47,7 +98,12 @@ export default function EditProfileForm() {
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;
 
   return (
-    <form className="flex items-center justify-center flex-col">
+    <form
+      onSubmit={handleSubmit}
+      method="POST"
+      encType="multipart/form-data"
+      className="flex items-center justify-center flex-col"
+    >
       <input
         type="submit"
         value={'완료'}
@@ -72,7 +128,7 @@ export default function EditProfileForm() {
                         alt=""
                         className="flex items-center justify-center w-[100px] h-[100px] bg-slate-400 rounded-[50%]"
                       />
-                      <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />
+                      <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white opacity-70" />
                     </>
                   )}
                 </div>
@@ -95,23 +151,57 @@ export default function EditProfileForm() {
             </div>
             <div className="w-full flex items-center justify-center gap-5 border-b">
               <p className="w-[100px] font-bold">닉네임</p>
-              <input type="text" placeholder="닉네임" value={pf.nickname} className="outline-none py-4 " />
+              <input
+                type="text"
+                placeholder="닉네임"
+                defaultValue={pf.nickname}
+                name={nickname}
+                onChange={handleNicknameChange}
+                className="outline-none py-4 "
+              />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호</p>
-              <input type="password" placeholder="비밀번호 입력" className="outline-none" />
+              <input
+                type="password"
+                placeholder="비밀번호 입력"
+                minLength={8}
+                maxLength={16}
+                className="outline-none"
+              />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호 확인</p>
-              <input type="password" placeholder="비밀번호 확인" className="outline-none" />
+              <input
+                type="password"
+                placeholder="비밀번호 확인"
+                minLength={8}
+                maxLength={16}
+                className="outline-none"
+              />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">주소</p>
-              <input type="text" placeholder="주소" value={pf.location} className="outline-none" />
+              <input
+                type="text"
+                placeholder="주소"
+                defaultValue={pf.location}
+                name={location}
+                onChange={handleLocationChange}
+                className="outline-none"
+              />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">전화번호</p>
-              <input type="text" placeholder="전화번호 입력" value={pf.phoneNumber} className="outline-none" />
+              <input
+                type="text"
+                placeholder="전화번호 입력"
+                defaultValue={pf.phoneNumber}
+                name={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                maxLength={11}
+                className="outline-none"
+              />
             </div>
           </div>
         ))}

@@ -4,7 +4,13 @@ export const allPosts: Post[] = [
   // DAILY
   {
     Id: 33,
-    userId: 34,
+    user: {
+      id: 1,
+      nickname: '홍길동',
+      profileImgUrl: '',
+      manners: 5,
+    },
+    productImgUrl: [],
     title: '모닝 커피 재료 구매 요청',
     participants: 2,
     deadline: '2024-06-20 08:00:00',
@@ -21,7 +27,6 @@ export const allPosts: Post[] = [
         price: 20000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/coffeeshop/products/181818181',
-        productImgUrl: 'https://example.com/images/product899091.jpg',
       },
       {
         productId: 32,
@@ -29,15 +34,21 @@ export const allPosts: Post[] = [
         price: 3000,
         count: 1,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product929394.jpg',
       },
     ],
+
     createAt: '2024-04-19 07:15:00',
     updateAt: '2024-04-19 07:15:00',
   },
   {
     Id: 35,
-    userId: 36,
+    user: {
+      id: 2,
+      nickname: '홍길동2',
+      profileImgUrl: '',
+      manners: 4,
+    },
+    productImgUrl: [],
     title: '운동화 구매 부탁드립니다',
     deadline: '2024-06-25 16:30:00',
     status: 'in_progress',
@@ -54,7 +65,6 @@ export const allPosts: Post[] = [
         price: 70000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/sportsshop/products/191919191',
-        productImgUrl: 'https://example.com/images/product959697.jpg',
       },
       {
         productId: 34,
@@ -62,7 +72,6 @@ export const allPosts: Post[] = [
         price: 5000,
         count: 3,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product9899100.jpg',
       },
     ],
     createAt: '2024-04-20 14:00:00',
@@ -70,7 +79,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 37,
-    userId: 38,
+    user: {
+      id: 3,
+      nickname: '홍길동3',
+      profileImgUrl: '',
+      manners: 1,
+    },
+    productImgUrl: [],
     title: '물티슈 구매 인원 구해요',
     deadline: '2024-06-30 15:30:00',
     status: 'completed',
@@ -87,7 +102,6 @@ export const allPosts: Post[] = [
         price: 10000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/wetwipes/products/202020202',
-        productImgUrl: 'https://example.com/images/product101103.jpg',
       },
       {
         productId: 36,
@@ -95,7 +109,6 @@ export const allPosts: Post[] = [
         price: 5000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product104105.jpg',
       },
     ],
     createAt: '2024-04-21 09:45:00',
@@ -103,7 +116,17 @@ export const allPosts: Post[] = [
   },
   {
     Id: 2,
-    userId: 3,
+    user: {
+      id: 1,
+      nickname: '익명의유저2',
+      profileImgUrl:
+        'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D',
+      manners: 5,
+    },
+    productImgUrl: [
+      'https://photo3.enuri.info/data/images/service/dnw/master/110388000/110388713.jpg',
+      'https://photo3.enuri.info/data/images/service/dnw/master/14984000/14984034.jpg',
+    ],
     title: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
     deadline: '2024-04-11 12:00:00',
     status: 'in_progress',
@@ -120,7 +143,6 @@ export const allPosts: Post[] = [
         price: 10830,
         count: 30,
         purchaseLink: 'https://smartstore.naver.com/groceryshop/products/123456789',
-        productImgUrl: 'https://example.com/images/product789.jpg',
       },
       {
         productId: 4,
@@ -128,7 +150,6 @@ export const allPosts: Post[] = [
         price: 30930,
         count: 3,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product101112.jpg',
       },
     ],
     createAt: '2024-04-06 10:30:00',
@@ -137,7 +158,13 @@ export const allPosts: Post[] = [
   // KITCHEN
   {
     Id: 3,
-    userId: 4,
+    user: {
+      id: 2,
+      nickname: '홍길동2',
+      profileImgUrl: '',
+      manners: 4,
+    },
+    productImgUrl: [],
     title: '주방용품 구매 도와주세요',
     deadline: '2024-04-12 18:00:00',
     status: 'in_progress',
@@ -154,7 +181,6 @@ export const allPosts: Post[] = [
         price: 45000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/kitchenmart/products/987654321',
-        productImgUrl: 'https://example.com/images/product131415.jpg',
       },
       {
         productId: 6,
@@ -162,7 +188,6 @@ export const allPosts: Post[] = [
         price: 8000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product161718.jpg',
       },
     ],
     createAt: '2024-04-07 14:20:00',
@@ -171,7 +196,13 @@ export const allPosts: Post[] = [
   // FOOD
   {
     Id: 7,
-    userId: 8,
+    user: {
+      id: 10,
+      nickname: '김철수',
+      profileImgUrl: '',
+      manners: 2,
+    },
+    productImgUrl: [],
     title: '식사 대신할 다이어트 식품 구매 요청',
     deadline: '2024-04-15 10:00:00',
     status: 'in_progress',
@@ -188,7 +219,6 @@ export const allPosts: Post[] = [
         price: 25000,
         count: 5,
         purchaseLink: 'https://smartstore.naver.com/dietshop/products/123123123',
-        productImgUrl: 'https://example.com/images/product192021.jpg',
       },
       {
         productId: 8,
@@ -196,7 +226,6 @@ export const allPosts: Post[] = [
         price: 15000,
         count: 3,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product222324.jpg',
       },
     ],
     createAt: '2024-04-08 11:45:00',
@@ -205,7 +234,13 @@ export const allPosts: Post[] = [
   // PET
   {
     Id: 9,
-    userId: 10,
+    user: {
+      id: 11,
+      nickname: '익명의유저1',
+      profileImgUrl: '',
+      manners: 3,
+    },
+    productImgUrl: [],
     title: '애완동물 간식 구매 부탁드립니다',
     deadline: '2024-04-20 14:00:00',
     status: 'in_progress',
@@ -222,7 +257,6 @@ export const allPosts: Post[] = [
         price: 20000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/petshop/products/987987987',
-        productImgUrl: 'https://example.com/images/product252627.jpg',
       },
       {
         productId: 10,
@@ -230,7 +264,6 @@ export const allPosts: Post[] = [
         price: 5000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product282930.jpg',
       },
     ],
     createAt: '2024-04-09 09:30:00',
@@ -239,7 +272,13 @@ export const allPosts: Post[] = [
   // CLOTHING
   {
     Id: 11,
-    userId: 12,
+    user: {
+      id: 11,
+      nickname: '익명의유저1',
+      profileImgUrl: '',
+      manners: 3,
+    },
+    productImgUrl: [],
     title: '신상 의류 구매 도와주세요',
     deadline: '2024-04-25 17:00:00',
     status: 'in_progress',
@@ -256,7 +295,6 @@ export const allPosts: Post[] = [
         price: 50000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/111222333',
-        productImgUrl: 'https://example.com/images/product313233.jpg',
       },
     ],
     createAt: '2024-04-10 13:20:00',
@@ -264,7 +302,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 13,
-    userId: 14,
+    user: {
+      id: 123,
+      nickname: '유저123',
+      profileImgUrl: '',
+      manners: 4,
+    },
+    productImgUrl: [],
     title: '비오는 날을 위한 우비 구매 요청',
     deadline: '2024-04-30 10:00:00',
     status: 'in_progress',
@@ -281,7 +325,6 @@ export const allPosts: Post[] = [
         price: 20000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/444555666',
-        productImgUrl: 'https://example.com/images/product373839.jpg',
       },
       {
         productId: 12,
@@ -289,7 +332,6 @@ export const allPosts: Post[] = [
         price: 35000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product343536.jpg',
       },
       {
         productId: 14,
@@ -297,7 +339,6 @@ export const allPosts: Post[] = [
         price: 30000,
         count: 1,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product404142.jpg',
       },
     ],
     createAt: '2024-04-11 09:45:00',
@@ -305,7 +346,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 15,
-    userId: 16,
+    user: {
+      id: 11,
+      nickname: '익명의유저1',
+      profileImgUrl: '',
+      manners: 3,
+    },
+    productImgUrl: [],
     title: '트레이닝복 구매 도와주세요',
     deadline: '2024-05-05 15:00:00',
     status: 'in_progress',
@@ -322,7 +369,6 @@ export const allPosts: Post[] = [
         price: 25000,
         count: 10,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/777888999',
-        productImgUrl: 'https://example.com/images/product434445.jpg',
       },
       {
         productId: 16,
@@ -330,7 +376,6 @@ export const allPosts: Post[] = [
         price: 20000,
         count: 10,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product464748.jpg',
       },
     ],
     createAt: '2024-04-12 11:00:00',
@@ -338,7 +383,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 17,
-    userId: 18,
+    user: {
+      id: 11,
+      nickname: '익명의유저1',
+      profileImgUrl: '',
+      manners: 3,
+    },
+    productImgUrl: [],
     title: '여름을 위한 시원한 원피스 구매 요청',
     deadline: '2024-05-10 14:30:00',
     status: 'in_progress',
@@ -355,7 +406,6 @@ export const allPosts: Post[] = [
         price: 35000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/clothingshop/products/101010101',
-        productImgUrl: 'https://example.com/images/product495051.jpg',
       },
       {
         productId: 18,
@@ -363,7 +413,6 @@ export const allPosts: Post[] = [
         price: 15000,
         count: 1,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product525354.jpg',
       },
     ],
     createAt: '2024-04-13 09:00:00',
@@ -371,7 +420,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 21,
-    userId: 22,
+    user: {
+      id: 13,
+      nickname: '운동하는사람',
+      profileImgUrl: '',
+      manners: 3,
+    },
+    productImgUrl: [],
     title: '운동용품 구매 도와주세요',
     deadline: '2024-05-20 09:00:00',
     status: 'in_progress',
@@ -388,7 +443,6 @@ export const allPosts: Post[] = [
         price: 30000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/healthshop/products/131313131',
-        productImgUrl: 'https://example.com/images/product585960.jpg',
       },
       {
         productId: 22,
@@ -396,7 +450,6 @@ export const allPosts: Post[] = [
         price: 25000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product616263.jpg',
       },
     ],
     createAt: '2024-04-14 13:45:00',
@@ -404,7 +457,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 23,
-    userId: 24,
+    user: {
+      id: 123,
+      nickname: '유저123',
+      profileImgUrl: '',
+      manners: 4,
+    },
+    productImgUrl: [],
     title: '사무용품 구매 부탁드립니다',
     deadline: '2024-05-25 15:30:00',
     status: 'completed',
@@ -421,7 +480,6 @@ export const allPosts: Post[] = [
         price: 20000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/officeshop/products/141414141',
-        productImgUrl: 'https://example.com/images/product646566.jpg',
       },
       {
         productId: 24,
@@ -429,7 +487,6 @@ export const allPosts: Post[] = [
         price: 15000,
         count: 2,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product676869.jpg',
       },
     ],
     createAt: '2024-04-15 10:00:00',
@@ -437,7 +494,13 @@ export const allPosts: Post[] = [
   },
   {
     Id: 25,
-    userId: 26,
+    user: {
+      id: 123,
+      nickname: '유저123',
+      profileImgUrl: '',
+      manners: 4,
+    },
+    productImgUrl: [],
     title: '기타 생활 용품 구매 요청',
     deadline: '2024-05-30 12:00:00',
     status: 'failed',
@@ -454,7 +517,6 @@ export const allPosts: Post[] = [
         price: 10000,
         count: 1,
         purchaseLink: 'https://smartstore.naver.com/othershop/products/151515151',
-        productImgUrl: 'https://example.com/images/product707172.jpg',
       },
       {
         productId: 26,
@@ -462,7 +524,6 @@ export const allPosts: Post[] = [
         price: 25000,
         count: 1,
         purchaseLink: 'https://www.naver.com',
-        productImgUrl: 'https://example.com/images/product737475.jpg',
       },
     ],
     createAt: '2024-04-16 09:30:00',

@@ -1,28 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Button } from '@/components/ui/button';
 import { Pencil2Icon } from '@radix-ui/react-icons';
 
-import type { OptionType, Post, StatusFilter } from '../lib/types';
+import { type Category, type OptionType, type Post, type StatusFilter } from '../lib/types';
 
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
 import PostList from '@/components/postListPage/PostList';
 import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
 import SortOptions from '@/components/postListPage/SortOptions';
-import { Input } from '@/components/ui/input';
+import SearchForm from '@/components/atoms/SearchForm';
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();
-  const navigate = useNavigate();
 
   const [data, setData] = useState<Post[] | []>([]);
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('all');
   const [selectedSort, setSelectedSort] = useState<'createAt' | 'title'>('createAt');
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,6 +69,8 @@ export default function PostListPage() {
       });
     }
     setFilteredAndSortedPosts(sorted);
+    setCurrentPage(1);
+    setStartPage(1);
   }, [data, selectedSort, selectedFilter]);
 
   // sort
@@ -95,32 +96,41 @@ export default function PostListPage() {
   };
 
   // search
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const trimmedKeyword = searchKeyword.trim();
-
+    if (!trimmedKeyword) return;
     // 입력 값이 공백 또는 비어 있는 경우 경고 메시지 표시
     if (trimmedKeyword === '' || trimmedKeyword.length < 2) {
       alert('최소 두 글자 이상 입력해주세요.');
       setSearchKeyword('');
     } else {
-      navigate(`/search/${trimmedKeyword}`);
-      setSearchKeyword('');
+      try {
+        // 검색어를 포함한 URL로 요청을 보냅니다.
+        const response = await axios.get(`/post/search?keyword=${trimmedKeyword}`);
+
+        // 요청 결과로 받은 데이터를 setData로 업데이트합니다.
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching search data: ', error);
+      } finally {
+        setSearchKeyword('');
+      }
     }
   };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchKeyword(e.target.value);
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <Input
-          value={searchKeyword}
-          onChange={e => setSearchKeyword(e.target.value)}
-          className="mt-4 mb-6 placeholder:text-dark-gray"
-          placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
-        />
-      </form>
-      <CategorySelector selectedCategory={selectedCategory} />
+      <SearchForm
+        onFormSubmit={handleSearch}
+        value={searchKeyword}
+        onValueChange={handleChange}
+        placeholder="상품의 이름이나 게시글 제목을 검색해보세요."
+        className="mt-4 mb-6 placeholder:text-dark-gray"
+      />
+      <CategorySelector selectedCategory={selectedCategory as Category} />
 
       <section className="flex items-center justify-center mt-2 pt-2">
         <div className="flex flex-col gap-y-1">

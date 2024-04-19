@@ -6,23 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 
 export default function EditProfileForm() {
-  const [profiles, setProfiles] = useState<EditProfile[]>([]);
   const profileImgFileInput = useRef(null);
+  const [profiles, setProfiles] = useState<EditProfile[]>([]);
   const [imageFile, setImageFiles] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState('');
   const [nickname, setNickname] = useState('');
   const [location, setLocation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  console.log(
-    '이미지 파일 정보 확인',
-    imageFile,
-    'nickname: ',
-    nickname,
-    'location: ',
-    location,
-    'phoneNumber: ',
-    phoneNumber,
-  );
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles/update'],
@@ -75,11 +65,10 @@ export default function EditProfileForm() {
       });
 
       console.log('응답: ', response.data);
+      alert('프로필 수정이 완료되었습니다.');
     } catch (error) {
       console.error('에러 발생: ', error);
     }
-
-    alert(`nickname: ${nickname}, location: ${location}, phoneNumber: ${phoneNumber}`);
   };
 
   useEffect(() => {

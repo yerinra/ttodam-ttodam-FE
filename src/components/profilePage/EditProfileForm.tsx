@@ -146,7 +146,7 @@ export default function EditProfileForm() {
                 defaultValue={pf.nickname}
                 name={nickname}
                 onChange={handleNicknameChange}
-                className="outline-none py-4 "
+                className="w-[250px] outline-none py-4 "
               />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
@@ -156,7 +156,7 @@ export default function EditProfileForm() {
                 placeholder="비밀번호 입력"
                 minLength={8}
                 maxLength={16}
-                className="outline-none"
+                className="w-[250px] outline-none"
               />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
@@ -166,7 +166,7 @@ export default function EditProfileForm() {
                 placeholder="비밀번호 확인"
                 minLength={8}
                 maxLength={16}
-                className="outline-none"
+                className="w-[250px] outline-none"
               />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
@@ -177,7 +177,7 @@ export default function EditProfileForm() {
                 defaultValue={pf.location}
                 name={location}
                 onChange={handleLocationChange}
-                className="outline-none"
+                className="w-[250px] outline-none"
               />
             </div>
             <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
@@ -189,7 +189,7 @@ export default function EditProfileForm() {
                 name={phoneNumber}
                 onChange={handlePhoneNumberChange}
                 maxLength={11}
-                className="outline-none"
+                className="w-[250px] outline-none"
               />
             </div>
           </div>

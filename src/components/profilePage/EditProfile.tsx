@@ -4,7 +4,7 @@ import EditProfileForm from './EditProfileForm';
 
 export default function EditProfile() {
   return (
-    <section className="px-5 w-full">
+    <section className="px-5 w-full h-screen">
       <div className="flex items-center justify-between border-b border-black h-[60px]">
         <div className="flex items-center gap-2.5">
           <Link to="/my/profile">

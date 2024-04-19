@@ -26,7 +26,7 @@ export default function ProfilePage() {
       }
     };
     fetchProfiles();
-  }, [profiles]);
+  }, []);
 
   if (isLoading) return <div>프로필 정보를 가져오는 중입니다.</div>;
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;
@@ -47,12 +47,14 @@ export default function ProfilePage() {
                   />
                 ) : (
                   <div className="relative w-[170px] h-[150px] flex items-center justify-center">
-                    <img
-                      src={pf.profileImgUrl}
-                      alt=""
-                      className="flex items-center justify-center w-36 h-36 bg-slate-400 rounded-[50%]"
-                    />
-                    <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />
+                    <Link to="/my/edit/Profile">
+                      <img
+                        src={pf.profileImgUrl}
+                        alt=""
+                        className="flex items-center justify-center w-36 h-36 bg-slate-400 rounded-[50%]"
+                      />
+                      <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />
+                    </Link>
                   </div>
                 )}
               </div>

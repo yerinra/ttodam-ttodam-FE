@@ -13,6 +13,7 @@ import ProfilePage from './pages/MyProfilePage';
 import EditProfile from './components/profilePage/EditProfile';
 import HistoryPage from './pages/HistoryPage';
 import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
+import RequestPage from './pages/RequestPage';
 
 const queryClient = new QueryClient();
 
@@ -32,14 +33,11 @@ export default function App() {
                 <Route path="/posts/:selectedCategory" element={<PostListPage />} />
                 <Route path="/post/:postId" element={<PostDetailPage />} />
 
-                <Route path="/my" element={<MyPage />} />
-
-
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
                 <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
-
+                <Route path="/my/request" element={<RequestPage />} />
               </Route>
             </Routes>
           </Router>

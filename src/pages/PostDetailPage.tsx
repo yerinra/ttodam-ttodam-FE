@@ -10,11 +10,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
 import Map from '@/components/postDetailPage/Map';
+import useUserInfoStore from '@/store/userInfoStore';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
   const [data, setData] = useState<Post>();
   const [bookmarked, setBookMarked] = useState(false);
+  const userInfo = useUserInfoStore(state => state.userInfo);
+  const isUserPost = userInfo && data && userInfo.id === data.user.id;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,21 +78,32 @@ export default function PostDetailPage() {
                   </div>
                 </div>
               </div>
-              <Button variant={'outline'} size={'lg'}>
-                1:1 채팅
-              </Button>
+              {isUserPost ? (
+                <div className="flex gap-2">
+                  <Button variant={'outline'}>수정</Button>
+                  <Button variant={'destructive'}>삭제</Button>
+                </div>
+              ) : (
+                <Button variant={'outline'} size={'lg'}>
+                  1:1 채팅
+                </Button>
+              )}
             </section>
             <div className="flex gap-2 items-center text-slate-600">
               <ClockIcon />
               {formatDate(data.createAt)}
               <section className="flex justify-center ml-auto">
-                <Button onClick={handleParticipate} size={'lg'} disabled={data.status !== 'in_progress'}>
-                  {data.status == 'in_progress'
-                    ? '참여신청하기'
-                    : data.status == 'completed'
-                      ? '모집이 완료되었습니다.'
-                      : '마감되었습니다.'}
-                </Button>
+                {isUserPost ? (
+                  <Button>요청내역 확인</Button>
+                ) : (
+                  <Button onClick={handleParticipate} size={'lg'} disabled={data.status !== 'in_progress'}>
+                    {data.status == 'in_progress'
+                      ? '참여신청하기'
+                      : data.status == 'completed'
+                        ? '모집이 완료되었습니다.'
+                        : '마감되었습니다.'}
+                  </Button>
+                )}
               </section>
             </div>
           </section>

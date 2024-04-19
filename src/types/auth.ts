@@ -1,7 +1,8 @@
 export type UserInfo = {
-  userId: number;
-  email: string;
+  id: number;
+  email?: string;
   profileImgUrl?: string;
   nickname?: string;
   location?: string;
+  manners?: number;
 };

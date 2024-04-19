@@ -6,14 +6,12 @@ import PostListPage from './pages/PostListPage';
 import PostNewPage from './pages/PostNewPage';
 import PostDetailPage from './pages/PostDetailPage';
 
-import MyPage from './pages/MyPage';
 import BookMarkPage from './pages/BookMarkPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProfilePage from './pages/MyProfilePage';
 import EditProfile from './components/profilePage/EditProfile';
 import HistoryPage from './pages/HistoryPage';
 import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
-import RequestPage from './pages/RequestPage';
 
 const queryClient = new QueryClient();
 
@@ -37,7 +35,6 @@ export default function App() {
                 <Route path="/my/profile" element={<ProfilePage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
                 <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
-                <Route path="/my/request" element={<RequestPage />} />
               </Route>
             </Routes>
           </Router>

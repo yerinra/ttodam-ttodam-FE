@@ -72,7 +72,13 @@ export default function BookMarkPage() {
       <ul>
         {dataToShow &&
           dataToShow.map((bm: Bookmark) => (
-            <PostPreview key={bm.id} post={bm.postInfo} removeBtn onDelete={() => handleDeleteBookmark(bm.id)} />
+            <PostPreview
+              key={bm.id}
+              post={bm.postInfo}
+              removeBtn
+              onDelete={() => handleDeleteBookmark(bm.id)}
+              bookmarkId={bm.id}
+            />
           ))}
       </ul>
       <PaginationSection

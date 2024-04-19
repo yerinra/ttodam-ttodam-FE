@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 
 export default function NavBar() {
   const { pathname } = useLocation();
-  console.log(pathname);
   const isMatchingPath = (path: string) => {
     if (pathname === '/') {
       return pathname === path;

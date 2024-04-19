@@ -6,7 +6,7 @@ export const getPost = async (postId: number) => {
   try {
     const res = await axiosAccess({
       method: 'get',
-      url: `/post/{postId}`,
+      url: `/post/${postId}`,
     });
 
     return res;

@@ -16,7 +16,6 @@ export default function EditProfileForm() {
       setImageFiles(file);
       setImagePreview(productImgUrl);
       console.log('productImgUrl', productImgUrl);
-      console.log(``);
     }
   };
 
@@ -29,10 +28,10 @@ export default function EditProfileForm() {
       />
       <div className="flex w-full items-center justify-center py-6">
         <div className="w-full flex flex-col items-center justify-center gap-6">
-          <div className="relative w-[170px] h-[150px] flex items-center justify-center">
+          <div className="relative w-[100px] h-[100px] flex items-center justify-center">
             <img
               src={imagePreview}
-              alt="프로필 이미지"
+              alt=""
               className="flex items-center justify-center w-[100px] h-[100px] bg-slate-400 rounded-[50%]"
             />
             <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />

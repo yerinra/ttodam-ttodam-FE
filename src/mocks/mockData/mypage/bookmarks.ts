@@ -8,7 +8,7 @@ export type Bookmark = {
   postInfo: Post;
 };
 
-export const bookmarks = {
+export const bookmarksMockData = {
   list: [
     {
       id: 1,

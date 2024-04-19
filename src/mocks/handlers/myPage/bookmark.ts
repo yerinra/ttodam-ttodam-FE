@@ -1,7 +1,5 @@
-
-import { bookmarks } from '@/mocks/mockData/mypage/bookmarks';
+import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 import { http, HttpResponse } from 'msw';
-
 
 export type BookMark = {
   id: number;
@@ -15,7 +13,7 @@ export const postBookmarkHandler = http.post('/post/:postId/bookmark', async () 
 });
 
 export const getBookmarksHandler = http.get('/post/bookmark', () => {
-  return HttpResponse.json(bookmarks);
+  return HttpResponse.json(bookmarksMockData);
 });
 
 export const deleteBookmarkHandler = http.delete(`/post/bookmark/:bookmarkId`, () => {

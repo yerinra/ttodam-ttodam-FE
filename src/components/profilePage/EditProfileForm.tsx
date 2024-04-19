@@ -1,4 +1,25 @@
+import { useRef, useState } from 'react';
+import { MdAddAPhoto } from 'react-icons/md';
+
 export default function EditProfileForm() {
+  const profileImgFileInput = useRef(null);
+  const [imageFile, setImageFiles] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState('');
+  console.log('이미지 파일 정보 확인', imageFile);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log('file', file);
+
+    if (file) {
+      const productImgUrl = URL.createObjectURL(file);
+      setImageFiles(file);
+      setImagePreview(productImgUrl);
+      console.log('productImgUrl', productImgUrl);
+      console.log(``);
+    }
+  };
+
   return (
     <form className="flex items-center justify-center flex-col">
       <input
@@ -8,14 +29,29 @@ export default function EditProfileForm() {
       />
       <div className="flex w-full items-center justify-center py-6">
         <div className="w-full flex flex-col items-center justify-center gap-6">
-          <img src="" alt="" className="w-[100px] h-[100px] bg-gray-500 rounded-[50%]" />
+          <div className="relative w-[170px] h-[150px] flex items-center justify-center">
+            <img
+              src={imagePreview}
+              alt="프로필 이미지"
+              className="flex items-center justify-center w-[100px] h-[100px] bg-slate-400 rounded-[50%]"
+            />
+            <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />
+          </div>
           <label
             htmlFor={`edit-image`}
             className="w-[80px] h-8 flex items-center justify-center py-0.5 px-3 bg-primary rounded-md text-white cursor-pointer"
           >
             사진변경
           </label>
-          <input type="file" id="edit-image" accept="'image/*" className="hidden" />
+          <input
+            type="file"
+            id="edit-image"
+            accept="'image/*"
+            onChange={handleImageChange}
+            ref={profileImgFileInput}
+            name="profileImgUrl"
+            className="hidden"
+          />
         </div>
       </div>
       <div className="w-full flex items-center justify-center gap-5 border-b">

@@ -14,3 +14,16 @@ export const getProfiles = async () => {
     throw error;
   }
 };
+
+export const getEditProfiles = async () => {
+  try {
+    const res = await axiosAccess({
+      method: 'get',
+      url: '/users/profiles/update',
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

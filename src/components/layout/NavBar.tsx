@@ -4,13 +4,16 @@ import { cn } from '@/lib/utils';
 
 export default function NavBar() {
   const { pathname } = useLocation();
-
   const isMatchingPath = (path: string) => {
     if (pathname === '/') {
       return pathname === path;
     } else if (pathname.startsWith('/post')) {
       return path == '/posts/all';
-    } else return pathname.includes(path);
+    } else if (pathname.startsWith('/my')) {
+      return path.startsWith('/my');
+    } else {
+      return pathname.includes(path);
+    }
   };
 
   return (

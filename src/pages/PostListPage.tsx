@@ -14,6 +14,9 @@ import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
 import SortOptions from '@/components/postListPage/SortOptions';
 import SearchForm from '@/components/atoms/SearchForm';
 
+import usePagination from '@/hooks/usePagination';
+
+
 export default function PostListPage() {
   const { selectedCategory } = useParams();
 
@@ -23,14 +26,20 @@ export default function PostListPage() {
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
   const [searchKeyword, setSearchKeyword] = useState('');
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [startPage, setStartPage] = useState(1);
-  const itemsPerPage = 2;
-  const pagesToShow = 5;
-  const totalPages = Math.ceil(filteredAndSortedPosts.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const {
+    startPage,
+    setStartPage,
+    currentPage,
+    setCurrentPage,
+    indexOfFirstItem,
+    indexOfLastItem,
+    handleNextPageGroup,
+    handlePrevPageGroup,
+    handlePageClick,
+    totalPages,
+    pagesToShow,
+  } = usePagination(filteredAndSortedPosts.length);
+
   const currentPosts = filteredAndSortedPosts.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
@@ -76,23 +85,6 @@ export default function PostListPage() {
   // sort
   const handleSortOptionClick = (type: OptionType) => {
     setSelectedSort(type);
-  };
-
-  // pagination
-  const handleNextPageGroup = () => {
-    if (startPage + pagesToShow <= totalPages) {
-      setStartPage(startPage + pagesToShow);
-    }
-  };
-  const handlePrevPageGroup = () => {
-    if (startPage - pagesToShow >= 1) {
-      setStartPage(startPage - pagesToShow);
-    }
-  };
-  const handlePageClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const { innerText } = e.target as HTMLLIElement;
-    const newPage = Number(innerText);
-    setCurrentPage(newPage);
   };
 
   // search

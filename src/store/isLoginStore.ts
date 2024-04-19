@@ -5,7 +5,7 @@ const useUserIsLogInStore = create(
   persist(
     set => ({
       // 초기 상태
-      isLogIn: false, // 로그인 상태 초기 값은 false
+      isLogIn: true, // 로그인 상태 초기 값은 false
 
       // 액션: 로그인 상태를 업데이트
       setIsLogIn: (newIsLogIn: boolean) =>

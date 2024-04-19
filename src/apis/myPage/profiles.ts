@@ -9,7 +9,7 @@ export const getProfiles = async () => {
       url: '/users/profiles',
     });
 
-    return res;
+    return res.data;
   } catch (error) {
     throw error;
   }

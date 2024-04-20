@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import DaumPost from './DaumPost';
 
+// TODO: 컴포넌트 분리하기
+// TODO: 회원탈퇴 기능 구현하기
 export default function EditProfileForm() {
   const profileImgFileInput = useRef(null);
   const [profiles, setProfiles] = useState<EditProfile[]>([]);
@@ -14,6 +16,9 @@ export default function EditProfileForm() {
   const [nickname, setNickname] = useState('');
   const [location, setLocation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles/update'],
@@ -38,7 +43,6 @@ export default function EditProfileForm() {
     setNickname(e.target.value);
   };
 
-  // 주소 변경
   const handleAddressChange = (address: string) => {
     setLocation(address);
   };
@@ -47,13 +51,30 @@ export default function EditProfileForm() {
     setPhoneNumber(e.target.value);
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    // setPasswordMatch(e.target.value === confirmPassword);
+  };
+
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+    setPasswordMatch(e.target.value === password);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setPasswordMatch(false);
+      return;
+    }
 
     const formData = new FormData();
     formData.append('nickname', nickname);
     formData.append('location', location);
     formData.append('phoneNumber', phoneNumber);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
     if (imageFile) {
       const profileImgUrl = URL.createObjectURL(imageFile);
       formData.append('profileImg', profileImgUrl);
@@ -158,6 +179,8 @@ export default function EditProfileForm() {
                 placeholder="비밀번호 입력"
                 minLength={8}
                 maxLength={16}
+                value={password}
+                onChange={handlePasswordChange}
                 className="w-[250px] outline-none"
               />
             </div>
@@ -168,8 +191,11 @@ export default function EditProfileForm() {
                 placeholder="비밀번호 확인"
                 minLength={8}
                 maxLength={16}
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
                 className="w-[250px] outline-none"
               />
+              {!passwordMatch && <p className="text-red-500">입력하신 비밀번호가 일치하지 않습니다.</p>}
             </div>
             <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">주소</p>

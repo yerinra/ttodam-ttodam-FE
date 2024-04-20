@@ -1,4 +1,4 @@
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 
 import { Link } from 'react-router-dom';
 import StatusBadge from './StatusBadge';
@@ -42,8 +42,6 @@ export default function PostPreview({ post, removeBtn, onDelete, bookmarkId }: P
           ))}
         </ul>
       </div>
-
     </li>
-
   );
 }

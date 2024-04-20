@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 
 type ProductImgProps = {
   data: Post;

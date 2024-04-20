@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 
 type HeaderBtnProps = {
   isUserPost: boolean | null | undefined;

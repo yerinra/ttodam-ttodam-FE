@@ -1,5 +1,5 @@
 import { Button } from '../ui/button';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 import ParticipationDialog from './ParticipationDialog';
 import { useQuery } from '@tanstack/react-query';
 import { getRequests } from '@/apis/post/request';

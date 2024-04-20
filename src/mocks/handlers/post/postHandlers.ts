@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { Post } from '@/lib/types';
+import type { Post } from '@/types/post';
 import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';

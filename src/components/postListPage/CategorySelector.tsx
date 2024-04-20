@@ -1,5 +1,5 @@
 import { CATEGORIES } from '@/lib/data';
-import { Category } from '@/lib/types';
+import { Category } from '@/types/post';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 

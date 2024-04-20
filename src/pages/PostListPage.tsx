@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Pencil2Icon } from '@radix-ui/react-icons';
 
-import { type Category, type OptionType, type Post, type StatusFilter } from '../lib/types';
+import { type Category, type OptionType, type Post, type StatusFilter } from '@/types/post';
 
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
@@ -15,7 +15,6 @@ import SortOptions from '@/components/postListPage/SortOptions';
 import SearchForm from '@/components/atoms/SearchForm';
 
 import usePagination from '@/hooks/usePagination';
-
 
 export default function PostListPage() {
   const { selectedCategory } = useParams();

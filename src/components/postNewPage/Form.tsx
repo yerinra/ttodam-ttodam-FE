@@ -1,13 +1,11 @@
-
 import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
-import { PostNew } from '@/lib/types';
+import { PostNew } from '@/types/post';
 import Category from './Category';
 import axios from 'axios';
-
 
 export default function Form() {
   const [products, setProducts] = useState<PostNew[]>([
@@ -23,8 +21,7 @@ export default function Form() {
       productImgUrl: '',
       content: '',
 
-      category: "ALL"
-
+      category: 'ALL',
     },
   ]);
 
@@ -37,9 +34,7 @@ export default function Form() {
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
-
   };
-
 
   /**
    * 새로운 입력 필드 추가
@@ -65,7 +60,6 @@ export default function Form() {
         content: '',
 
         category: 'ALL',
-
       },
     ]);
   };
@@ -80,9 +74,7 @@ export default function Form() {
   // 게시글 변경
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-
   };
-
 
   // 상품 이름 변경
   const handleProductNameChange = (index: number, value: string) => {
@@ -96,7 +88,6 @@ export default function Form() {
     const newProducts = [...products];
     newProducts[index].purchaseLink = value;
     setProducts(newProducts);
-
   };
 
   /**
@@ -127,9 +118,7 @@ export default function Form() {
     // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
     const newValue = value.trim() === '' ? '0' : value.replaceAll(',', '');
 
-
     const newProducts = [...products];
-
 
     // 상품의 가격 업데이트
     newProducts[index].price = parseInt(newValue);
@@ -164,15 +153,12 @@ export default function Form() {
     if (participants === 0) return '';
     const perPersonPrice = price / participants;
     return isNaN(perPersonPrice) ? '' : perPersonPrice.toLocaleString() + '원';
-
   };
 
   // 주소 변경
   const handleAddressChange = (address: string) => {
-
     setSelectedAddress(address);
   };
-
 
   // 날짜 선택
   const handleDateSelect = (selectedDate: Date) => {
@@ -182,7 +168,6 @@ export default function Form() {
 
   // 상세정보 변경
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-
     setContent(e.target.value);
   };
 
@@ -243,7 +228,6 @@ export default function Form() {
       setImagePreview(productImgUrl);
       console.log('productImgUrl', productImgUrl);
     }
-
   };
 
   // 메모리 누수 방지 - 이미지 업로드 후 Blob URL 해제
@@ -255,7 +239,6 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
-
       <input
         type="submit"
         value={'등록'}
@@ -312,7 +295,6 @@ export default function Form() {
             <input
               type="text"
               placeholder="원래 가격"
-
               value={product.price === 0 ? '' : product.price.toLocaleString()}
               onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
               className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -336,7 +318,6 @@ export default function Form() {
               value={calculatePerPersonPrice(product)}
               readOnly
               className="w-full outline-none py-4 border-b-2 border-stone-300 text-black"
-
             />
           )}
         </div>
@@ -350,9 +331,7 @@ export default function Form() {
         className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
       <div className="w-full border-b py-4">
-
         <DatePicker onDateChange={handleDateSelect} />
-
       </div>
       <textarea
         cols={30}
@@ -393,4 +372,3 @@ export default function Form() {
     </form>
   );
 }
-

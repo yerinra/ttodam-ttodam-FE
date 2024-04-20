@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 import { type Request } from '@/mocks/mockData/post/requests';
 import { useQuery } from '@tanstack/react-query';
 import { getRequests } from '@/apis/post/request';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 
 type ParticipationDialogProps = {
   data: Post;

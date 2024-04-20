@@ -4,7 +4,7 @@ import HeaderBtn from './HeaderBtn';
 import { ClockIcon } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import ParticipateBtnSection from './ParticipateBtnSection';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 import StatusBadge from '../postListPage/StatusBadge';
 
 type PostHeaderProps = {

@@ -1,38 +1,31 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 import { Post } from '@/lib/types';
+import ParticipationDialog from './ParticipationDialog';
+import { useQuery } from '@tanstack/react-query';
+import { getRequests } from '@/apis/post/request';
+import { Request, requestsMockDataType } from '@/mocks/mockData/post/requests';
 
 type ParticipateBtnSectionProps = {
   isUserPost: boolean | null | undefined;
   data: Post;
 };
+
 export default function ParticipateBtnSection({ isUserPost, data }: ParticipateBtnSectionProps) {
+  // const {
+  //   data: requestsData,
+  //   error,
+  //   isLoading,
+  // } = useQuery({
+  //   queryKey: ['request', data.Id],
+  //   queryFn: () => {
+  //     return getRequests(+data.Id!);
+  //   },
+  // });
+
   return (
     <section className="flex justify-center ml-auto">
       {isUserPost ? (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>요청내역 확인</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>요청내역</DialogTitle>
-              <DialogDescription>다른 회원들에게서 온 요청을 확인해보세요.</DialogDescription>
-            </DialogHeader>
-            <div>요청 1.</div>
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <ParticipationDialog data={data} />
       ) : (
         <Button size={'lg'} disabled={data.status !== 'in_progress'}>
           {data.status == 'in_progress'

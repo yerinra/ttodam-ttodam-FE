@@ -20,6 +20,32 @@ export default function ProfilePage() {
           </Link>
         </div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-14 w-full">
+        <Link
+          to="/my/history"
+          className="py-3 px-3 text-black hover:bg-secondary gap-y-2 transition-all border-light-gray border-b text-center font-bold text-lg"
+        >
+          참여내역
+        </Link>
+        <Link
+          to="/my/bookmark"
+          className="py-3 px-3 text-black hover:bg-secondary gap-y-2 transition-all border-light-gray border-b border-l text-center font-bold text-lg"
+        >
+          북마크
+        </Link>
+        <Link
+          to="/my/keyword"
+          className="py-3 px-3 text-black hover:bg-secondary gap-y-2 transition-all text-center font-bold text-lg"
+        >
+          키워드
+        </Link>
+        <Link
+          to="/request"
+          className="py-3 px-3 text-black hover:bg-secondary gap-y-2 transition-all border-light-gray border-l text-center font-bold text-lg"
+        >
+          요청내역
+        </Link>
+      </div>
     </section>
   );
 }

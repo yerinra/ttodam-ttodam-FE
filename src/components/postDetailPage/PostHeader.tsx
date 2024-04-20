@@ -1,4 +1,3 @@
-import React from 'react';
 import BookmarkBtn from './BookmarkBtn';
 import UserInfo from './UserInfo';
 import HeaderBtn from './HeaderBtn';
@@ -11,8 +10,9 @@ import StatusBadge from '../postListPage/StatusBadge';
 type PostHeaderProps = {
   data: Post;
   isUserPost: boolean | null | undefined;
+  handleDeletePost: (postId: number) => void;
 };
-export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
+export default function PostHeader({ data, isUserPost, handleDeletePost }: PostHeaderProps) {
   return (
     <section className="flex flex-col gap-2 border-b border-slate-200 py-6">
       <BookmarkBtn bookmarked={false} />
@@ -21,7 +21,7 @@ export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
 
       <section className="flex items-center mt-3 mb-3 justify-between">
         <UserInfo data={data} />
-        <HeaderBtn data={data} isUserPost={isUserPost} />
+        <HeaderBtn data={data} isUserPost={isUserPost} handleDeletePost={handleDeletePost} />
       </section>
       <div className="flex gap-2 items-center text-slate-600">
         <ClockIcon />

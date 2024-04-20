@@ -40,3 +40,14 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(filteredPosts);
   }
 });
+
+export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
+  const { param } = params;
+  const postId = parseInt(param as string);
+
+  if (!isNaN(postId)) {
+    return HttpResponse.json({
+      message: '정상적으로 삭제되었습니다.',
+    });
+  }
+});

@@ -34,7 +34,6 @@ const useUserInfoStore = create<UserInfoState>()(
     }),
     {
       name: 'userInfo', // 로컬 스토리지에 저장할 키 이름
-      getStorage: () => window.localStorage, // 로컬 스토리지 사용
     },
   ),
 );

@@ -1,4 +1,4 @@
-import { Post } from '@/lib/types';
+import { Post } from '@/types/post';
 
 export type BookmarkResponse = {
   list: Bookmark[];

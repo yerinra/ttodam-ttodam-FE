@@ -1,8 +1,8 @@
-import { PostNew } from '@/lib/types';
+import { PostNew } from '@/types/post';
 import { ChangeEvent, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 
-export default function DaumPost({ onAddressChange }: { onAddressChange: (address: PostNew['place']) => void}) {
+export default function DaumPost({ onAddressChange }: { onAddressChange: (address: PostNew['place']) => void }) {
   // 주소, 모달 열림 여부, 상세 주소 상태 관리
   const [address, setAddress] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -60,7 +60,7 @@ export default function DaumPost({ onAddressChange }: { onAddressChange: (addres
         </button>
         {isOpen && (
           <div className="absolute left-0 top-full border">
-            <DaumPostcode onComplete={handleComplete} onClose={handleClose} autoMapping  />
+            <DaumPostcode onComplete={handleComplete} onClose={handleClose} autoMapping />
           </div>
         )}
       </div>

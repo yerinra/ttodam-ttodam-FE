@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { deletePost, getPost } from '@/apis/post/post';
 
-import type { Post } from '@/lib/types';
+import type { Post } from '@/types/post';
+
 
 import useUserInfoStore from '@/store/userInfoStore';
 import ProductImg from '@/components/postDetailPage/ProductImg';

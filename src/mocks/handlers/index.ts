@@ -1,11 +1,11 @@
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
+import { getAllPostsHandler, getPostByParamHandler, deletePostHandler } from './post/postHandlers';
 import {
   getEditProfilesHandler,
   getProfilesHandler,
   postEditProfilesHandler,
   postProfilesHandler,
 } from './myPage/profile';
-import { getAllPostsHandler, getPostByParamHandler } from './post/postHandlers';
 
 export const handlers = [
   getAllPostsHandler,
@@ -13,6 +13,7 @@ export const handlers = [
   getBookmarksHandler,
   postBookmarkHandler,
   deleteBookmarkHandler,
+  deletePostHandler,
   getProfilesHandler,
   postProfilesHandler,
   getEditProfilesHandler,

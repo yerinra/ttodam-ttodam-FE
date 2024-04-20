@@ -1,7 +1,9 @@
 import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
 import Map from './Map';
 import { categoryNameKR, cn, formatDate } from '@/lib/utils';
+
 import { Category, Post } from '@/types/post';
+
 import { Link } from 'react-router-dom';
 
 type PostMetaDataSectionProps = {

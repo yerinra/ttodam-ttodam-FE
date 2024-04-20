@@ -1,9 +1,11 @@
+
 import { Button } from '../ui/button';
 import { Post } from '@/types/post';
 import ParticipationDialog from './ParticipationDialog';
 import { useQuery } from '@tanstack/react-query';
 import { getRequests } from '@/apis/post/request';
 import { Request, requestsMockDataType } from '@/mocks/mockData/post/requests';
+
 
 type ParticipateBtnSectionProps = {
   isUserPost: boolean | null | undefined;
@@ -26,6 +28,7 @@ export default function ParticipateBtnSection({ isUserPost, data }: ParticipateB
     <section className="flex justify-center ml-auto">
       {isUserPost ? (
         <ParticipationDialog data={data} />
+
       ) : (
         <Button size={'lg'} disabled={data.status !== 'in_progress'}>
           {data.status == 'in_progress'

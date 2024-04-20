@@ -1,3 +1,4 @@
+
 import { User } from '@/types/post';
 
 export type requestsMockDataType = {
@@ -30,6 +31,7 @@ export const requestsMockData = {
         manners: 3,
       },
       requestStatus: 'wait',
+
     },
   ],
 };

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
+import DaumPost from './DaumPost';
 
 export default function EditProfileForm() {
   const profileImgFileInput = useRef(null);
@@ -37,8 +38,9 @@ export default function EditProfileForm() {
     setNickname(e.target.value);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(e.target.value);
+  // 주소 변경
+  const handleAddressChange = (address: string) => {
+    setLocation(address);
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +140,7 @@ export default function EditProfileForm() {
                 />
               </div>
             </div>
-            <div className="w-full flex items-center justify-center gap-5 border-b">
+            <div className="w-full flex items-center gap-5 border-b">
               <p className="w-[100px] font-bold">닉네임</p>
               <input
                 type="text"
@@ -149,7 +151,7 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none py-4 "
               />
             </div>
-            <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
+            <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호</p>
               <input
                 type="password"
@@ -159,7 +161,7 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none"
               />
             </div>
-            <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
+            <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호 확인</p>
               <input
                 type="password"
@@ -169,18 +171,11 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none"
               />
             </div>
-            <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
+            <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">주소</p>
-              <input
-                type="text"
-                placeholder="주소"
-                defaultValue={pf.location}
-                name={location}
-                onChange={handleLocationChange}
-                className="w-[250px] outline-none"
-              />
+              <DaumPost onAddressChange={handleAddressChange} />
             </div>
-            <div className="w-full flex items-center justify-center py-4 gap-5 border-b text-black">
+            <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">전화번호</p>
               <input
                 type="text"
@@ -194,7 +189,6 @@ export default function EditProfileForm() {
             </div>
           </div>
         ))}
-
       <button className="w-[80px] h-8 flex items-center justify-center py-0.5 px-3 rounded-md text-white mt-28 bg-[#F94A3F]">
         회원탈퇴
       </button>

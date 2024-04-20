@@ -530,3 +530,11 @@ export const allPosts: Post[] = [
     updateAt: '2024-04-16 09:30:00',
   },
 ];
+
+export const users = [
+  {
+    id: 1,
+    email: 'wasd111@gmail.com',
+    password: '11111111',
+  },
+];

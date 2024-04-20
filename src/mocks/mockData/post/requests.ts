@@ -1,17 +1,13 @@
-import { Post } from '@/lib/types';
-
-export type BookmarkResponse = {
-  list: Bookmark[];
-};
-export type Bookmark = {
-  id: number;
-  postInfo: Post;
-};
-
-export const bookmarksMockData = {
-  list: [
+export const requestsMockData = {
+  participationRequests: [
     {
-      id: 1,
+      requestId: 123,
+      requesterInfo: {
+        id: 1,
+        nickname: '닉네임',
+        profileImage: 'https://example.com/images/johndoe.jpg',
+        manners: 1,
+      },
       postInfo: {
         Id: 2,
         user: {
@@ -53,46 +49,7 @@ export const bookmarksMockData = {
         createAt: '2024-04-06 10:30:00',
         updateAt: '2024-04-06 10:30:00',
       },
-    },
-    {
-      id: 2,
-      postInfo: {
-        Id: 3,
-        user: {
-          id: 2,
-          nickname: '홍길동2',
-          profileImgUrl: '',
-          manners: 4,
-        },
-        productImgUrl: [],
-        title: '주방용품 구매 도와주세요',
-        deadline: '2024-04-12 18:00:00',
-        status: 'in_progress',
-        category: 'KITCHEN',
-        place: '경기도 성남시 분당구 대왕판교로 645',
-        pLocationX: 37.3949096,
-        pLocationY: 127.1113331,
-        content: '주방용품을 새로 구매하려고 합니다.',
-        participants: 2,
-        products: [
-          {
-            productId: 5,
-            productName: '냄비세트',
-            price: 45000,
-            count: 1,
-            purchaseLink: 'https://smartstore.naver.com/kitchenmart/products/987654321',
-          },
-          {
-            productId: 6,
-            productName: '도마',
-            price: 8000,
-            count: 2,
-            purchaseLink: 'https://www.naver.com',
-          },
-        ],
-        createAt: '2024-04-07 14:20:00',
-        updateAt: '2024-04-07 14:20:00',
-      },
+      status: 'wait',
     },
   ],
 };

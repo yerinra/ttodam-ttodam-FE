@@ -12,6 +12,7 @@ import ProfilePage from './pages/MyProfilePage';
 import EditProfile from './components/profilePage/EditProfile';
 import HistoryPage from './pages/HistoryPage';
 import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
+import PostEditPage from './pages/PostEditPage';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ export default function App() {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/post/new" element={<PostNewPage />} />
+              <Route path="/post/edit/:postId" element={<PostEditPage />} />
               <Route path="/my/edit/profile" element={<EditProfile />} />
 
               <Route element={<Layout />}>

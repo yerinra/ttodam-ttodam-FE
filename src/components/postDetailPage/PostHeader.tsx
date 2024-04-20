@@ -21,7 +21,7 @@ export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
 
       <section className="flex items-center mt-3 mb-3 justify-between">
         <UserInfo data={data} />
-        <HeaderBtn isUserPost={isUserPost} />
+        <HeaderBtn data={data} isUserPost={isUserPost} />
       </section>
       <div className="flex gap-2 items-center text-slate-600">
         <ClockIcon />

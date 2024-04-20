@@ -9,7 +9,7 @@ export const getPost = async (postId: number) => {
       url: `/post/${postId}`,
     });
 
-    return res;
+    return res.data;
   } catch (error) {
     throw error;
   }

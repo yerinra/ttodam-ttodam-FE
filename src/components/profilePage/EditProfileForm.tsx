@@ -195,8 +195,8 @@ export default function EditProfileForm() {
                 onChange={handleConfirmPasswordChange}
                 className="w-[250px] outline-none"
               />
-              {!passwordMatch && <p className="text-red-500">입력하신 비밀번호가 일치하지 않습니다.</p>}
             </div>
+            {!passwordMatch && <p className="text-red-500 text-xs">입력하신 비밀번호가 일치하지 않습니다.</p>}
             <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">주소</p>
               <DaumPost onAddressChange={handleAddressChange} />

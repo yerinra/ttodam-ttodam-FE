@@ -1,4 +1,4 @@
-import { type Status } from '@/lib/types';
+import { type Status } from '@/types/post';
 import { cn } from '@/lib/utils';
 
 type StatusBadgeProps = {

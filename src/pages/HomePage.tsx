@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import KakaoMapScriptLoader from '../map/KakaoMapScriptLoader';
 import Map from '../map/Map';
 import MapSearchInput from '../map/MapSearchInput';
-import { PlaceType } from '../lib/types';
+
 import MapMarkerController from '../map/MapMarkerController';
+import { PlaceType } from '@/types/map';
 // import { IoBookmarkSharp } from 'react-icons/io5';
 
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기

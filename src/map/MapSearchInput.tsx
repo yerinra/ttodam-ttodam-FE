@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { PlaceType } from '../lib/types';
+
 import { useMap } from './useMap';
+import { PlaceType } from '@/types/map';
 
 interface MapSearchInputProps {
   onUpdatePlaces: (places: PlaceType[]) => void;
@@ -12,7 +13,7 @@ interface MapSearchInputProps {
 export default function MapSearchInput(props: MapSearchInputProps) {
   const map = useMap();
   const [search, setSearch] = useState('');
-  const [places, setPlaces] = useState<PlaceType[]>([]);
+  const [places, setPlaces] = useState<PlaceTypee[]>([]);
   const [isSearchInput, setIsSearchInput] = useState(false);
 
   const placeService = useRef<kakao.maps.services.Places | null>(null);

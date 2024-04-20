@@ -1,7 +1,7 @@
+import { Category } from '@/types/post';
 import { type ClassValue, clsx } from 'clsx';
 import { format } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
-import { Category } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,7 +14,7 @@ export function formatDate(dateString: string) {
 }
 
 export function categoryNameKR(category: Exclude<Category, 'ALL'>) {
-  const categoryMap = {
+  const categoryMap: { [key in Category]: string } = {
     DAILY: '생활용품',
     KITCHEN: '주방용품',
     FOOD: '식품',
@@ -27,3 +27,10 @@ export function categoryNameKR(category: Exclude<Category, 'ALL'>) {
 
   return categoryMap[category] || category;
 }
+
+const priceFormat = new Intl.NumberFormat('ko-KR', {
+  style: 'decimal',
+  maximumFractionDigits: 0,
+});
+
+export const toPriceFormat = (value: number) => priceFormat.format(value);

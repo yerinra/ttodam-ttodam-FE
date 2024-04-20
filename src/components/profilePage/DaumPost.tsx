@@ -1,4 +1,4 @@
-import { PostNew } from '@/lib/types';
+import { PostNew } from '@/types/post';
 import { ChangeEvent, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 

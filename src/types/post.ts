@@ -1,4 +1,4 @@
-import { CATEGORIES, SORT_OPTIONS, STATUS } from './data';
+import { CATEGORIES, SORT_OPTIONS, STATUS } from '@/lib/data';
 
 export type Category = (typeof CATEGORIES)[number]['type'];
 export type StatusFilter = (typeof STATUS)[number]['type'];

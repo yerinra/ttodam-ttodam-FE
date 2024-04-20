@@ -215,9 +215,6 @@ export default function EditProfileForm() {
             </div>
           </div>
         ))}
-      <button className="w-[80px] h-8 flex items-center justify-center py-0.5 px-3 rounded-md text-white mt-28 bg-[#F94A3F]">
-        회원탈퇴
-      </button>
     </form>
   );
 }

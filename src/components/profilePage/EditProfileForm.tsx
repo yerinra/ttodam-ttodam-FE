@@ -20,6 +20,7 @@ export default function EditProfileForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
   const [passwordError, setPasswordError] = useState('');
+  const [nicknameError, setNicknameError] = useState('');
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles/update'],
@@ -41,7 +42,24 @@ export default function EditProfileForm() {
   };
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
+    const newNickname = e.target.value;
+
+    // 글자수 제한
+    if (newNickname.length < 2 || newNickname.length > 8) {
+      setNicknameError('* 닉네임은 2~8글자를 사용해 주세요.');
+    } else {
+      setNicknameError('');
+    }
+
+    // 중복 검사
+    const isNickNameAvailable = !profiles.some(profile => profile.nickname === newNickname);
+    if (!isNickNameAvailable) {
+      setNicknameError('이미 사용 중인 닉네임입니다.');
+    } else {
+      setNicknameError('사용 가능한 닉네임입니다.');
+    }
+
+    setNickname(newNickname);
   };
 
   const handleAddressChange = (address: string) => {
@@ -189,6 +207,7 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none py-4 "
               />
             </div>
+            {nicknameError && <p className="text-red-500 text-xs">{nicknameError}</p>}
             <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호</p>
               <input

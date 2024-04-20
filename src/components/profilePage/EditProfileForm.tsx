@@ -19,6 +19,7 @@ export default function EditProfileForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+  const [passwordError, setPasswordError] = useState('');
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles/update'],
@@ -51,14 +52,30 @@ export default function EditProfileForm() {
     setPhoneNumber(e.target.value);
   };
 
+  /**
+   * 비밀번호 정규식
+   * (?=.*[a-z]): 최소한 하나의 소문자 포함
+   * (?=.*[A-Z]): 최소한 하나의 대문자 포함
+   * (?=.*\d): 최소한 하나의 숫자 포함
+   * (?=.[@$!%?&]): 최소한 하나의 특수기호 포함
+   * [A-Za-z\d@$!%*?&]{8,16}: 8자 이상, 16자 이하의 영 대/소문자, 숫자, 특수기호로 이루어진 문자열
+   */
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    // setPasswordMatch(e.target.value === confirmPassword);
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    if (!passwordRegex.test(newPassword)) {
+      setPasswordError('* 비밀번호: 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.');
+    } else {
+      setPasswordError('');
+    }
   };
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    setPasswordMatch(e.target.value === password);
+    const newPassword = e.target.value;
+    setConfirmPassword(newPassword);
+    setPasswordMatch(newPassword === password);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLInputElement>) => {
@@ -184,6 +201,7 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none"
               />
             </div>
+            {passwordError && <p className="text-red-500 text-xs">{passwordError}</p>}
             <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">비밀번호 확인</p>
               <input
@@ -196,7 +214,7 @@ export default function EditProfileForm() {
                 className="w-[250px] outline-none"
               />
             </div>
-            {!passwordMatch && <p className="text-red-500 text-xs">입력하신 비밀번호가 일치하지 않습니다.</p>}
+            {!passwordMatch && <p className="text-red-500 text-xs">* 입력하신 비밀번호가 일치하지 않습니다.</p>}
             <div className="w-full flex items-center py-4 gap-5 border-b text-black">
               <p className="w-[100px] font-bold">주소</p>
               <DaumPost onAddressChange={handleAddressChange} />

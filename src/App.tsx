@@ -14,6 +14,7 @@ import HistoryPage from './pages/HistoryPage';
 import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
 import PostEditPage from './pages/PostEditPage';
 import SignUpPage from './pages/SignUpPage';
+import NotificationPage from './pages/NotificationPage';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,8 @@ export default function App() {
                 <Route path="/my/profile" element={<ProfilePage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
                 <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
+
+                <Route path="/notification" element={<NotificationPage />} />
               </Route>
             </Routes>
           </Router>

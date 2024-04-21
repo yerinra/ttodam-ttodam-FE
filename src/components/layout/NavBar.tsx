@@ -11,6 +11,8 @@ export default function NavBar() {
       return path == '/posts/all';
     } else if (pathname.startsWith('/my')) {
       return path.startsWith('/my');
+    } else if (pathname == '/notification') {
+      return path === pathname;
     } else {
       return pathname.includes(path);
     }

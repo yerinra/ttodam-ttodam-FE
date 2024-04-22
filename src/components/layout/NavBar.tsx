@@ -19,7 +19,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="w-full h-[65px] fixed max-w-[940px] bottom-0 border border-t-1 border-x-0 border-b-0 bg-slate-200">
+    <nav className="w-full h-[60px] fixed max-w-[940px] bottom-0 border border-t-1 border-x-0 border-b-0 bg-slate-200">
       <ul className="flex justify-between items-center w-full h-full px-10">
         {NAVIGATION.map(nav => (
           <li key={nav.path}>

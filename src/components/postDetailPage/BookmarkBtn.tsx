@@ -8,9 +8,9 @@ type BookmarkBtnProps = {
 
 export default function BookmarkBtn({ bookmarked }: BookmarkBtnProps) {
   return (
-    <button className="absolute top-[78px] right-4">
+    <button className="absolute top-[55px] right-4">
       <BookmarkFilledIcon
-        className={cn('h-[80px] w-auto ', { 'text-slate-200': !bookmarked }, { 'text-yellow-400': !!bookmarked })}
+        className={cn('h-[90px] w-auto ', { 'text-slate-200': !bookmarked }, { 'text-yellow-400': !!bookmarked })}
       />
     </button>
   );

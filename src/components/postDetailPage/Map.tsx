@@ -19,7 +19,7 @@ export default function Map({ lat, lng }: MapProps) {
     const targetPoint = new kakao.maps.LatLng(lat, lng);
     const options = {
       center: targetPoint,
-      level: 2,
+      level: 3,
       draggable: false,
     };
 

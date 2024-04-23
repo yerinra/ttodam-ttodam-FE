@@ -15,6 +15,7 @@ import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
 import PostEditPage from './pages/PostEditPage';
 import SignUpPage from './pages/SignUpPage';
 import NotificationPage from './pages/NotificationPage';
+import LandingPage from './pages/LandingPage';
 
 const queryClient = new QueryClient();
 
@@ -25,14 +26,15 @@ export default function App() {
         <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
           <Router>
             <Routes>
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/sign" element={<SignUpPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
               <Route path="/post/new" element={<PostNewPage />} />
               <Route path="/post/edit/:postId" element={<PostEditPage />} />
               <Route path="/my/edit/profile" element={<EditProfile />} />
 
               <Route element={<Layout />}>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/home" element={<HomePage />} />
                 <Route path="/posts/:selectedCategory" element={<PostListPage />} />
                 <Route path="/post/:postId" element={<PostDetailPage />} />
 

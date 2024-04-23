@@ -4,13 +4,14 @@ import { deletePost, getPost } from '@/apis/post/post';
 
 import type { Post } from '@/types/post';
 
-
 import useUserInfoStore from '@/store/userInfoStore';
 import ProductImg from '@/components/postDetailPage/ProductImg';
 import ContentSection from '@/components/postDetailPage/ContentSection';
 import BackToListBtn from '@/components/postDetailPage/BackToListBtn';
 import PostMetaDataSection from '@/components/postDetailPage/PostMetaDataSection';
 import PostHeader from '@/components/postDetailPage/PostHeader';
+import useCurrentPostIdStore from '@/store/currentPostIdStore';
+import { useEffect } from 'react';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
@@ -22,6 +23,14 @@ export default function PostDetailPage() {
     },
   });
   const userInfo = useUserInfoStore(state => state.userInfo);
+  const { setCurrentPostId } = useCurrentPostIdStore();
+  useEffect(() => {
+    if (postId) {
+      setCurrentPostId(+postId);
+    } else {
+      setCurrentPostId(null); // postId가 undefined인 경우에는 null로 설정
+    }
+  }, [postId, setCurrentPostId]);
   const queryClient = useQueryClient();
   const isUserPost = userInfo && data && userInfo.id === data.user.id;
 

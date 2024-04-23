@@ -64,7 +64,9 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col mt-5 w-full h-screen px-10">
       <header className="flex items-center justify-between">
-        <img src={logo} alt="logo" className="w-20 h-20" />
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-20 h-20" />
+        </Link>
         <div className="flex gap-5">
           <Link to="/login">
             <Button className="text-md p-5">로그인</Button>

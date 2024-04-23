@@ -42,6 +42,11 @@ export default function EditProfileForm() {
     }
   };
 
+  // 대체 이미지 설정 (엑박 이미지 안뜨게 처리)
+  const handleImageError = (e: React.ChangeEvent<HTMLImageElement>) => {
+    e.target.src = placeholderImage;
+  };
+
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newNickname = e.target.value;
 
@@ -127,6 +132,7 @@ export default function EditProfileForm() {
       alert('프로필 수정이 완료되었습니다.');
     } catch (error) {
       console.error('에러 발생: ', error);
+      alert('프로필 수정에 실패하였습니다. 다시 시도해주세요.');
     }
   };
 
@@ -141,11 +147,6 @@ export default function EditProfileForm() {
     };
     fetchProfiles();
   }, []);
-
-  // 대체 이미지 설정 (엑박 이미지 안뜨게 처리)
-  const handleImageError = (e: React.ChangeEvent<HTMLImageElement>) => {
-    e.target.src = placeholderImage;
-  };
 
   if (isLoading) return <div>프로필 정보를 가져오는 중입니다.</div>;
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;

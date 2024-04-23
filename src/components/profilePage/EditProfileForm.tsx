@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import DaumPost from './DaumPost';
+import placeholderImage from '@/assets/placeholderImage.png';
 
 // TODO: 컴포넌트 분리하기
 // TODO: 회원탈퇴 기능 구현하기
@@ -141,6 +142,11 @@ export default function EditProfileForm() {
     fetchProfiles();
   }, []);
 
+  // 대체 이미지 설정 (엑박 이미지 안뜨게 처리)
+  const handleImageError = (e: React.ChangeEvent<HTMLImageElement>) => {
+    e.target.src = placeholderImage;
+  };
+
   if (isLoading) return <div>프로필 정보를 가져오는 중입니다.</div>;
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;
 
@@ -173,6 +179,7 @@ export default function EditProfileForm() {
                       <img
                         src={imagePreview}
                         alt=""
+                        onError={null || handleImageError}
                         className="flex items-center justify-center w-[100px] h-[100px] bg-slate-400 rounded-[50%]"
                       />
                       <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white opacity-70" />

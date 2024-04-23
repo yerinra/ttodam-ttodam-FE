@@ -6,7 +6,8 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
-import { getAllPostsHandler, getPostByParamHandler, deletePostHandler, getRequestsHandler } from './post/postHandlers';
+import { getAllPostsHandler, getPostByParamHandler, deletePostHandler } from './post/postHandlers';
+import { getRequestsHandler } from './post/requestHandlers';
 
 export const handlers = [
   getAllPostsHandler,

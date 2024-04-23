@@ -32,11 +32,11 @@ export type User = {
 };
 
 export type Product = {
-  productId: number;
+  productId?: number;
   productName: string;
   price: number;
   count: number;
-  purchaseLink: string;
+  purchaseLink?: string;
 };
 
 export type PostNew = {

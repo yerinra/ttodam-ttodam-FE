@@ -26,7 +26,8 @@ export default function Map(props: MapProps) {
   }, []);
 
   return (
-    <div className="absolute left-[-50%] top-0 translate-x-2/4 w-full h-full border">
+    // <div className="absolute left-[-50%] top-0 translate-x-2/4 w-full h-full border">
+    <div className="relative mx-auto w-full h-3/4">
       <div className="static w-full h-full" ref={kakaoMapRef} />
       {map ? (
         <KakaoMapContext.Provider value={map}>{props.children}</KakaoMapContext.Provider>

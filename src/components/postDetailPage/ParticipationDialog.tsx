@@ -1,9 +1,10 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
-import { type Request } from '@/mocks/mockData/post/requests';
+
 import { useQuery } from '@tanstack/react-query';
 import { getRequests } from '@/apis/post/request';
 import { type Post } from '@/types/post';
+import { Request } from '@/types/request';
 
 type ParticipationDialogProps = {
   data: Post;
@@ -35,15 +36,15 @@ export default function ParticipationDialog({ data }: ParticipationDialogProps) 
         <ul>
           {requestsData &&
             requestsData.map(request => (
-              <li key={request.requestUserInfo.id} className="flex border-b first-of-type:border-t py-2 items-center">
+              <li key={request.requestUser.id} className="flex border-b first-of-type:border-t py-2 items-center">
                 <section>
                   <div className="flex gap-2 items-center">
                     <div className="text-sm w-14 text-dark-gray">닉네임</div>
-                    <div className="font-semibold text-primary">{request.requestUserInfo.nickname}</div>
+                    <div className="font-semibold text-primary">{request.requestUser.nickname}</div>
                   </div>
                   <div className="flex gap-2 items-center">
                     <div className="text-sm w-14 text-dark-gray">매너점수</div>
-                    <div>{request.requestUserInfo.manners * 20} 점</div>
+                    <div>{request.requestUser.manners * 20} 점</div>
                   </div>
                 </section>
                 <div className="ml-auto flex gap-2">

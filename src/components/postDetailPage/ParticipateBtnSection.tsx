@@ -1,9 +1,6 @@
 import { Button } from '../ui/button';
 import { type Post } from '@/types/post';
 import ParticipationDialog from './ParticipationDialog';
-import { useQuery } from '@tanstack/react-query';
-import { getRequests } from '@/apis/post/request';
-import { Request, requestsMockDataType } from '@/mocks/mockData/post/requests';
 
 type ParticipateBtnSectionProps = {
   isUserPost: boolean | null | undefined;
@@ -11,17 +8,6 @@ type ParticipateBtnSectionProps = {
 };
 
 export default function ParticipateBtnSection({ isUserPost, data }: ParticipateBtnSectionProps) {
-  // const {
-  //   data: requestsData,
-  //   error,
-  //   isLoading,
-  // } = useQuery({
-  //   queryKey: ['request', data.Id],
-  //   queryFn: () => {
-  //     return getRequests(+data.Id!);
-  //   },
-  // });
-
   return (
     <section className="flex justify-center ml-auto">
       {isUserPost ? (

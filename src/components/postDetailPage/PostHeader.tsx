@@ -16,7 +16,7 @@ type PostHeaderProps = {
 export default function PostHeader({ data, isUserPost, handleDeletePost }: PostHeaderProps) {
   return (
     <section className="flex flex-col gap-2 border-b border-slate-200 py-6">
-      <BookmarkBtn bookmarked={false} />
+      <BookmarkBtn />
 
       <Badge variant={data.status} size="lg" />
       <h1 className="font-bold text-3xl">{data.title}</h1>

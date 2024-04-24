@@ -5,7 +5,7 @@ import { allPosts } from '@/mocks/mockData/post/allPosts';
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
 import { requestsMockData } from '@/mocks/mockData/post/requests';
-
+import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
 export const getAllPostsHandler = http.get('/post', () => {
   return HttpResponse.json(allPosts);
@@ -35,6 +35,8 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(searchResults);
   } else if (param === 'bookmark') {
     return HttpResponse.json(bookmarksMockData);
+  } else if (param === 'activities') {
+    return HttpResponse.json(HistoryMockData);
   } else {
     // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
     const filteredPosts = allPosts.filter(
@@ -55,7 +57,6 @@ export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
   }
 });
 
-
 export const getRequestsHandler = http.get('/post/:postId/request', ({ params }) => {
   const { postId } = params;
   const postIdNum = parseInt(postId as string);
@@ -64,4 +65,3 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
     return HttpResponse.json(requestsMockData);
   }
 });
-

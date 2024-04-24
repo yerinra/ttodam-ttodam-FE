@@ -6,11 +6,11 @@ import { getRequests } from '@/apis/post/request';
 import { type Post } from '@/types/post';
 import { Request } from '@/types/request';
 
-type ParticipationDialogProps = {
+type RequestDialogProps = {
   data: Post;
 };
 
-export default function ParticipationDialog({ data }: ParticipationDialogProps) {
+export default function RequestDialog({ data }: RequestDialogProps) {
   const {
     data: requestsData,
     error,

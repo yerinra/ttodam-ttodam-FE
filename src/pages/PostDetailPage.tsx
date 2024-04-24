@@ -31,6 +31,7 @@ export default function PostDetailPage() {
     } else {
       setCurrentPostId(null);
     }
+    return () => setCurrentPostId(null);
   }, [postId, setCurrentPostId]);
 
   const isUserPost = userInfo && data && userInfo.id === data.user.id;

@@ -14,7 +14,7 @@ export function formatDate(dateString: string) {
 }
 
 export function categoryNameKR(category: Exclude<Category, 'ALL'>) {
-  const categoryMap: { [key in Category]: string } = {
+  const categoryMap: { [key in Exclude<Category, 'ALL'>]: string } = {
     DAILY: '생활용품',
     KITCHEN: '주방용품',
     FOOD: '식품',

@@ -42,14 +42,14 @@ export default function DaumPost({ onAddressChange }: { onAddressChange: (addres
 
   return (
     <div>
-      <div className="flex items-center justify-between w-full relative border-b">
+      <div className="relative">
         <input
           type="text"
-          placeholder="희망 거래 주소"
+          placeholder="주소"
           value={address}
           onChange={handleInputChange}
           readOnly
-          className="w-2/4 outline-none py-4"
+          className="w-[250px] outline-none"
         />
         <button
           type="button"

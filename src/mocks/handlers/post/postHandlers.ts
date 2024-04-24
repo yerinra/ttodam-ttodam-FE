@@ -1,8 +1,11 @@
 import { http, HttpResponse } from 'msw';
-import type { Post } from '@/lib/types';
+import type { Post } from '@/types/post';
 import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
+
+import { requestsMockData } from '@/mocks/mockData/post/requests';
+
 
 export const getAllPostsHandler = http.get('/post', () => {
   return HttpResponse.json(allPosts);
@@ -51,3 +54,14 @@ export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
     });
   }
 });
+
+
+export const getRequestsHandler = http.get('/post/:postId/request', ({ params }) => {
+  const { postId } = params;
+  const postIdNum = parseInt(postId as string);
+
+  if (!isNaN(postIdNum)) {
+    return HttpResponse.json(requestsMockData);
+  }
+});
+

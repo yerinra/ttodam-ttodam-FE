@@ -1,5 +1,5 @@
 import { STATUS } from '@/lib/data';
-import { StatusFilter } from '@/lib/types';
+import { StatusFilter } from '@/types/post';
 import { cn } from '@/lib/utils';
 import { DotFilledIcon } from '@radix-ui/react-icons';
 

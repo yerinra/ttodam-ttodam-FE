@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import type { Post } from '@/lib/types';
+import type { Post } from '@/types/post';
 import { cn } from '@/lib/utils';
 import PostPreview from './PostPreview';
 

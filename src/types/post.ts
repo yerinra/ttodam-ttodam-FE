@@ -1,4 +1,4 @@
-import { CATEGORIES, SORT_OPTIONS, STATUS } from './data';
+import { CATEGORIES, SORT_OPTIONS, STATUS } from '@/lib/data';
 
 export type Category = (typeof CATEGORIES)[number]['type'];
 export type StatusFilter = (typeof STATUS)[number]['type'];
@@ -51,12 +51,4 @@ export type PostNew = {
   purchaseLink: string;
   productImgUrl: string;
   content: string;
-}
-
-// 카카오 지도 place 타입
-export interface PlaceType {
-  id: string;
-  position: kakao.maps.LatLng;
-  title: string;
-  address: string;
-}
+};

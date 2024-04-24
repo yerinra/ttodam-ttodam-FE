@@ -1,4 +1,6 @@
-import { Post } from '@/lib/types';
+
+import { Post } from '@/types/post';
+
 
 type UserInfoProps = {
   data: Post;

@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom';
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
-import { PlaceType } from '../lib/types';
+
 import { useMap } from './useMap';
 import { IoBookmarkSharp } from 'react-icons/io5';
+import { PlaceType } from '@/types/map';
 
 interface MapMarkerProps {
   place: PlaceType;

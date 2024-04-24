@@ -1,6 +1,6 @@
 import { Button } from '../ui/button';
 import { type Post } from '@/types/post';
-import ParticipationDialog from './ParticipationDialog';
+import RequestDialog from './RequestDialog';
 
 type ParticipateBtnSectionProps = {
   isUserPost: boolean | null | undefined;
@@ -11,7 +11,7 @@ export default function ParticipateBtnSection({ isUserPost, data }: ParticipateB
   return (
     <section className="flex justify-center ml-auto">
       {isUserPost ? (
-        <ParticipationDialog data={data} />
+        <RequestDialog data={data} />
       ) : (
         <Button size={'lg'} disabled={data.status !== 'in_progress'}>
           {data.status == 'in_progress'

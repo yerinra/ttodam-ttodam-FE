@@ -1,4 +1,5 @@
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
+import { getMyPostsHandler } from './myPage/myPosts';
 import {
   getEditProfilesHandler,
   getProfilesHandler,
@@ -21,4 +22,5 @@ export const handlers = [
   getEditProfilesHandler,
   postEditProfilesHandler,
   getRequestsHandler,
+  getMyPostsHandler,
 ];

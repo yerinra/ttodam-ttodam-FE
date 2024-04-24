@@ -28,7 +28,7 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
               {data &&
                 data.products.map(product => (
                   <Badge variant="secondary" key={product.productId} classNames="hover:bg-opacity-80">
-                    <Link to={product.purchaseLink} className="flex flex-col">
+                    <Link to={product.purchaseLink as string} className="flex flex-col">
                       <div>{product.productName}</div>
                       <div>
                         {Math.ceil(product.price / data.participants).toLocaleString()}원 *{' '}

@@ -5,7 +5,8 @@ type UserInfoProps = {
   data: Post;
 };
 
-import defaultUser from '../../../public/user.png';
+import defaultUser from '@/assets/user.png';
+
 export default function UserInfo({ data }: UserInfoProps) {
   return (
     <div className="flex items-center gap-2">

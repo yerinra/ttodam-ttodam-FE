@@ -10,10 +10,9 @@ import Badge from '../atoms/Badge';
 type PostHeaderProps = {
   data: Post;
   isUserPost: boolean | null | undefined;
-  handleDeletePost: (postId: number) => void;
 };
 
-export default function PostHeader({ data, isUserPost, handleDeletePost }: PostHeaderProps) {
+export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
   return (
     <section className="flex flex-col gap-2 border-b border-slate-200 py-6">
       <BookmarkBtn />
@@ -23,7 +22,7 @@ export default function PostHeader({ data, isUserPost, handleDeletePost }: PostH
 
       <section className="flex items-center mt-3 mb-3 justify-between">
         <UserInfo data={data} />
-        <HeaderBtn data={data} isUserPost={isUserPost} handleDeletePost={handleDeletePost} />
+        <HeaderBtn isUserPost={isUserPost} />
       </section>
       <div className="flex gap-2 items-center text-slate-600">
         <ClockIcon />

@@ -4,8 +4,6 @@ import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
-import { requestsMockData } from '@/mocks/mockData/post/requests';
-
 export const getAllPostsHandler = http.get('/post', () => {
   return HttpResponse.json(allPosts);
 });

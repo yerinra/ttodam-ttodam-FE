@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import Badge from '../atoms/Badge';
 import { cn } from '@/lib/utils';
+import ListItemContainer from '../atoms/ListItemContainer';
 
 type PostPreviewProps = {
   removeBtn?: boolean;
@@ -30,10 +31,7 @@ export default function PostPreview({
     if (onDelete && bookmarkId) onDelete(bookmarkId);
   };
   return (
-    <li
-      key={postId}
-      className="flex flex-col border-light-gray first-of-type:border-t-[1px] border-b-[1px] p-4 hover:bg-secondary gap-y-2 transition-all"
-    >
+    <ListItemContainer>
       <div className="flex items-center gap-x-2">
         <Badge variant={status}></Badge>
 
@@ -58,6 +56,6 @@ export default function PostPreview({
             ))}
         </ul>
       </div>
-    </li>
+    </ListItemContainer>
   );
 }

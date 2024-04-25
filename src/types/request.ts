@@ -13,3 +13,5 @@ export type RequestUser = {
   nickname: string;
   manners: number;
 };
+
+export type RequestStatus = 'wait' | 'accept' | 'refuse';

@@ -9,3 +9,16 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
     return HttpResponse.json(requestsMockData);
   }
 });
+
+export const putRequestHandler = http.put('/request/:requestId/:requestStatus', () => {
+  // const { requestId, requestStatus } = params;
+  return new HttpResponse(null, {
+    status: 200,
+  });
+});
+
+export const cancelRequestHandler = http.delete('/request/:requestId', () => {
+  return new HttpResponse(null, {
+    status: 204,
+  });
+});

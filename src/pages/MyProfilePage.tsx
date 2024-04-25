@@ -94,10 +94,10 @@ export default function ProfilePage() {
           키워드
         </Link>
         <Link
-          to="/request"
+          to="/my/posts"
           className="py-3 px-3 text-black hover:bg-secondary gap-y-2 transition-all border-light-gray border-l text-center font-bold text-lg"
         >
-          요청내역
+          내가 쓴 글
         </Link>
       </div>
     </section>

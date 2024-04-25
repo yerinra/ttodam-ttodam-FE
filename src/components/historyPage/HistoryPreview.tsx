@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import StatusBadge from '../postListPage/StatusBadge';
 import { Post } from '@/types/post';
+import Manners from './Manners';
 
 type HistoryPreviewProps = {
   post: Post;
@@ -27,6 +28,9 @@ export default function HistoryPreview({ post }: HistoryPreviewProps) {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="absolute top-[50%] right-0 translate-y-[-50%]">
+        <Manners />
       </div>
     </li>
   );

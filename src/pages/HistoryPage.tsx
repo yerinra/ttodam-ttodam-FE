@@ -32,7 +32,7 @@ export default function HistoryPage() {
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>에러가 발생했습니다.</div>;
 
-  if (data?.length === 0) return <div>등록한 북마크가 없습니다.</div>;
+  if (data?.length === 0) return <div>참여하신 내역이 없습니다.</div>;
 
   const dataToShow = data?.slice(indexOfFirstItem, indexOfLastItem);
 

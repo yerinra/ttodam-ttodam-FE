@@ -22,7 +22,9 @@ export default function RequestDialog({ data }: RequestDialogProps) {
       return getRequests(+data.Id!);
     },
   });
+
   const { mutateAsync } = useChangeRequestStatusMutation(+data.Id);
+
   const handleAccept = async (requestId: number) => {
     const confirmed = window.confirm('승인하시겠습니까? 이 결정은 되돌릴 수 없습니다.');
 
@@ -34,6 +36,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
       }
     }
   };
+
   const handleReject = async (requestId: number) => {
     const confirmed = window.confirm('거절하시겠습니까? 이 결정은 되돌릴 수 없습니다.');
 
@@ -45,6 +48,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
       }
     }
   };
+
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;
 

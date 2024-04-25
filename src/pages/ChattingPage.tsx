@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaArrowLeft, FaUserCircle } from 'react-icons/fa';
 
+
 interface ChattingPageProps {}
 
 const ChattingPage: React.FC<ChattingPageProps> = ({}) => {
@@ -50,12 +51,13 @@ const ChattingPage: React.FC<ChattingPageProps> = ({}) => {
         ))}
       </div>
 
-      <div className="p-7">
+        {/* 디자인 수정 */}
+      {/* <div className="p-7">
         <div className="flex items-center justify-between border rounded-md px-4 py-2">
           <input type="text" className=" border-none rounded-md focus:outline-none" />
           <button className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-md">전송</button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -14,6 +14,9 @@ import HistoryPage from './pages/HistoryPage';
 import HistoryDetailPage from './components/historyPage/HistoryDetailPage';
 import PostEditPage from './pages/PostEditPage';
 import SignUpPage from './pages/SignUpPage';
+import KeywordPage from './pages/keywordpage';
+import ChattingPage from './pages/ChattingPage';
+import ChattingList from './pages/ChattingList';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,7 @@ export default function App() {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/sign" element={<SignUpPage />} />
+              <Route path="/my/keyword" element={<KeywordPage />} />
               <Route path="/post/new" element={<PostNewPage />} />
               <Route path="/post/edit/:postId" element={<PostEditPage />} />
               <Route path="/my/edit/profile" element={<EditProfile />} />
@@ -37,6 +41,8 @@ export default function App() {
 
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
+                <Route path="/chat" element={<ChattingList />} />
+                <Route path="/chatting" element={<ChattingPage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
                 <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
               </Route>

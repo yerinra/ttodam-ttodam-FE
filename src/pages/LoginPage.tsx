@@ -1,27 +1,36 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import SocialLogin from '../components/Login/SocialLogin';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import SocialLogin from '@/components/Login/SocialLogin';
+import { loginUser } from '@/apis/login/login'; 
 
 interface FormValues {
   email: string;
   password: string;
 }
 
-export default function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
+const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await loginUser(data); 
+      console.log('Login response:', response); 
+      if (response.message === '로그인 성공') {
+        navigate('/');
+      } else {
+        alert('로그인 실패. 계정 정보를 확인하세요.'); 
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      alert('로그인 실패. 나중에 다시 시도하세요.'); 
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Link to="/">
+            <Link to="/">
       <img src="/src/assets/logo.png" alt="Logo" className="w-48 h-48 mb-8" />
       </Link>
       <h1 className="text-4xl font-bold mb-8">로그인</h1>
@@ -62,11 +71,9 @@ export default function LoginPage() {
           <a href="/" className="text-sm text-gray-500">
             비밀번호 찾기
           </a>
-          <Link to="/sign">
-          <a className="text-sm text-gray-500">
+          <a href="/sign" className="text-sm text-gray-500">
             회원가입
           </a>
-          </Link>
         </div>
 
         <button type="submit" className="bg-primary text-white px-10 py-4 rounded w-96 mb-3">
@@ -76,4 +83,6 @@ export default function LoginPage() {
       <SocialLogin />
     </div>
   );
-}
+};
+
+export default LoginPage;

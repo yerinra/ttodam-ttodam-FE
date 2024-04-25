@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import sendAuthenticationCode from '@/apis/signup/sendAuthenticationCode'
-import verifyAuthenticationCode from '@/apis/signup/verifyAuthenticationCode';
+import sendAuthenticationCode from '@/apis/Email_authentication/sendAuthenticationCode'
+import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenticationCode';
 
 interface FormValues {
   email: string;

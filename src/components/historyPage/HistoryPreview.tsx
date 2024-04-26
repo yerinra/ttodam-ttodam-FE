@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import StatusBadge from '../postListPage/StatusBadge';
 import { Post } from '@/types/post';
-import Manners from './Manners';
+import MannersDialog from './MannersDialog';
 
 type HistoryPreviewProps = {
   post: Post;
@@ -30,7 +30,13 @@ export default function HistoryPreview({ post }: HistoryPreviewProps) {
         </ul>
       </div>
       <div className="absolute top-[50%] right-0 translate-y-[-50%]">
-        <Manners />
+        <MannersDialog
+          data={{
+            membersId: 0,
+            nickname: '',
+            manners: 0,
+          }}
+        />
       </div>
     </li>
   );

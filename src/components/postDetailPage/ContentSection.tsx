@@ -1,6 +1,4 @@
-
-import { Post } from '@/lib/types';
-
+import { type Post } from '@/types/post';
 
 type ContentSectionProps = {
   data: Post;

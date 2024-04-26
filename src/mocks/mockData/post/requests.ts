@@ -1,37 +1,26 @@
+import { RequestResponse } from '@/types/request';
 
-import { User } from '@/types/post';
-
-export type requestsMockDataType = {
-  participationRequests: Request[];
-};
-
-export type Request = {
-  postId: number;
-  requestUserInfo: User;
-  requestStatus: 'wait' | null;
-};
-export const requestsMockData = {
+export const requestsMockData: RequestResponse = {
   participationRequests: [
     {
+      requestId: 1,
       postId: 2,
-      requestUserInfo: {
+      requestUser: {
         id: 3,
         nickname: '홍길동3',
-        profileImgUrl: '',
         manners: 1,
       },
       requestStatus: 'wait',
     },
     {
+      requestId: 2,
       postId: 2,
-      requestUserInfo: {
+      requestUser: {
         id: 11,
         nickname: '익명의유저1',
-        profileImgUrl: '',
         manners: 3,
       },
       requestStatus: 'wait',
-
     },
   ],
 };

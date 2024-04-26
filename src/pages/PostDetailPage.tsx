@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { deletePost, getPost } from '@/apis/post/post';
+import { getPost } from '@/apis/post/post';
 
 import type { Post } from '@/types/post';
 
@@ -10,6 +10,8 @@ import ContentSection from '@/components/postDetailPage/ContentSection';
 import BackToListBtn from '@/components/postDetailPage/BackToListBtn';
 import PostMetaDataSection from '@/components/postDetailPage/PostMetaDataSection';
 import PostHeader from '@/components/postDetailPage/PostHeader';
+import useCurrentPostIdStore from '@/store/currentPostIdStore';
+import { useEffect } from 'react';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
@@ -21,25 +23,18 @@ export default function PostDetailPage() {
     },
   });
   const userInfo = useUserInfoStore(state => state.userInfo);
-  const queryClient = useQueryClient();
+  const { setCurrentPostId } = useCurrentPostIdStore();
+
+  useEffect(() => {
+    if (postId) {
+      setCurrentPostId(+postId);
+    } else {
+      setCurrentPostId(null);
+    }
+    return () => setCurrentPostId(null);
+  }, [postId, setCurrentPostId]);
+
   const isUserPost = userInfo && data && userInfo.id === data.user.id;
-
-  const deletePostMutation = useMutation({
-    mutationFn: (postId: number) => deletePost(postId),
-    onSuccess: () => {
-      // 포스트 삭제 성공 시, 쿼리 캐시를 업데이트하고 리스트 페이지로 이동
-      queryClient.invalidateQueries({ queryKey: ['post', postId] });
-      location.href = '/posts/all';
-    },
-    onError: () => {
-      console.error('Error deleting post');
-    },
-  });
-
-  const handleDeletePost = (postId: number) => {
-    // 포스트 삭제 요청
-    data && data.Id && deletePostMutation.mutate(postId);
-  };
 
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -48,7 +43,7 @@ export default function PostDetailPage() {
     <div className="flex flex-col">
       {data && (
         <>
-          <PostHeader data={data} isUserPost={isUserPost} handleDeletePost={handleDeletePost} />
+          <PostHeader data={data} isUserPost={isUserPost} />
           <ProductImg data={data} />
           <PostMetaDataSection data={data} />
           <ContentSection data={data} />

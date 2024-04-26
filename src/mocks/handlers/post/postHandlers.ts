@@ -4,6 +4,7 @@ import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
+
 import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
@@ -65,3 +66,4 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
     return HttpResponse.json(requestsMockData);
   }
 });
+

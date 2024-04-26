@@ -1,6 +1,10 @@
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
+
 import { getHistoryHandler } from './myPage/history';
 import { postMannersHandler } from './myPage/manners';
+
+
+import { getMyPostsHandler } from './myPage/myPosts';
 
 import {
   getEditProfilesHandler,
@@ -9,7 +13,10 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
-import { getAllPostsHandler, getPostByParamHandler, deletePostHandler, getRequestsHandler } from './post/postHandlers';
+import { getAllPostsHandler, getPostByParamHandler, deletePostHandler } from './post/postHandlers';
+
+import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
+
 
 export const handlers = [
   getAllPostsHandler,
@@ -25,4 +32,8 @@ export const handlers = [
   getRequestsHandler,
   getHistoryHandler,
   postMannersHandler,
+  getMyPostsHandler,
+  putRequestHandler,
+  cancelRequestHandler,
+
 ];

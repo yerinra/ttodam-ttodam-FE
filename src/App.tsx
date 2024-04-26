@@ -42,10 +42,8 @@ export default function App() {
                 <Route path="/my/profile" element={<ProfilePage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
 
-                <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
                 <Route path="/my/posts" element={<MyPostsPage />} />
                 <Route path="/notification" element={<NotificationPage />} />
-
               </Route>
             </Routes>
           </Router>

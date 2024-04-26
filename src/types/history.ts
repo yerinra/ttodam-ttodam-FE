@@ -11,6 +11,6 @@ export type History = {
   products: Product[];
   updatedAt: string;
   createdAt: string;
-  members: string[];
+  members: [{ membersId: number; nickname: string }];
   master: number;
 };

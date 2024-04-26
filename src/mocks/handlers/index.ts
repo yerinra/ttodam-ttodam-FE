@@ -1,5 +1,6 @@
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 import { getHistoryHandler } from './myPage/history';
+import { postMannersHandler } from './myPage/manners';
 
 import {
   getEditProfilesHandler,
@@ -23,4 +24,5 @@ export const handlers = [
   postEditProfilesHandler,
   getRequestsHandler,
   getHistoryHandler,
+  postMannersHandler,
 ];

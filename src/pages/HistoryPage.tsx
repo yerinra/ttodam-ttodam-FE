@@ -48,8 +48,8 @@ export default function HistoryPage() {
               status={ht.status}
               title={ht.title}
               products={ht.products}
-              startDate={ht.startDate}
-              endDate={ht.endDate}
+              updatedAt={ht.updatedAt}
+              createdAt={ht.createdAt}
             />
           ))}
       </ul>

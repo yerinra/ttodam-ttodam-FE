@@ -78,10 +78,10 @@ export default function RequestDialog({ data }: RequestDialogProps) {
                 <div className="ml-auto flex gap-2">
                   {request.requestStatus == 'wait' && (
                     <>
-                      <Button size={'sm'} onClick={() => handleAccept(request.requestUser.id)}>
+                      <Button size={'sm'} onClick={() => handleAccept(request.requestId)}>
                         승인
                       </Button>
-                      <Button size={'sm'} variant={'outline'} onClick={() => handleReject(request.requestUser.id)}>
+                      <Button size={'sm'} variant={'outline'} onClick={() => handleReject(request.requestId)}>
                         거절
                       </Button>
                     </>

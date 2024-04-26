@@ -1,4 +1,5 @@
 export type Request = {
+  requestId: number;
   postId: number;
   requestUser: RequestUser;
   requestStatus: 'wait' | 'accept' | 'refuse';

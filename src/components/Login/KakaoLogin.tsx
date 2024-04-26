@@ -7,7 +7,7 @@ const KakaoLogin = () => {
 
   const handleKakaoLogin = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_REDIRECT_URL}/kakao/login`);
+      const response = await axios.get(`${env.REACT_APP_REDIRECT_URL}/kakao/login`);
       const { data } = response;
       
       localStorage.setItem("name", data.account.kakaoName);

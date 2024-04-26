@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
+import registerKeyword from '@/apis/keyword/registerKeyword';
+import updateKeyword from '@/apis/keyword/updateKeyword';
+import deleteKeyword from '@/apis/keyword/deleteKeyword';
 
 interface Keyword {
   keywordId: string;

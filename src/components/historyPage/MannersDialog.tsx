@@ -67,7 +67,11 @@ export default function MannersDialog({ data }: MannersDialogProps) {
   };
 
   const handleEvaluationComplete = () => {
-    alert(`${clickedStars}점으로 평가가 완료되었습니다.`);
+    if (score.some(score => score === 0)) {
+      alert('함께한 참여자의 매너점수를 모두 평가해주세요!');
+    } else {
+      alert(`${clickedStars}점으로 매너점수 평가가 완료되었습니다.`);
+    }
   };
 
   if (error) return <div>에러가 발생했습니다.</div>;

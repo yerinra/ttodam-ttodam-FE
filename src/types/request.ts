@@ -1,4 +1,5 @@
 export type Request = {
+  requestId: number;
   postId: number;
   requestUser: RequestUser;
   requestStatus: 'wait' | 'accept' | 'refuse';
@@ -13,3 +14,5 @@ export type RequestUser = {
   nickname: string;
   manners: number;
 };
+
+export type RequestStatus = 'wait' | 'accept' | 'refuse';

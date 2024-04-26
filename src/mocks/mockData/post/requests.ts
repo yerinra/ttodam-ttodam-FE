@@ -3,6 +3,7 @@ import { RequestResponse } from '@/types/request';
 export const requestsMockData: RequestResponse = {
   participationRequests: [
     {
+      requestId: 1,
       postId: 2,
       requestUser: {
         id: 3,
@@ -12,6 +13,7 @@ export const requestsMockData: RequestResponse = {
       requestStatus: 'wait',
     },
     {
+      requestId: 2,
       postId: 2,
       requestUser: {
         id: 11,

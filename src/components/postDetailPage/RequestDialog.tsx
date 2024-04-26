@@ -6,6 +6,9 @@ import { getRequests } from '@/apis/post/request';
 import { type Post } from '@/types/post';
 import { Request } from '@/types/request';
 
+import { useChangeRequestStatusMutation } from '@/hooks/queries/useChangeRequestStatusMutation';
+
+
 type RequestDialogProps = {
   data: Post;
 };
@@ -22,8 +25,37 @@ export default function RequestDialog({ data }: RequestDialogProps) {
     },
   });
 
+
+  const { mutateAsync } = useChangeRequestStatusMutation(+data.Id);
+
+  const handleAccept = async (requestId: number) => {
+    const confirmed = window.confirm('승인하시겠습니까? 이 결정은 되돌릴 수 없습니다.');
+
+    if (confirmed) {
+      try {
+        await mutateAsync({ requestId, newStatus: 'accept' });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleReject = async (requestId: number) => {
+    const confirmed = window.confirm('거절하시겠습니까? 이 결정은 되돌릴 수 없습니다.');
+
+    if (confirmed) {
+      try {
+        await mutateAsync({ requestId, newStatus: 'refuse' });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;
+
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -48,10 +80,24 @@ export default function RequestDialog({ data }: RequestDialogProps) {
                   </div>
                 </section>
                 <div className="ml-auto flex gap-2">
-                  <Button size={'sm'}>승인</Button>
-                  <Button size={'sm'} variant={'outline'}>
-                    거절
-                  </Button>
+
+                  {request.requestStatus == 'wait' && (
+                    <>
+                      <Button size={'sm'} onClick={() => handleAccept(request.requestId)}>
+                        승인
+                      </Button>
+                      <Button size={'sm'} variant={'outline'} onClick={() => handleReject(request.requestId)}>
+                        거절
+                      </Button>
+                    </>
+                  )}
+                  {request.requestStatus == 'accept' && (
+                    <div className="text-sm font-semibold text-gray-400">이미 승인된 유저입니다.</div>
+                  )}
+                  {request.requestStatus == 'refuse' && (
+                    <div className="text-sm font-semibold text-gray-400">이미 거절된 유저입니다.</div>
+                  )}
+
                 </div>
               </li>
             ))}

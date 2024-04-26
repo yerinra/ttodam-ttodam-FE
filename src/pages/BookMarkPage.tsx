@@ -36,8 +36,10 @@ export default function BookMarkPage() {
       mutationFn: (bookmarkId: number) => deleteBookmark(bookmarkId),
       onMutate: (deletedBookmarkId: number) => {
         const previousData = queryClient.getQueryData<BookMark[]>(['bookmarks']);
-        queryClient.setQueryData(['bookmarks'], previousData => {
-          return (previousData as BookMark[])?.filter((item: BookMark) => item.id !== deletedBookmarkId) || [];
+
+        queryClient.setQueryData(['bookmarks'], (previousData: BookMark[]) => {
+          return previousData.filter((item: BookMark) => item.id !== deletedBookmarkId) || [];
+
         });
         return { previousData };
       },
@@ -52,10 +54,14 @@ export default function BookMarkPage() {
 
   const { mutateAsync } = useDeleteBookmarkMutation();
   const handleDeleteBookmark = async (bookmarkId: number) => {
-    try {
-      await mutateAsync(bookmarkId);
-    } catch (error) {
-      console.error(error);
+    const confirmed = window.confirm('북마크를 삭제하시겠습니까?');
+
+    if (confirmed) {
+      try {
+        await mutateAsync(bookmarkId);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 

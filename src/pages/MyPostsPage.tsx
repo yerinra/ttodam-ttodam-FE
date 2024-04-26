@@ -27,8 +27,19 @@ export default function MyPostsPage() {
   });
 
   const handleDeletePost = async (postId: number) => {
-    deletePostMutation.mutateAsync(postId);
+
+    try {
+      const confirmed = window.confirm('글을 삭제하시겠습니까?');
+
+      if (confirmed) {
+        await deletePostMutation.mutateAsync(postId);
+      }
+    } catch (error) {
+      console.error('게시글 삭제 중 오류가 발생했습니다:', error);
+    }
   };
+
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;
   return (

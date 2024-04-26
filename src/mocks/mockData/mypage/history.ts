@@ -4,7 +4,20 @@ export const HistoryMockData = {
       postId: 2,
       userId: 1,
       nickname: '익명의유저2',
-      members: ['유저1', '유저2', '유저3'],
+      members: [
+        {
+          membersId: 1,
+          nickname: '유저2',
+        },
+        {
+          membersId: 2,
+          nickname: '홍길동',
+        },
+        {
+          membersId: 3,
+          nickname: '또담',
+        },
+      ],
       title: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
       updatedAt: '2024-04-06 10:30:00',
       createdAt: '2024-04-11 12:00:00',

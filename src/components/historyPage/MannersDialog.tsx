@@ -67,7 +67,7 @@ export default function MannersDialog({ data }: MannersDialogProps) {
   };
 
   const handleEvaluationComplete = () => {
-    alert('평가가 완료되었습니다.');
+    alert(`${clickedStars}점으로 평가가 완료되었습니다.`);
   };
 
   if (error) return <div>에러가 발생했습니다.</div>;
@@ -117,13 +117,13 @@ export default function MannersDialog({ data }: MannersDialogProps) {
                       ))}
                   </div>
                 </section>
-                <div className="ml-auto flex gap-2">
-                  <Button type="submit" size={'sm'} onClick={handleEvaluationComplete}>
-                    평가 완료
-                  </Button>
-                </div>
               </li>
             ))}
+          <div className="flex gap-2 items-center justify-center mt-6">
+            <Button type="submit" size={'sm'} onClick={handleEvaluationComplete}>
+              평가 완료
+            </Button>
+          </div>
         </ul>
       </DialogContent>
     </Dialog>

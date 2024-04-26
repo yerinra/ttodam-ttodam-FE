@@ -6,7 +6,9 @@ import type { Category, Post } from '@/types/post';
 
 import { Link } from 'react-router-dom';
 import Badge from '../atoms/Badge';
+
 import MapMarker from './MapMarker';
+
 
 type PostMetaDataSectionProps = {
   data: Post;

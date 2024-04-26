@@ -25,6 +25,7 @@ export default function HeaderBtn({ isUserPost }: HeaderBtnProps) {
   });
 
   const handleDeletePost = async () => {
+
     const confirmed = window.confirm('글을 삭제하시겠습니까?');
 
     if (confirmed) {
@@ -34,6 +35,7 @@ export default function HeaderBtn({ isUserPost }: HeaderBtnProps) {
         console.error('게시글 삭제 중 오류가 발생했습니다:', error);
       }
     }
+
   };
 
   return isUserPost ? (

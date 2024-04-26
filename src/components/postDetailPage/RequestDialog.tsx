@@ -5,7 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getRequests } from '@/apis/post/request';
 import { type Post } from '@/types/post';
 import { Request } from '@/types/request';
+
 import { useChangeRequestStatusMutation } from '@/hooks/queries/useChangeRequestStatusMutation';
+
 
 type RequestDialogProps = {
   data: Post;
@@ -22,6 +24,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
       return getRequests(+data.Id!);
     },
   });
+
 
   const { mutateAsync } = useChangeRequestStatusMutation(+data.Id);
 
@@ -52,6 +55,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;
 
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -76,6 +80,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
                   </div>
                 </section>
                 <div className="ml-auto flex gap-2">
+
                   {request.requestStatus == 'wait' && (
                     <>
                       <Button size={'sm'} onClick={() => handleAccept(request.requestId)}>
@@ -92,6 +97,7 @@ export default function RequestDialog({ data }: RequestDialogProps) {
                   {request.requestStatus == 'refuse' && (
                     <div className="text-sm font-semibold text-gray-400">이미 거절된 유저입니다.</div>
                   )}
+
                 </div>
               </li>
             ))}

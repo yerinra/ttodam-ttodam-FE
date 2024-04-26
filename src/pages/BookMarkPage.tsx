@@ -36,8 +36,10 @@ export default function BookMarkPage() {
       mutationFn: (bookmarkId: number) => deleteBookmark(bookmarkId),
       onMutate: (deletedBookmarkId: number) => {
         const previousData = queryClient.getQueryData<BookMark[]>(['bookmarks']);
+
         queryClient.setQueryData(['bookmarks'], (previousData: BookMark[]) => {
           return previousData.filter((item: BookMark) => item.id !== deletedBookmarkId) || [];
+
         });
         return { previousData };
       },

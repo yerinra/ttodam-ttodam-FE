@@ -8,7 +8,9 @@ import {
 } from './myPage/profile';
 
 import { getAllPostsHandler, getPostByParamHandler, deletePostHandler } from './post/postHandlers';
+
 import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
+
 
 export const handlers = [
   getAllPostsHandler,
@@ -25,4 +27,5 @@ export const handlers = [
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
+
 ];

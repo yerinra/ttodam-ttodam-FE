@@ -10,6 +10,7 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
   }
 });
 
+
 export const putRequestHandler = http.put('/request/:requestId/:requestStatus', () => {
   // const { requestId, requestStatus } = params;
   return new HttpResponse(null, {
@@ -28,3 +29,4 @@ export const postRequestHandler = http.post('/post/:postId/request', () => {
     status: 200,
   });
 });
+

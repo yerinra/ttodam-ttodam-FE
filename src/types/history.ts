@@ -9,8 +9,8 @@ export type History = {
   title: string;
   status: Status;
   products: Product[];
-  startDate: string;
-  endDate: string;
+  updatedAt: string;
+  createdAt: string;
   members: string[];
   master: number;
 };

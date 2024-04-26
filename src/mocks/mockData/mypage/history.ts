@@ -6,8 +6,8 @@ export const HistoryMockData = {
       nickname: '익명의유저2',
       members: ['유저1', '유저2', '유저3'],
       title: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
-      startDate: '2024-04-06 10:30:00',
-      endDate: '2024-04-11 12:00:00',
+      updatedAt: '2024-04-06 10:30:00',
+      createdAt: '2024-04-11 12:00:00',
       status: 'in_progress',
       products: [
         {

@@ -22,3 +22,9 @@ export const cancelRequestHandler = http.delete('/request/:requestId', () => {
     status: 204,
   });
 });
+
+export const postRequestHandler = http.post('/post/:postId/request', () => {
+  return new HttpResponse(null, {
+    status: 200,
+  });
+});

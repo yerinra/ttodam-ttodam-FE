@@ -36,3 +36,14 @@ export const cancelRequest = async (requestId: number) => {
     throw error;
   }
 };
+
+export const postRequest = async (postId: number) => {
+  try {
+    await axiosAccess({
+      method: 'post',
+      url: `/post/${postId}/request`,
+    });
+  } catch (error) {
+    throw error;
+  }
+};

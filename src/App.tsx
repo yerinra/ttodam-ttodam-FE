@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-secondary">
+      <div className="bg-secondary font-PretendardRegular">
         <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
           <Router>
             <Routes>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
-import registerKeyword from '@/apis/keyword/registerKeyword';
-import updateKeyword from '@/apis/keyword/updateKeyword';
-import deleteKeyword from '@/apis/keyword/deleteKeyword';
+// import registerKeyword from '@/apis/keyword/registerKeyword';
+// import updateKeyword from '@/apis/keyword/updateKeyword';
+// import deleteKeyword from '@/apis/keyword/deleteKeyword';
 
 interface Keyword {
   keywordId: string;
@@ -24,16 +24,16 @@ const KeywordPage: React.FC = () => {
 
   const handleEdit = (keywordId: string, newKeywordName: string) => {
     console.log('키워드 수정:', keywordId, newKeywordName);
-    setKeywords((prevKeywords) =>
-      prevKeywords.map((keyword) =>
-        keyword.keywordId === keywordId ? { ...keyword, keywordName: newKeywordName } : keyword
-      )
+    setKeywords(prevKeywords =>
+      prevKeywords.map(keyword =>
+        keyword.keywordId === keywordId ? { ...keyword, keywordName: newKeywordName } : keyword,
+      ),
     );
   };
 
   const handleDelete = (keywordId: string) => {
     console.log('키워드 삭제:', keywordId);
-    setKeywords((prevKeywords) => prevKeywords.filter((keyword) => keyword.keywordId !== keywordId));
+    setKeywords(prevKeywords => prevKeywords.filter(keyword => keyword.keywordId !== keywordId));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +47,7 @@ const KeywordPage: React.FC = () => {
         userId: '1',
         keywordName: inputKeyword.trim(),
       };
-      setKeywords((prevKeywords) => [...prevKeywords, newKeyword]);
+      setKeywords(prevKeywords => [...prevKeywords, newKeyword]);
       setInputKeyword('');
     }
   };
@@ -55,12 +55,12 @@ const KeywordPage: React.FC = () => {
   return (
     <div className="min-h-screen w-full h-full">
       <Header />
-      <div className="max-w-screen-lg max-h-screen-lg mx-auto p-20 mt-20"> 
+      <div className="max-w-screen-lg max-h-screen-lg mx-auto p-20 mt-20">
         <div className="flex justify-center border-b-2 pb-4 mb-4">
           <h2 className="text-xl font-sans font-bold">키워드</h2>
         </div>
         <ul className="mb-6 mt-2">
-          {keywords.map((keyword) => (
+          {keywords.map(keyword => (
             <li key={keyword.keywordId} className="flex justify-between items-center border-b py-10 hover:bg-gray-100">
               <span>{keyword.keywordName}</span>
               <div>
@@ -93,10 +93,7 @@ const KeywordPage: React.FC = () => {
             value={inputKeyword}
             onChange={handleInputChange}
           />
-          <button
-            className="bg-primary text-white px-4 py-2 rounded mt-2"
-            onClick={handleAddKeyword}
-          >
+          <button className="bg-primary text-white px-4 py-2 rounded mt-2" onClick={handleAddKeyword}>
             추가
           </button>
         </div>

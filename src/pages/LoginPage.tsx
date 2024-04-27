@@ -17,7 +17,7 @@ interface FormValues {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['AccessToken']);
+  const [, setCookie] = useCookies(['AccessToken']);
   const queryClient = new QueryClient();
   const {
     register,
@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const { isLoggedIn, setIsLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
+  const { isLoggedIn, setIsLoggedIn } = useUserIsLogInStore();
 
   useEffect(() => {
     // const token = cookies.get('accessToken');

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // profileImgUrl
 export default function ProfilePage() {
   useRequireLogin();
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [, setProfiles] = useState<Profile[]>([]);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles'],

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 // import { loginUser } from '@/apis/auth/login';
 import { LoginFormData, login } from '@/apis/auth/login';
 import SocialLogin from '@/components/Login/SocialLogin';
-import { Cookies, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 

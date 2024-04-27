@@ -1,0 +1,28 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "javascript.format.enable": false,
+  "eslint.alwaysShowStatus": true,
+  "files.autoSave": "onFocusChange",
+  "cSpell.words": [
+    "clsx",
+    "daum",
+    "embla",
+    "kakao",
+    "kakaomap",
+    "lucide",
+    "mypage",
+    "Parens",
+    "shadcn",
+    "signin",
+    "signout",
+    "Signup",
+    "tailwindcss",
+    "tanstack",
+    "zustand"
+  ]
+}

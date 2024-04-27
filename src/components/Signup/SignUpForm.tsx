@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { axiosPublic } from '@/apis/apiClient';
 import sendAuthenticationCode from '@/apis/Email_authentication/sendAuthenticationCode';
 import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenticationCode';
+import { signUpFormData } from '@/types/auth';
+import { signUp } from '@/apis/signup/signup';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   email: string;
@@ -19,20 +21,31 @@ const SignUpForm: React.FC = () => {
     formState: { errors },
     watch,
     setError,
+    reset,
   } = useForm<FormValues>();
+  const navigate = useNavigate();
 
   const [isCodeRequested, setIsCodeRequested] = useState(false);
   const [isCodeVerified, setIsCodeVerified] = useState(false);
   const password = watch('password');
 
   const onSubmit = async (data: FormValues) => {
-    try {
-      const response = await axiosPublic.post('/api/signup', data);
-      if (response.status === 200) {
-        console.log('회원가입 성공');
+    if (isCodeVerified) {
+      try {
+        const dataToSend: signUpFormData = {
+          email: data.email,
+          password: data.password,
+          nickname: data.nickname,
+        };
+        await signUp(dataToSend);
+        reset();
+        alert('가입을 환영합니다.');
+        navigate('/login');
+      } catch (error) {
+        console.error('회원가입 실패:', error);
       }
-    } catch (error) {
-      console.error('회원가입 실패:', error);
+    } else {
+      alert('이메일 인증을 진행해주세요!');
     }
   };
 

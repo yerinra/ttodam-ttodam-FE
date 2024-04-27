@@ -22,6 +22,7 @@ const LoginPage: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
   const { isLoggedIn, setIsLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
@@ -43,11 +44,15 @@ const LoginPage: React.FC = () => {
       setCookie('AccessToken', accessToken, {
         path: '/',
       });
-      alert('로그인 성공');
+      alert('로그인 성공!');
       setIsLoggedIn(true);
       navigate('/home');
     },
-    onError: err => console.error('로그인 api 실패', err),
+    onError: err => {
+      alert('로그인에 실패하였습니다.');
+      console.error('로그인 api 실패', err);
+      reset();
+    },
   });
   const onSubmit = async (data: FormValues) => {
     // try {

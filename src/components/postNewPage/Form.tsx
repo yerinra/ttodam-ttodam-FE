@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
@@ -34,6 +35,8 @@ export default function Form() {
   const [deadline, setDeadline] = useState<Date>(new Date());
   const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -232,6 +235,7 @@ export default function Form() {
       await postPostNew(formData);
       alert('게시글 등록이 완료되었습니다.');
       console.log('요청이 성공적으로 완료되었습니다.');
+      navigate('/posts/all');
     } catch (error) {
       console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
     }

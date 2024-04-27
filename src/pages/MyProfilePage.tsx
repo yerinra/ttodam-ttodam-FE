@@ -1,4 +1,6 @@
 import { getProfiles } from '@/apis/myPage/profiles';
+import useRequireLogin from '@/hooks/useRequireLogin';
+
 import { Profile } from '@/mocks/handlers/myPage/profile';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -7,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 // profileImgUrl
 export default function ProfilePage() {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  useRequireLogin();
+  const [, setProfiles] = useState<Profile[]>([]);
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles'],

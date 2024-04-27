@@ -8,6 +8,8 @@ import star from '../assets/star.png';
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useUserIsLogInStore from '@/store/isLoginStore';
+import { signout } from '@/apis/auth/signout';
 
 const LandingPageData = [
   {
@@ -45,6 +47,7 @@ const LandingPageData = [
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const { isLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;
   //   setCurrentIndex(newIndex);
@@ -60,6 +63,18 @@ export default function LandingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
+  const handleSignout = async () => {
+    const confirmed = window.confirm('로그아웃 하시겠습니까?');
+    if (confirmed) {
+      try {
+        await signout();
+        resetIsLoggedIn();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const content = LandingPageData[currentIndex];
   return (
     <div className="flex flex-col mt-5 w-full h-screen px-10">
@@ -67,16 +82,27 @@ export default function LandingPage() {
         <Link to="/">
           <img src={logo} alt="logo" className="w-20 h-20" />
         </Link>
-        <div className="flex gap-5">
-          <Link to="/login">
-            <Button className="text-md p-5">로그인</Button>
-          </Link>
-          <Link to="/signup">
-            <Button variant="outline" className="text-md p-5">
-              회원가입
+        {isLoggedIn ? (
+          <div className="flex gap-5">
+            <Link to="/login">
+              <Button className="text-md p-5">홈으로</Button>
+            </Link>
+            <Button variant="outline" className="text-md p-5" onClick={handleSignout}>
+              로그아웃
             </Button>
-          </Link>
-        </div>
+          </div>
+        ) : (
+          <div className="flex gap-5">
+            <Link to="/login">
+              <Button className="text-md p-5">로그인</Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="outline" className="text-md p-5">
+                회원가입
+              </Button>
+            </Link>
+          </div>
+        )}
       </header>
       <div className="flex flex-col items-center w-full m-auto gap-y-4 justify-center">
         <div className="bg-primary/80 rounded-full mb-10 p-5 ">

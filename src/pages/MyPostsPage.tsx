@@ -4,12 +4,14 @@ import Badge from '@/components/atoms/Badge';
 import H1 from '@/components/atoms/H1';
 import ListItemContainer from '@/components/atoms/ListItemContainer';
 import { Button } from '@/components/ui/button';
+import useRequireLogin from '@/hooks/useRequireLogin';
 import { categoryNameKR } from '@/lib/utils';
 import { Category, Post } from '@/types/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 export default function MyPostsPage() {
+  useRequireLogin();
   const { data, error, isLoading } = useQuery<Post[]>({
     queryKey: ['myPosts'],
     queryFn: getMyPosts,
@@ -27,7 +29,6 @@ export default function MyPostsPage() {
   });
 
   const handleDeletePost = async (postId: number) => {
-
     try {
       const confirmed = window.confirm('글을 삭제하시겠습니까?');
 
@@ -38,7 +39,6 @@ export default function MyPostsPage() {
       console.error('게시글 삭제 중 오류가 발생했습니다:', error);
     }
   };
-
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;

@@ -16,13 +16,15 @@ import SignUpPage from './pages/SignUpPage';
 import NotificationPage from './pages/NotificationPage';
 import LandingPage from './pages/LandingPage';
 import MyPostsPage from './pages/MyPostsPage';
+import ChattingList from './pages/ChattingList';
+import ChattingPage from './pages/ChattingPage';
 
 const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-secondary">
+      <div className="bg-secondary font-PretendardRegular">
         <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
           <Router>
             <Routes>
@@ -40,6 +42,8 @@ export default function App() {
 
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
+                <Route path="/chat" element={<ChattingList />} />
+                <Route path="/chatting" element={<ChattingPage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
 
                 <Route path="/my/posts" element={<MyPostsPage />} />

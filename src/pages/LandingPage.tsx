@@ -7,7 +7,7 @@ import chat from '../assets/chat.png';
 import star from '../assets/star.png';
 
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useUserIsLogInStore from '@/store/isLoginStore';
 import { signout } from '@/apis/auth/signout';
 

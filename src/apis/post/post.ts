@@ -27,3 +27,18 @@ export const deletePost = async (postId: number) => {
     throw error;
   }
 };
+
+export const postPostNew = async (formData: FormData) => {
+  try {
+    await axiosAccess({
+      method: 'post',
+      url: `/post`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/from-data',
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};

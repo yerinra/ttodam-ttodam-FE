@@ -262,18 +262,17 @@ export default function Form() {
       <Category onSelectCategory={handleCategorySelect} />
       <input
         type="text"
-        placeholder="게시글 제목"
+        placeholder="게시글 제목을 입력해주세요."
         value={title}
         onChange={handleTitleChange}
         className="w-full outline-none py-4 border-b"
       />
-
       {products.map((product, index) => (
         <div key={index}>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="상품 이름"
+              placeholder="상품의 이름을 입력해주세요."
               value={product.productName}
               onChange={e => handleProductNameChange(index, e.target.value)}
               className="w-full outline-none"
@@ -291,7 +290,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="상품 링크"
+              placeholder="상품의 링크를 입력해주세요."
               value={product.purchaseLink}
               onChange={e => handleProductLinkChange(index, e.target.value)}
               className="w-full outline-none"
@@ -300,7 +299,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="number"
-              placeholder="수량"
+              placeholder="상품의 수량을 입력해주세요."
               value={product.count === 0 ? '' : String(product.count)}
               onChange={e => handleProductCountChange(index, e.target.value)}
               className="w-full outline-none"
@@ -309,7 +308,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="원래 가격"
+              placeholder="상품의 가격을 입력해주세요."
               value={product.price === 0 ? '' : product.price.toLocaleString()}
               onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
               className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -320,7 +319,7 @@ export default function Form() {
             <input
               type="text"
               key={index}
-              placeholder="인당 가격"
+              placeholder="모집 인원을 입력하시면 자동으로 인당 가격이 계산됩니다."
               value={calculatePerPersonPrice(product)}
               readOnly
               className="w-full outline-none py-4 border-b"
@@ -329,7 +328,7 @@ export default function Form() {
             <input
               type="text"
               key={index}
-              placeholder="인당 가격"
+              placeholder="희망 모집 인원을 입력하시면 자동으로 인당 가격이 보여집니다."
               value={calculatePerPersonPrice(product)}
               readOnly
               className="w-full outline-none py-4 border-b-2 border-stone-300 text-black"
@@ -340,7 +339,7 @@ export default function Form() {
       <DaumPost onAddressChange={handleAddressChange} />
       <input
         type="number"
-        placeholder="희망 모집 인원"
+        placeholder="희망 모집 인원을 입력해주세요."
         value={totalParticipants}
         onChange={e => handleParticipantsChangeAllProducts(e.target.value)}
         className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -351,7 +350,7 @@ export default function Form() {
       <textarea
         cols={30}
         rows={10}
-        placeholder="상세 정보"
+        placeholder="또담공구의 상세 정보를 입력해주세요."
         name="content"
         value={content}
         onChange={handleContentChange}

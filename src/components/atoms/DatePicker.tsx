@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale'
+import { ko } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -20,8 +20,8 @@ export function DatePicker({ onDateChange }: DatePickerProps) {
       setDate(date);
       onDateChange(date);
     }
-  }
-  
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,7 +32,11 @@ export function DatePicker({ onDateChange }: DatePickerProps) {
             !date && 'text-muted-foreground',
           )}
         >
-          {date ? format(date, 'yyyy-MM-dd') : <span className=" text-base text-[#9ca3af]">마감일</span>}
+          {date ? (
+            format(date, 'yyyy-MM-dd')
+          ) : (
+            <span className=" text-base text-[#9ca3af]">마감일을 선택해주세요.</span>
+          )}
           <CalendarIcon className="mr-2 h-4 w-4 ml-1 text-[#9ca3af]" />
         </Button>
       </PopoverTrigger>

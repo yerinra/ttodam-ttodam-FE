@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png';
 // import { loginUser } from '@/apis/auth/login';
 import { LoginFormData, login } from '@/apis/auth/login';
 import SocialLogin from '@/components/Login/SocialLogin';
@@ -85,7 +86,7 @@ const LoginPage: React.FC = () => {
       {
         <>
           <Link to="/">
-            <img src="/src/assets/logo.png" alt="Logo" className="w-24 h-24 mb-8" />
+            <img src={logo} alt="Logo" className="w-24 h-24 mb-8" />
           </Link>
           <h1 className="text-4xl font-bold mb-8">로그인</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">

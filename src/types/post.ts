@@ -49,6 +49,6 @@ export type PostNew = {
   price: number;
   count: number;
   purchaseLink: string;
-  productImgUrl: string;
+  postImgUrl: string;
   content: string;
 };

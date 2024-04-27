@@ -18,7 +18,7 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
-import { getAllPostsHandler, getPostByParamHandler, deletePostHandler } from './post/postHandlers';
+import { getAllPostsHandler, getPostByParamHandler, deletePostHandler, postPostNewHandler } from './post/postHandlers';
 
 import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
 
@@ -44,4 +44,5 @@ export const handlers = [
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
+  postPostNewHandler,
 ];

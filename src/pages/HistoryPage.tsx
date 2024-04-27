@@ -5,8 +5,9 @@ import PaginationSection from '@/components/postListPage/PaginationSection';
 
 import H1 from '@/components/atoms/H1';
 import { getHistory } from '@/apis/myPage/history';
-import { type History } from '@/mocks/mockData/mypage/history';
 import HistoryPreview from '@/components/historyPage/HistoryPreview';
+import { History } from '@/types/history';
+import { Manners } from '@/types/manners';
 
 export default function HistoryPage() {
   const { data, error, isLoading } = useQuery<History[]>({
@@ -36,10 +37,32 @@ export default function HistoryPage() {
 
   const dataToShow = data?.slice(indexOfFirstItem, indexOfLastItem);
 
+  const convertToManners = (history: History): Manners[] => {
+    return history.members.map(member => ({
+      membersId: member.membersId,
+      nickname: member.nickname,
+      manners: 0, // 예시로 초기 매너값은 0으로 설정
+    }));
+  };
+
   return (
     <>
       <H1>참여 내역</H1>
-      <ul>{dataToShow && dataToShow.map((ht: History) => <HistoryPreview key={ht.id} post={ht.postInfo} />)}</ul>
+      <ul>
+        {dataToShow &&
+          dataToShow.map((ht: History) => (
+            <HistoryPreview
+              key={ht.postId}
+              postId={ht.postId}
+              status={ht.status}
+              title={ht.title}
+              products={ht.products}
+              updatedAt={ht.updatedAt}
+              createdAt={ht.createdAt}
+              data={convertToManners(ht)}
+            />
+          ))}
+      </ul>
       <PaginationSection
         currentPage={currentPage}
         startPage={startPage}

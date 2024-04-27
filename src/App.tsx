@@ -13,15 +13,11 @@ import EditProfile from './components/profilePage/EditProfile';
 import HistoryPage from './pages/HistoryPage';
 import PostEditPage from './pages/PostEditPage';
 import SignUpPage from './pages/SignUpPage';
-<<<<<<< HEAD
-import KeywordPage from './pages/keywordpage';
-import ChattingPage from './pages/ChattingPage';
-import ChattingList from './pages/ChattingList';
-=======
 import NotificationPage from './pages/NotificationPage';
 import LandingPage from './pages/LandingPage';
 import MyPostsPage from './pages/MyPostsPage';
->>>>>>> 19a97e2b6bd6ea569b95c08f43335f292ab56448
+import ChattingList from './pages/ChattingList';
+import ChattingPage from './pages/ChattingPage';
 
 const queryClient = new QueryClient();
 
@@ -34,12 +30,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
-<<<<<<< HEAD
-              <Route path="/sign" element={<SignUpPage />} />
-              <Route path="/my/keyword" element={<KeywordPage />} />
-=======
               <Route path="/signup" element={<SignUpPage />} />
->>>>>>> 19a97e2b6bd6ea569b95c08f43335f292ab56448
               <Route path="/post/new" element={<PostNewPage />} />
               <Route path="/post/edit/:postId" element={<PostEditPage />} />
               <Route path="/my/edit/profile" element={<EditProfile />} />
@@ -55,10 +46,8 @@ export default function App() {
                 <Route path="/chatting" element={<ChattingPage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
 
-                <Route path="/my/history/:postId" element={<HistoryDetailPage />} />
                 <Route path="/my/posts" element={<MyPostsPage />} />
                 <Route path="/notification" element={<NotificationPage />} />
-
               </Route>
             </Routes>
           </Router>

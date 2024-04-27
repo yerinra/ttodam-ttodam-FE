@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 
 export default function Header() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['AccessToken']);
+  const [, , removeCookie] = useCookies(['AccessToken']);
   const { isLoggedIn, resetIsLoggedIn } = useUserIsLoggedInStore();
   const logout = () => {
     const confirmed = window.confirm('로그아웃 하시겠습니까?');

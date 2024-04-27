@@ -46,7 +46,7 @@ const LandingPageData = [
 
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate();
+
   const { isLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;

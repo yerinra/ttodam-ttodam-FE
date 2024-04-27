@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { KakaoMapContext } from '@/map/useMap';
-import usePostDetailMapMarker from '../../hooks/usePostDetailMapMarker';
 
 interface MapProps {
   lat: number;

@@ -1,21 +1,18 @@
-import React from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 const KakaoLogin = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleKakaoLogin = async () => {
-    try {
-      const response = await axios.get(`${env.REACT_APP_REDIRECT_URL}/kakao/login`);
-      const { data } = response;
-      
-      localStorage.setItem("name", data.account.kakaoName);
-      
-      navigate("/");
-    } catch (error) {
-      console.error('카카오톡 로그인 실패:', error);
-    }
+    // try {
+    //   const response = await axios.get(`${env.REACT_APP_REDIRECT_URL}/kakao/login`);
+    //   const { data } = response;
+    //   localStorage.setItem('name', data.account.kakaoName);
+    //   navigate('/');
+    // } catch (error) {
+    //   console.error('카카오톡 로그인 실패:', error);
+    // }
   };
 
   return (

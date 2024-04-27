@@ -13,7 +13,7 @@ interface MapSearchInputProps {
 export default function MapSearchInput(props: MapSearchInputProps) {
   const map = useMap();
   const [search, setSearch] = useState('');
-  const [places, setPlaces] = useState<PlaceTypee[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
   const [isSearchInput, setIsSearchInput] = useState(false);
 
   const placeService = useRef<kakao.maps.services.Places | null>(null);

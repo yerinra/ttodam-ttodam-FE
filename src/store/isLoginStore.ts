@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type IsLoggedInStore = {
+type IsLoggedInStoreState = {
   isLoggedIn: boolean;
+};
+type IsLoggedInStoreActions = {
   setIsLoggedIn: (newIsLoggedIn: boolean) => void;
   resetIsLoggedIn: () => void;
 };
-const useUserIsLoggedInStore = create(
+const useUserIsLoggedInStore = create<IsLoggedInStoreState & IsLoggedInStoreActions>()(
   persist(
     set => ({
       // 초기 상태

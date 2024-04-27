@@ -5,16 +5,16 @@ export interface LoginFormData {
   password: string;
 }
 
-interface ErrorResponse {
-  status: number;
-  errorCode: string;
-  message: string;
-}
+// interface ErrorResponse {
+//   status: number;
+//   errorCode: string;
+//   message: string;
+// }
 
-interface AuthResponse {
-  message: string;
-  accessToken: string;
-}
+// interface AuthResponse {
+//   message: string;
+//   accessToken: string;
+// }
 
 export const login = async (loginFormData: LoginFormData) => {
   try {

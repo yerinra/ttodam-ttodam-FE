@@ -7,7 +7,7 @@ import { BookmarkFilledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
 export default function BookmarkBtn() {
-  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarked] = useState(false);
   const { currentPostId } = useCurrentPostIdStore();
 
   const { mutateAsync: mutateDeleteAsync } = useDeleteBookmarkMutation();

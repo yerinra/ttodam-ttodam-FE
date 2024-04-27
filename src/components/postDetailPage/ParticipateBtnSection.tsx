@@ -1,10 +1,10 @@
-
 import { Button } from '../ui/button';
-import { Post } from '@/types/post';
-import ParticipationDialog from './ParticipationDialog';
-import { useQuery } from '@tanstack/react-query';
-import { getRequests } from '@/apis/post/request';
-import { Request, requestsMockDataType } from '@/mocks/mockData/post/requests';
+import { type Post } from '@/types/post';
+import RequestDialog from './RequestDialog';
+
+// import { useCancelRequestMutation } from '@/hooks/queries/useCancelRequestMutation';
+// import { usePostRequestMutation } from '@/hooks/queries/usePostRequestMutation';
+// import { RequestStatus } from '@/types/request';
 
 
 type ParticipateBtnSectionProps = {
@@ -13,29 +13,25 @@ type ParticipateBtnSectionProps = {
 };
 
 export default function ParticipateBtnSection({ isUserPost, data }: ParticipateBtnSectionProps) {
-  // const {
-  //   data: requestsData,
-  //   error,
-  //   isLoading,
-  // } = useQuery({
-  //   queryKey: ['request', data.Id],
-  //   queryFn: () => {
-  //     return getRequests(+data.Id!);
-  //   },
-  // });
 
+  // const stat: RequestStatus = 'wait';
+  // const { mutateAsync: postRequestMutateAsync } = usePostRequestMutation(data.Id);
+  // const { mutateAsync: cancelRequestMutateAsync } = useCancelRequestMutation(data.Id);
+  // const handleParticipate = () => {
+  //   if (stat === 'wait') postRequestMutateAsync(data.Id);
+  //   else cancelRequestMutateAsync(3);
+  // };
   return (
     <section className="flex justify-center ml-auto">
-      {isUserPost ? (
-        <ParticipationDialog data={data} />
+      {isUserPost && <RequestDialog data={data} />}
+      {!isUserPost && (
+        <Button size={'lg'} disabled={data.status !== 'in_progress'} onClick={() => console.log('해야됨')}>
 
-      ) : (
-        <Button size={'lg'} disabled={data.status !== 'in_progress'}>
           {data.status == 'in_progress'
-            ? '참여신청하기'
+            ? '참여요청 보내기'
             : data.status == 'completed'
               ? '모집이 완료되었습니다.'
-              : '마감되었습니다.'}
+              : '모집이 마감되었습니다.'}
         </Button>
       )}
     </section>

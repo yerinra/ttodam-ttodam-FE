@@ -21,7 +21,19 @@ export const deleteBookmark = async (postId: number) => {
       url: `post/bookmark/${postId}`,
     });
 
-    return res;
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addBookmark = async (postId: number) => {
+  try {
+    const res = await axiosAccess({
+      method: 'post',
+      url: `/post/${postId}/bookmark`,
+    });
+    return res.data;
   } catch (error) {
     throw error;
   }

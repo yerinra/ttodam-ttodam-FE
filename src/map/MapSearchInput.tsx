@@ -87,7 +87,8 @@ export default function MapSearchInput(props: MapSearchInputProps) {
   };
 
   return (
-    <div className="fixed top-[89px] left-0 flex flex-col min-w-[240px] w-full h-[70px] z-[99999] px-5 bg-white my-0 mx-auto">
+    // <div className="fixed top-[89px] left-0 flex flex-col min-w-[240px] w-full h-[70px] z-[99999] px-5 bg-white my-0 mx-auto">
+    <div className="absolute top-0 flex flex-col min-w-[240px] w-full h-[70px] z-[99999] px-5 bg-white my-0 mx-auto">
       <form onSubmit={handleSubmit} className="sticky min-w-[240px] w-full max-w-[768px] h-11 my-0 mx-auto">
         <input
           type="text"

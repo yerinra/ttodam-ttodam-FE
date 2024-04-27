@@ -1,10 +1,17 @@
-import axios from 'axios';
+import { axiosPublic } from '../apiClient';
 
-const signUp = async (userData) => {
+interface UserData {
+  email: string;
+  authenticationCode: string;
+  nickname: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const signUp = async (userData: UserData) => {
   try {
- 
-    const response = await axios.post('/api/signup', userData);
-    return response.data; 
+    const response = await axiosPublic.post('/users/signup', userData);
+    return response.data;
   } catch (error) {
     throw new Error('회원가입에 실패했습니다.');
   }

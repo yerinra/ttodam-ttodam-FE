@@ -1,16 +1,35 @@
-import axios from 'axios';
+import { axiosPublic } from '../apiClient';
 
 interface LoginData {
   email: string;
   password: string;
 }
 
+interface ErrorResponse {
+  status: number;
+  errorCode: string;
+  message: string;
+}
 
-export const loginUser = async (userData: LoginData): Promise<any> => {
+interface AuthResponse {
+  message: string;
+  accessToken: string;
+}
+
+export const loginUser = async (userData: LoginData): Promise<string | null> => {
   try {
-    const response = await axios.post('/user/login', userData);
-    return response.data; 
-  } catch (error) {
-    throw new Error('로그인 실패. 계정 정보를 확인하세요.'); 
+    const response = await axiosPublic.post('/users/signin', userData);
+    const authResponse: AuthResponse = response.data;
+    const token: string = authResponse.accessToken;
+    return token;
+  } catch (error: any) {
+    if (error.response) {
+      const errorResponse: ErrorResponse = error.response.data;
+      throw new Error(`로그인 실패: ${errorResponse.status}, ${errorResponse.errorCode}, ${errorResponse.message}`);
+    } else if (error.request) {
+      throw new Error('서버로부터 응답이 없습니다.');
+    } else {
+      throw new Error('요청을 설정하는 동안 오류가 발생했습니다.');
+    }
   }
 };

@@ -1,12 +1,14 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { KakaoMapContext } from '@/map/useMap';
+import usePostDetailMapMarker from '../../hooks/usePostDetailMapMarker';
 
 interface MapProps {
   lat: number;
   lng: number;
+  children?: ReactNode;
 }
 
-export default function Map({ lat, lng }: MapProps) {
+export default function Map({ lat, lng, children }: MapProps) {
   const [map, setMap] = useState<kakao.maps.Map | null>();
   const kakaoMapRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +21,7 @@ export default function Map({ lat, lng }: MapProps) {
     const targetPoint = new kakao.maps.LatLng(lat, lng);
     const options = {
       center: targetPoint,
-      level: 2,
+      level: 3,
       draggable: false,
     };
 
@@ -29,11 +31,7 @@ export default function Map({ lat, lng }: MapProps) {
   return (
     <div className="w-full h-[300px] mt-10">
       <div className="w-full h-[240px] md:h-[300px] rounded-2xl -z-0" ref={kakaoMapRef} />
-      {map ? (
-        <KakaoMapContext.Provider value={map}></KakaoMapContext.Provider>
-      ) : (
-        <div>지도 정보를 가져오는데 실패하였습니다.</div>
-      )}
+      {map && <KakaoMapContext.Provider value={map}>{children}</KakaoMapContext.Provider>}
     </div>
   );
 }

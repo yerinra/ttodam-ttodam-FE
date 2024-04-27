@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '@/apis/login/login';
 import SocialLogin from '@/components/Login/SocialLogin';
+import { Cookies } from 'react-cookie';
+import useUserIsLogInStore from '../store/isLoginStore';
+
+const cookies = new Cookies();
 
 interface FormValues {
   email: string;
@@ -11,22 +15,26 @@ interface FormValues {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const isLoggedIn: boolean = useUserIsLogInStore(state => state.isLogIn);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = cookies.get('accessToken');
     if (token) {
-      setIsLoggedIn(true);
+      useUserIsLogInStore.setState({ isLogIn: true });
     }
   }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await loginUser(data);
-      if (response.message === '로그인 성공') {
-        localStorage.setItem('token', response.token);
-        setIsLoggedIn(true);
+      const token = await loginUser(data);
+      if (token) {
+        cookies.set('accessToken', token, { path: '/' });
+        useUserIsLogInStore.setState({ isLogIn: true });
         navigate('/');
       } else {
         alert('로그인 실패. 계정 정보를 확인하세요.');
@@ -38,8 +46,8 @@ const LoginPage: React.FC = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    cookies.remove('accessToken');
+    useUserIsLogInStore.setState({ isLogIn: false });
   };
 
   return (

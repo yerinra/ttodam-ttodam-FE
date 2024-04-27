@@ -1,10 +1,14 @@
 import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
 import Map from './Map';
-import { categoryNameKR, cn, formatDate } from '@/lib/utils';
+import { categoryNameKR, formatDate } from '@/lib/utils';
 
-import { Category, Post } from '@/types/post';
+import type { Category, Post } from '@/types/post';
 
 import { Link } from 'react-router-dom';
+import Badge from '../atoms/Badge';
+
+import MapMarker from './MapMarker';
+
 
 type PostMetaDataSectionProps = {
   data: Post;
@@ -26,11 +30,8 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
             <div className="flex flex-col gap-2">
               {data &&
                 data.products.map(product => (
-                  <div
-                    key={product.productId}
-                    className="bg-slate-200 opacity-50 px-3 py-1 rounded-md  hover:bg-gray-300 transition-all"
-                  >
-                    <Link to={product.purchaseLink} className="flex flex-col">
+                  <Badge variant="secondary" key={product.productId} classNames="hover:bg-opacity-80">
+                    <Link to={product.purchaseLink as string} className="flex flex-col">
                       <div>{product.productName}</div>
                       <div>
                         {Math.ceil(product.price / data.participants).toLocaleString()}원 *{' '}
@@ -38,7 +39,7 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
                         EA
                       </div>
                     </Link>
-                  </div>
+                  </Badge>
                 ))}
             </div>
           </section>
@@ -46,23 +47,21 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
             metaData.map(meta => (
               <li key={meta.desc} className="flex gap-5">
                 <div className="text-dark-gray font-bold w-24 flex-shrink-0">{meta.desc}</div>
-                <div
-                  className={cn('h-fit', {
-                    'bg-primary/30 px-2 py-[2px] text-primary font-semibold rounded-sm': meta.desc === '카테고리',
-                  })}
-                >
-                  {meta.desc === '마감일'
-                    ? formatDate(meta.content as string)
-                    : meta.desc === '카테고리'
-                      ? categoryNameKR(meta.content as Exclude<Category, 'ALL'>)
-                      : meta.content}
-                </div>
+                {meta.desc == '카테고리' && (
+                  <Badge variant="primary" classNames="px-2 py-1 text-md -ml-1">
+                    {categoryNameKR(meta.content as Exclude<Category, 'ALL'>)}
+                  </Badge>
+                )}
+                {meta.desc == '마감일' && <div>{formatDate(meta.content as string)}</div>}
+                {meta.desc !== '카테고리' && meta.desc !== '마감일' && <div>{meta.content}</div>}
               </li>
             ))}
         </section>
 
         <KakaoMapScriptLoader>
-          <Map lat={data.pLocationX} lng={data.pLocationY}></Map>
+          <Map lat={data.pLocationX} lng={data.pLocationY}>
+            <MapMarker lat={data.pLocationX} lng={data.pLocationY} />
+          </Map>
         </KakaoMapScriptLoader>
       </div>
     </ul>

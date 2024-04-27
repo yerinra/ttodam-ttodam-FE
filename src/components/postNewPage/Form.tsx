@@ -5,8 +5,8 @@ import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
 import { PostNew } from '@/types/post';
 import Category from './Category';
-import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
+import { postPostNew } from '@/apis/post/post';
 
 // TODO: 컴포넌트 분리 및 리팩토링하기!
 export default function Form() {
@@ -218,6 +218,10 @@ export default function Form() {
       formData.append(`products[${index}][purchaseLink]`, product.purchaseLink);
     });
 
+    // 데이터 확인
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log(formDataObject);
+
     imageFile
       .filter(image => image !== null)
       .forEach((image, index) => {
@@ -225,15 +229,11 @@ export default function Form() {
       });
 
     try {
-      const response = await axios.post('/post/new', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      console.log('응답: ', response.data);
+      await postPostNew(formData);
+      alert('게시글 등록이 완료되었습니다.');
+      console.log('요청이 성공적으로 완료되었습니다.');
     } catch (error) {
-      console.error('에러 발생: ', error);
+      console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
     }
 
     imagePreview.forEach(URL.revokeObjectURL);

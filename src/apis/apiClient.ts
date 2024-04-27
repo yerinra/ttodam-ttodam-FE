@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 
-const API_BASE_URL = 'http://localhost:5173';
+// const API_BASE_URL = 'http://localhost:5173';
+const API_BASE_URL = 'https://ttodam-ttodam-fr.vercel.app/';
 const cookies = new Cookies();
 
 export const axiosPublic = axios.create({

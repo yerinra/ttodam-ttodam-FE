@@ -1,6 +1,9 @@
-import { signupHandler } from './\bauth/signup';
-import { verifyCodeHandler } from './\bauth/verifyCode';
-import { verifyEmailHandler } from './\bauth/verifyEmail';
+import { loginHandler } from './auth/login';
+import { signoutHandler } from './auth/signout';
+import { signupHandler } from './auth/signup';
+import { verifyCodeHandler } from './auth/verifyCode';
+import { verifyEmailHandler } from './auth/verifyEmail';
+
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 
 import { getHistoryHandler } from './myPage/history';
@@ -23,6 +26,8 @@ export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
   signupHandler,
+  signoutHandler,
+  loginHandler,
   getAllPostsHandler,
   getPostByParamHandler,
   getBookmarksHandler,

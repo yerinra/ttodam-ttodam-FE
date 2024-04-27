@@ -1,9 +1,10 @@
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Form from '@/components/postNewPage/Form';
+import useRequireLogin from '@/hooks/useRequireLogin';
 
 export default function PostNewPage() {
-
+  useRequireLogin();
   return (
     <section className="px-5 w-full">
       <div className="flex items-center justify-between border-b border-black h-[60px]">

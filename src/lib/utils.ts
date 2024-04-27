@@ -1,3 +1,5 @@
+import useUserIsLoggedInStore from '@/store/isLoginStore';
+import useUserInfoStore from '@/store/userInfoStore';
 import { Category } from '@/types/post';
 import { type ClassValue, clsx } from 'clsx';
 import { format } from 'date-fns';

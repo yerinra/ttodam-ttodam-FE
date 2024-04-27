@@ -8,8 +8,7 @@ import Category from './Category';
 import axios from 'axios';
 import { IoClose } from 'react-icons/io5';
 
-// import placeholderImage from '@/assets/placeholderImage.png';
-
+// TODO: 컴포넌트 분리 및 리팩토링하기!
 export default function Form() {
   const [products, setProducts] = useState<PostNew[]>([
     {
@@ -174,6 +173,7 @@ export default function Form() {
     setContent(e.target.value);
   };
 
+  // 이미지 변경
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -183,6 +183,7 @@ export default function Form() {
     }
   };
 
+  // 이미지 삭제
   const handleRemoveImage = (index: number) => {
     const newFiles = [...imageFile];
     newFiles.splice(index, 1);

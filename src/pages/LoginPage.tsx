@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '@/apis/login/login';
+// import { loginUser } from '@/apis/auth/login';
+import { LoginFormData, login } from '@/apis/auth/login';
 import SocialLogin from '@/components/Login/SocialLogin';
-import { Cookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 interface FormValues {
   email: string;
@@ -15,52 +17,70 @@ interface FormValues {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['AccessToken']);
+  const queryClient = new QueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const isLoggedIn: boolean = useUserIsLogInStore(state => state.isLogIn);
+  const { isLoggedIn, setIsLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
 
   useEffect(() => {
-    const token = cookies.get('accessToken');
-    if (token) {
-      useUserIsLogInStore.setState({ isLogIn: true });
-    }
+    // const token = cookies.get('accessToken');
+    // if (token) {
+    //   setIsLoggedIn(true);
+    // }
+
+    if (isLoggedIn) navigate('/home');
   }, []);
 
+  const loginMutation = useMutation({
+    mutationFn: (loginData: LoginFormData) => login(loginData),
+    onSuccess: data => {
+      const { accessToken } = data;
+      queryClient.setQueryData(['accessToken'], accessToken);
+      setCookie('AccessToken', accessToken, {
+        path: '/',
+      });
+      alert('로그인 성공');
+      setIsLoggedIn(true);
+      navigate('/home');
+    },
+    onError: err => console.error('로그인 api 실패', err),
+  });
   const onSubmit = async (data: FormValues) => {
+    // try {
+    //   const token = await loginUser(data);
+    //   if (token) {
+    //     cookies.set('accessToken', token, { path: '/' });
+    //     setIsLoggedIn(true);
+    //     navigate('/home');
+    //   } else {
+    //     alert('로그인 실패. 계정 정보를 확인하세요.');
+    //   }
+    // } catch (error) {
+    //   console.error('로그인 실패:', error);
+    //   alert('로그인에 실패하였습니다.');
+    // }
     try {
-      const token = await loginUser(data);
-      if (token) {
-        cookies.set('accessToken', token, { path: '/' });
-        useUserIsLogInStore.setState({ isLogIn: true });
-        navigate('/');
-      } else {
-        alert('로그인 실패. 계정 정보를 확인하세요.');
-      }
-    } catch (error) {
-      console.error('로그인 실패:', error);
-      alert('로그인 실패. 나중에 다시 시도하세요.');
+      loginMutation.mutateAsync(data);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const handleLogout = () => {
-    cookies.remove('accessToken');
-    useUserIsLogInStore.setState({ isLogIn: false });
-  };
+  // const handleLogout = () => {
+  //   cookies.remove('AccessToken');
+  //   resetIsLoggedIn();
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      {isLoggedIn ? (
-        <>
-          <p>이미 로그인되었습니다.</p>
-          <button onClick={handleLogout}>로그아웃</button>
-        </>
-      ) : (
+      {
         <>
           <Link to="/">
-            <img src="/src/assets/logo.png" alt="로고" className="w-48 h-48 mb-8" />
+            <img src="/src/assets/logo.png" alt="Logo" className="w-24 h-24 mb-8" />
           </Link>
           <h1 className="text-4xl font-bold mb-8">로그인</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
@@ -97,10 +117,10 @@ const LoginPage: React.FC = () => {
             {errors.password && <span className="text-red-500 text-sm mb-4">{errors.password.message}</span>}
 
             <div className="flex justify-between w-96 mb-6">
-              <a href="/" className="text-sm text-gray-500">
+              {/* <a href="/" className="text-sm text-gray-500">
                 비밀번호 찾기
-              </a>
-              <Link to="/sign" className="text-sm text-gray-500">
+              </a> */}
+              <Link to="/signup" className="text-sm text-gray-500">
                 회원가입
               </Link>
             </div>
@@ -110,7 +130,7 @@ const LoginPage: React.FC = () => {
             </button>
           </form>
         </>
-      )}
+      }
       <SocialLogin />
     </div>
   );

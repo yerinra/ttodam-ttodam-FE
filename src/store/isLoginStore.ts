@@ -1,28 +1,33 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const useUserIsLogInStore = create(
+type IsLoggedInStore = {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (newIsLoggedIn: boolean) => void;
+  resetIsLoggedIn: () => void;
+};
+const useUserIsLoggedInStore = create(
   persist(
     set => ({
       // 초기 상태
-      isLogIn: true, // 로그인 상태 초기 값은 false
+      isLoggedIn: false, // 로그인 상태 초기 값은 false
 
       // 액션: 로그인 상태를 업데이트
-      setIsLogIn: (newIsLogIn: boolean) =>
+      setIsLoggedIn: (newIsLoggedIn: boolean) =>
         set(() => ({
-          isLogIn: newIsLogIn,
+          isLoggedIn: newIsLoggedIn,
         })),
 
       // 로그인 상태 초기화
-      resetIsLogIn: () =>
+      resetIsLoggedIn: () =>
         set(() => ({
-          isLogIn: false,
+          isLoggedIn: false,
         })),
     }),
     {
-      name: 'isLogin', // 로컬 스토리지에 저장할 키 이름
+      name: 'isLoggedIn', // 로컬 스토리지에 저장할 키 이름
     },
   ),
 );
 
-export default useUserIsLogInStore;
+export default useUserIsLoggedInStore;

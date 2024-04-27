@@ -15,8 +15,10 @@ import SortOptions from '@/components/postListPage/SortOptions';
 import SearchForm from '@/components/atoms/SearchForm';
 
 import usePagination from '@/hooks/usePagination';
+import useRequireLogin from '@/hooks/useRequireLogin';
 
 export default function PostListPage() {
+  useRequireLogin();
   const { selectedCategory } = useParams();
 
   const [data, setData] = useState<Post[] | []>([]);

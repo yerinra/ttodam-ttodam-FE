@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import sendAuthenticationCode from '@/apis/Email_authentication/sendAuthenticationCode';
 import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenticationCode';
 import { signUpFormData } from '@/types/auth';
-import { signUp } from '@/apis/signup/signup';
+import { signUp } from '@/apis/auth/signup';
 import { useNavigate } from 'react-router-dom';
 
 interface FormValues {

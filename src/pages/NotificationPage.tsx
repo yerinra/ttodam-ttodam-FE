@@ -1,9 +1,11 @@
 import H1 from '@/components/atoms/H1';
 import ListItemContainer from '@/components/atoms/ListItemContainer';
+import useRequireLogin from '@/hooks/useRequireLogin';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { Link } from 'react-router-dom';
 
 export default function NotificationPage() {
+  useRequireLogin();
   return (
     <div>
       <H1>알림</H1>

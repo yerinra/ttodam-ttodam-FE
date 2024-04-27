@@ -8,10 +8,12 @@ import MapSearchInput from '../map/MapSearchInput';
 import MapMarkerController from '../map/MapMarkerController';
 import { PlaceType } from '@/types/map';
 import { Pencil1Icon } from '@radix-ui/react-icons';
+import useRequireLogin from '@/hooks/useRequireLogin';
 // import { IoBookmarkSharp } from 'react-icons/io5';
 
 // 상품 이름, 주소, 모집인원 데이터에 맞춰서 불러오기
 export default function HomePage() {
+  useRequireLogin();
   const [places, setPlaces] = useState<PlaceType[]>([]);
   const [selectedId, setSelectedId] = useState('');
 

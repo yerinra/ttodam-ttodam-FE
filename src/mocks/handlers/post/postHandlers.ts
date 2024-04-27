@@ -4,7 +4,6 @@ import { allPosts } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
-
 import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
@@ -67,3 +66,8 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
   }
 });
 
+export const postPostNewHandler = http.post('/post', () => {
+  return HttpResponse.json({
+    message: '게시글이 성공적으로 등록되었습니다.',
+  });
+});

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import { axiosPublic } from '../apiClient';
 
 const verifyAuthenticationCode = async (code: string) => {
   try {
-    const response = await axios.post('/api/verify-authentication-code', { code });
+    const response = await axiosPublic.post('/api/verify-authentication-code', { code });
     if (response.status === 200) {
       console.log('인증 코드가 성공적으로 확인되었습니다.');
     }

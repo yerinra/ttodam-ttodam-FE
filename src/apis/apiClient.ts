@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 
 const API_BASE_URL = 'http://localhost:5173';
+const cookies = new Cookies();
 
 export const axiosPublic = axios.create({
   baseURL: API_BASE_URL,
@@ -9,8 +10,6 @@ export const axiosPublic = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-const cookies = new Cookies();
 
 export const axiosAccessFn = () => {
   const axiosAccess = axios.create({
@@ -39,9 +38,7 @@ export const axiosAccessFn = () => {
 
   axiosAccess.interceptors.response.use(
     response => {
-
       return response;
-
     },
     error => {
       const axiosError = error as AxiosError;

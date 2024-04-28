@@ -1,32 +1,33 @@
-import { type Post } from '@/types/post';
+import { type PostDetail } from '@/types/post';
 import Badge from '../atoms/Badge';
 
 type UserInfoProps = {
-  data: Post;
+  data: PostDetail;
 };
 
 import defaultUser from '@/assets/user.png';
 
 export default function UserInfo({ data }: UserInfoProps) {
+  const { post } = data;
   return (
     <div className="flex items-center gap-2">
-      {data.user.profileImgUrl === '' && (
+      {(post.userProfileImg === '' || post.userProfileImg == null) && (
         <div className="w-10 h-10 text-primary/50 rounded-full">
           <img src={defaultUser} alt="user" />
         </div>
       )}
 
-      {data.user.profileImgUrl !== '' && (
+      {post.userProfileImg && post.userProfileImg !== '' && (
         <div
-          style={{ backgroundImage: `url(${data.user.profileImgUrl})` }}
+          style={{ backgroundImage: `url(${post.userProfileImg})` }}
           className="w-10 h-10 justify-center bg-no-repeat bg-cover bg-center rounded-full"
         />
       )}
 
       <div className="flex flex-col items-start gap-1">
-        <div className="font-semibold">{data.user.nickname}</div>
+        <div className="font-semibold">{post.userNickname}</div>
 
-        <Badge variant="primary">{data.user.manners * 20}점</Badge>
+        <Badge variant="primary">{post.userManners * 20}점</Badge>
       </div>
     </div>
   );

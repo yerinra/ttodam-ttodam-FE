@@ -2,8 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getPost } from '@/apis/post/post';
 
-import type { Post } from '@/types/post';
-
 import useUserInfoStore from '@/store/userInfoStore';
 import ProductImg from '@/components/postDetailPage/ProductImg';
 import ContentSection from '@/components/postDetailPage/ContentSection';
@@ -12,17 +10,18 @@ import PostMetaDataSection from '@/components/postDetailPage/PostMetaDataSection
 import PostHeader from '@/components/postDetailPage/PostHeader';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { useEffect } from 'react';
+import { PostDetail } from '@/types/post';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
 
-  const { data, error, isLoading } = useQuery<Post>({
+  const { data, error, isLoading } = useQuery<PostDetail>({
     queryKey: ['post', postId],
     queryFn: () => {
       return getPost(+postId!);
     },
   });
-  const userInfo = useUserInfoStore(state => state.userInfo);
+
   const { setCurrentPostId } = useCurrentPostIdStore();
 
   useEffect(() => {
@@ -34,8 +33,6 @@ export default function PostDetailPage() {
     return () => setCurrentPostId(null);
   }, [postId, setCurrentPostId]);
 
-  const isUserPost = userInfo && data && userInfo.id === data.user.id;
-
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;
 
@@ -43,7 +40,7 @@ export default function PostDetailPage() {
     <div className="flex flex-col">
       {data && (
         <>
-          <PostHeader data={data} isUserPost={isUserPost} />
+          <PostHeader data={data} isUserPost={data.loginUserRequestStatus == 'AUTHOR'} />
           <ProductImg data={data} />
           <PostMetaDataSection data={data} />
           <ContentSection data={data} />

@@ -1,3 +1,4 @@
+import { PurchaseStatus } from '@/types/post';
 import { axiosAccessFn } from '../apiClient';
 
 const axiosAccess = axiosAccessFn();
@@ -20,6 +21,19 @@ export const deletePost = async (postId: number) => {
     const res = await axiosAccess({
       method: 'delete',
       url: `/post/${postId}`,
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changePurchaseStatus = async (postId: number, newPurchaseStatus: PurchaseStatus) => {
+  try {
+    const res = await axiosAccess({
+      method: 'put',
+      url: `/post/${postId}/purchase/${newPurchaseStatus}`,
     });
 
     return res.data;

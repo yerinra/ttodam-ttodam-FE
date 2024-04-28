@@ -1,4 +1,4 @@
-import { GOOGLE_REDIRECT_URI, KAKAO_REDIRECT_URI } from '@/lib/data';
+import { GOOGLE_REDIRECT_URI, KAKAO_REDIRECT_URI } from '@/constants/auth';
 import { axiosPublic } from '../apiClient';
 
 export const kakaoLogin = async (code: string) => {

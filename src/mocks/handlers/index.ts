@@ -18,7 +18,13 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
-import { getAllPostsHandler, getPostByParamHandler, deletePostHandler, postPostNewHandler } from './post/postHandlers';
+import {
+  getAllPostsHandler,
+  getPostByParamHandler,
+  deletePostHandler,
+  postPostNewHandler,
+  putPurchaseStatusHandler,
+} from './post/postHandlers';
 
 import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
 
@@ -35,6 +41,7 @@ export const handlers = [
   postBookmarkHandler,
   deleteBookmarkHandler,
   deletePostHandler,
+  putPurchaseStatusHandler,
   getProfilesHandler,
   postProfilesHandler,
   getEditProfilesHandler,

@@ -66,6 +66,12 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
   }
 });
 
+export const putPurchaseStatusHandler = http.put(`/post/:postId/purchase/:purchaseStatus`, () => {
+  return HttpResponse.json({
+    message: '정상적으로 변경되었습니다.',
+  });
+});
+
 export const postPostNewHandler = http.post('/post', () => {
   return HttpResponse.json({
     message: '게시글이 성공적으로 등록되었습니다.',

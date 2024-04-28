@@ -8,6 +8,7 @@ import SocialLogin from '@/components/Login/SocialLogin';
 import { useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
 import { QueryClient, useMutation } from '@tanstack/react-query';
+import useRemainCookie from '@/hooks/useRemainCookie';
 
 // const cookies = new Cookies();
 
@@ -18,7 +19,7 @@ interface FormValues {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(['AccessToken']);
+  const [, setCookie, removeCookie] = useCookies(['AccessToken']);
   const queryClient = new QueryClient();
   const {
     register,
@@ -26,14 +27,10 @@ const LoginPage: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
+
   const { isLoggedIn, setIsLoggedIn } = useUserIsLogInStore();
 
   useEffect(() => {
-    // const token = cookies.get('accessToken');
-    // if (token) {
-    //   setIsLoggedIn(true);
-    // }
-
     if (isLoggedIn) navigate('/home');
   }, []);
 
@@ -56,30 +53,12 @@ const LoginPage: React.FC = () => {
     },
   });
   const onSubmit = async (data: FormValues) => {
-    // try {
-    //   const token = await loginUser(data);
-    //   if (token) {
-    //     cookies.set('accessToken', token, { path: '/' });
-    //     setIsLoggedIn(true);
-    //     navigate('/home');
-    //   } else {
-    //     alert('로그인 실패. 계정 정보를 확인하세요.');
-    //   }
-    // } catch (error) {
-    //   console.error('로그인 실패:', error);
-    //   alert('로그인에 실패하였습니다.');
-    // }
     try {
       loginMutation.mutateAsync(data);
     } catch (err) {
       console.error(err);
     }
   };
-
-  // const handleLogout = () => {
-  //   cookies.remove('AccessToken');
-  //   resetIsLoggedIn();
-  // };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -123,9 +102,6 @@ const LoginPage: React.FC = () => {
             {errors.password && <span className="text-red-500 text-sm mb-4">{errors.password.message}</span>}
 
             <div className="flex justify-between w-96 mb-6">
-              {/* <a href="/" className="text-sm text-gray-500">
-                비밀번호 찾기
-              </a> */}
               <Link to="/signup" className="text-sm text-gray-500">
                 회원가입
               </Link>

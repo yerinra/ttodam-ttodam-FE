@@ -1,6 +1,9 @@
 // import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
+import { KAKAO_AUTH_URL } from '@/lib/data';
+import { Link } from 'react-router-dom';
+
 const KakaoLogin = () => {
   // const navigate = useNavigate();
 
@@ -16,11 +19,11 @@ const KakaoLogin = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <Link to={KAKAO_AUTH_URL} className="flex flex-col space-y-4">
       <button onClick={handleKakaoLogin} className=" bg-yellow-300 text-black px-10 py-4 rounded w-96">
         카카오톡 로그인
       </button>
-    </div>
+    </Link>
   );
 };
 

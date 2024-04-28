@@ -1,4 +1,4 @@
-import { loginHandler } from './auth/login';
+import { loginHandler, socialLoginHandler } from './auth/login';
 import { signoutHandler } from './auth/signout';
 import { signupHandler } from './auth/signup';
 import { verifyCodeHandler } from './auth/verifyCode';
@@ -28,6 +28,7 @@ export const handlers = [
   signupHandler,
   signoutHandler,
   loginHandler,
+  socialLoginHandler,
   getAllPostsHandler,
   getPostByParamHandler,
   getBookmarksHandler,

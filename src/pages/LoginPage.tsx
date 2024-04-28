@@ -8,6 +8,7 @@ import SocialLogin from '@/components/Login/SocialLogin';
 import { useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
 import { QueryClient, useMutation } from '@tanstack/react-query';
+
 import useRemainCookie from '@/hooks/useRemainCookie';
 
 // const cookies = new Cookies();
@@ -19,7 +20,9 @@ interface FormValues {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+
   const [, setCookie, removeCookie] = useCookies(['AccessToken']);
+
   const queryClient = new QueryClient();
   const {
     register,
@@ -53,6 +56,19 @@ const LoginPage: React.FC = () => {
     },
   });
   const onSubmit = async (data: FormValues) => {
+    // try {
+    //   const token = await loginUser(data);
+    //   if (token) {
+    //     cookies.set('accessToken', token, { path: '/' });
+    //     setIsLoggedIn(true);
+    //     navigate('/home');
+    //   } else {
+    //     alert('로그인 실패. 계정 정보를 확인하세요.');
+    //   }
+    // } catch (error) {
+    //   console.error('로그인 실패:', error);
+    //   alert('로그인에 실패하였습니다.');
+    // }
     try {
       loginMutation.mutateAsync(data);
     } catch (err) {

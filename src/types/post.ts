@@ -4,25 +4,84 @@ export type Category = (typeof CATEGORIES)[number]['type'];
 export type StatusFilter = (typeof STATUS)[number]['type'];
 export type OptionType = (typeof SORT_OPTIONS)[number]['type'];
 
-export type Post = {
-  Id: number;
-  user: User;
-  title: string;
-  deadline: string;
+// export type Post = {
+//   Id: number;
+//   user: User;
+//   title: string;
+//   deadline: string;
+//   status: Status;
+//   category: Category;
+//   place: string;
+//   pLocationX: number;
+//   pLocationY: number;
+//   content: string;
+//   products: Product[];
+//   productImgUrl: string[] | [];
+//   participants: number;
+//   createAt: string;
+//   updateAt: string;
+// };
+
+export type PostPreview = {
+  postId: number;
   status: Status;
-  category: Category;
-  place: string;
-  pLocationX: number;
-  pLocationY: number;
+  category?: Exclude<Category, 'ALL'>;
+  authorId: number;
+  authorNickname: string;
+  title: string;
   content: string;
-  products: Product[];
-  productImgUrl: string[] | [];
-  participants: number;
-  createAt: string;
-  updateAt: string;
+  products: PreviewProduct[];
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type Status = 'in_progress' | 'completed' | 'failed';
+export type PreviewProduct = {
+  productName: string;
+  price: number;
+  count: number;
+};
+
+export type PostDetail = {
+  post: {
+    postId: number;
+    userId: number;
+    userNickname: string;
+    userManners: number;
+    category: Exclude<Category, 'ALL'>;
+    status: Status;
+    purchaseStatus: PurchaseStatus;
+    title: string;
+    deadline: string;
+    participants: number;
+    place: string;
+    content: string;
+    imgUrls: string[] | [] | null;
+    products: Product[];
+    createdAt: string;
+    updatedAt: string;
+    plocationX: number;
+    plocationY: number;
+  };
+  loginUserRequestStatus: UserRequestStatus;
+  bookmarkId: number;
+  requestList: UserRequest[];
+};
+
+export type UserRequest = {
+  requestId: number;
+  requestUserId: number;
+  requestUserNickname: string;
+  requestStatus: RequestStatus;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type PurchaseStatus = 'SUCCESS' | 'ON_GOING' | 'ENDED';
+
+export type RequestStatus = 'ACCEPT' | 'REFUSE' | 'WAIT';
+export type UserRequestStatus = RequestStatus | 'AUTHOR' | 'NONE';
+
+export type Status = 'IN_PROGRESS' | 'COMPLETED' | 'FAILED';
 
 export type User = {
   id: number;
@@ -32,7 +91,8 @@ export type User = {
 };
 
 export type Product = {
-  productId?: number;
+  productId: number;
+  postId: number;
   productName: string;
   price: number;
   count: number;

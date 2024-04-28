@@ -24,10 +24,10 @@ export const CATEGORIES = [
 ] as const;
 
 export const STATUS = [
-  { type: 'all', name: '전체' },
-  { type: 'in_progress', name: '모집중' },
-  { type: 'completed', name: '모집완료' },
-  { type: 'failed', name: '모집실패' },
+  { type: 'ALL', name: '전체' },
+  { type: 'IN_PROGRESS', name: '모집중' },
+  { type: 'COMPLETED', name: '모집완료' },
+  { type: 'FAILED', name: '모집실패' },
 ] as const;
 
 export const SORT_OPTIONS = [

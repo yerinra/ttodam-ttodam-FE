@@ -17,18 +17,18 @@ export default function Badge({ size, variant, classNames, children }: BadgeProp
 
         { 'px-2 py-1': size === 'lg' },
         {
-          'border border-primary text-primary': variant === 'in_progress',
+          'border border-primary text-primary': variant === 'IN_PROGRESS',
         },
-        { 'border border-light-gray bg-light-gray text-white': variant === 'completed' },
-        { 'border border-destructive text-destructive': variant === 'failed' },
+        { 'border border-light-gray bg-light-gray text-white': variant === 'COMPLETED' },
+        { 'border border-destructive text-destructive': variant === 'FAILED' },
         { 'bg-primary/20 px-1 py-[2px] text-primary rounded-md font-semibold': variant === 'primary' },
         { 'px-[6px] py-[2px] bg-slate-200 rounded-sm': variant === 'secondary' },
         classNames,
       )}
     >
-      {variant === 'in_progress' && '모집중'}
-      {variant === 'failed' && '모집실패'}
-      {variant === 'completed' && '모집완료'}
+      {variant === 'IN_PROGRESS' && '모집중'}
+      {variant === 'FAILED' && '모집실패'}
+      {variant === 'COMPLETED' && '모집완료'}
       {children}
     </div>
   );

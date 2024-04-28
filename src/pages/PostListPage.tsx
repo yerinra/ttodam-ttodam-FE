@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Pencil2Icon } from '@radix-ui/react-icons';
 
-import { type Category, type OptionType, type Post, type StatusFilter } from '@/types/post';
+import { PostPreview, type Category, type OptionType, type StatusFilter } from '@/types/post';
 
 import PaginationSection from '../components/postListPage/PaginationSection';
 import CategorySelector from '@/components/postListPage/CategorySelector';
@@ -21,8 +21,8 @@ export default function PostListPage() {
   useRequireLogin();
   const { selectedCategory } = useParams();
 
-  const [data, setData] = useState<Post[] | []>([]);
-  const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('all');
+  const [data, setData] = useState<PostPreview[] | []>([]);
+  const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('ALL');
   const [selectedSort, setSelectedSort] = useState<'createAt' | 'title'>('createAt');
   const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -56,13 +56,13 @@ export default function PostListPage() {
 
     setStartPage(1);
     setCurrentPage(1);
-    setSelectedFilter('all');
+    setSelectedFilter('ALL');
     fetchData();
   }, [selectedCategory]);
 
   useEffect(() => {
-    const sorted = [...data].filter(v => {
-      if (selectedFilter == 'all') return v;
+    const sorted = data.filter(v => {
+      if (selectedFilter == 'ALL') return v;
       else return v.status == selectedFilter;
     });
     if (selectedSort === 'title') {
@@ -73,8 +73,8 @@ export default function PostListPage() {
       });
     } else {
       sorted.sort((x, y) => {
-        if (x.createAt > y.createAt) return 1;
-        else if (x.createAt === y.createAt) return 0;
+        if (x.createdAt > y.createdAt) return 1;
+        else if (x.createdAt === y.createdAt) return 0;
         else return -1;
       });
     }

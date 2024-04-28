@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type { Post } from '@/types/post';
-import { allPosts } from '@/mocks/mockData/post/allPosts';
+import { allPosts, postMockData } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
@@ -8,7 +8,7 @@ import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
 export const getAllPostsHandler = http.get('/post', () => {
-  return HttpResponse.json(allPosts);
+  return HttpResponse.json(allPosts.posts);
 });
 
 export const getPostByParamHandler = http.get('/post/:param', ({ params, request }) => {
@@ -19,14 +19,14 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
 
   if (!isNaN(postId)) {
     // `postId`가 숫자일 경우, 게시글 1개 반환
-    const post = allPosts.find((post: Post) => post.Id === postId);
+    const post = postMockData.find(data => data.post.postId === postId);
     return HttpResponse.json(post);
   } else if (param === 'search') {
     const url = new URL(request.url);
     const keyword = url.searchParams.get('keyword');
 
     if (!keyword) return new HttpResponse(null, { status: 404 });
-    const searchResults = allPosts.filter((post: Post) => {
+    const searchResults = allPosts.posts.filter(post => {
       return (
         post.title.toLowerCase().includes(keyword.toLowerCase()) ||
         post.products.some(product => product.productName.toLowerCase().includes(keyword.toLowerCase()))
@@ -39,8 +39,8 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(HistoryMockData);
   } else {
     // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
-    const filteredPosts = allPosts.filter(
-      (post: Post) => post.category.toLowerCase() === (param as string).toLowerCase(),
+    const filteredPosts = allPosts.posts.filter(
+      post => post.category!.toLowerCase() === (param as string).toLowerCase(),
     );
     return HttpResponse.json(filteredPosts);
   }

@@ -9,7 +9,6 @@ import star from '../assets/star.png';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserIsLogInStore from '@/store/isLoginStore';
-import { signout } from '@/apis/auth/signout';
 
 const LandingPageData = [
   {
@@ -47,7 +46,8 @@ const LandingPageData = [
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { isLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
+
+  const { isLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;
   //   setCurrentIndex(newIndex);
@@ -87,9 +87,6 @@ export default function LandingPage() {
             <Link to="/login">
               <Button className="text-md p-5">홈으로</Button>
             </Link>
-            <Button variant="outline" className="text-md p-5" onClick={handleSignout}>
-              로그아웃
-            </Button>
           </div>
         ) : (
           <div className="flex gap-5">

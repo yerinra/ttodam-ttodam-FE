@@ -3,6 +3,7 @@ import { UserRequest, type PostDetail, PurchaseStatus } from '@/types/post';
 import RequestDialog from './RequestDialog';
 import { useState } from 'react';
 import PurchaseStatusDialog from './PurchaseStatusDialog';
+import RequestButtonSection from './RequestButtonSection';
 
 // import { useCancelRequestMutation } from '@/hooks/queries/useCancelRequestMutation';
 // import { usePostRequestMutation } from '@/hooks/queries/usePostRequestMutation';
@@ -26,12 +27,19 @@ export default function ParticipateBtnSection({ isUserPost, data, requestList }:
 
   return (
     <section className="flex justify-center ml-auto">
-      {isUserPost && post.status !== 'COMPLETED' && <RequestDialog requestList={requestList} />}
+      {isUserPost && post.status !== 'COMPLETED' && (
+        <RequestDialog
+          requestList={requestList}
+          terminated={post.status === 'FAILED' || post.purchaseStatus === 'FAILURE'}
+        />
+      )}
       {isUserPost && post.status == 'COMPLETED' && <PurchaseStatusDialog status={post.purchaseStatus} />}
       {!isUserPost && (
-        <Button size={'lg'} disabled={post.status !== 'IN_PROGRESS'} onClick={() => console.log('해야됨')}>
-          {post.status == 'IN_PROGRESS' ? '참여요청 보내기' : '요청을 보낼 수 없습니다.'}
-        </Button>
+        <RequestButtonSection
+          isOpen={data.post.status === 'IN_PROGRESS'}
+          postStatus={post.purchaseStatus}
+          userStatus={data.loginUserRequestStatus}
+        />
       )}
     </section>
   );

@@ -10,9 +10,10 @@ import { UserRequest } from '@/types/post';
 
 type RequestDialogProps = {
   requestList: UserRequest[];
+  terminated: boolean;
 };
 
-export default function RequestDialog({ requestList }: RequestDialogProps) {
+export default function RequestDialog({ requestList, terminated }: RequestDialogProps) {
   const { currentPostId } = useCurrentPostIdStore();
   // const {
   //   data: requestsData,
@@ -32,7 +33,7 @@ export default function RequestDialog({ requestList }: RequestDialogProps) {
 
     if (confirmed) {
       try {
-        await mutateAsync({ requestId, newStatus: 'accept' });
+        await mutateAsync({ requestId, newStatus: 'ACCEPT' });
       } catch (error) {
         console.error(error);
       }
@@ -44,7 +45,7 @@ export default function RequestDialog({ requestList }: RequestDialogProps) {
 
     if (confirmed) {
       try {
-        await mutateAsync({ requestId, newStatus: 'refuse' });
+        await mutateAsync({ requestId, newStatus: 'REFUSE' });
       } catch (error) {
         console.error(error);
       }
@@ -62,6 +63,7 @@ export default function RequestDialog({ requestList }: RequestDialogProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>요청내역</DialogTitle>
+          <div className="text-red-500">실패한 공구입니다. </div>
         </DialogHeader>
         <ul>
           {requestList.map(request => (
@@ -79,10 +81,15 @@ export default function RequestDialog({ requestList }: RequestDialogProps) {
               <div className="ml-auto flex gap-2">
                 {request.requestStatus == 'WAIT' && (
                   <>
-                    <Button size={'sm'} onClick={() => handleAccept(request.requestId)}>
+                    <Button size={'sm'} disabled={terminated} onClick={() => handleAccept(request.requestId)}>
                       승인
                     </Button>
-                    <Button size={'sm'} variant={'outline'} onClick={() => handleReject(request.requestId)}>
+                    <Button
+                      size={'sm'}
+                      disabled={terminated}
+                      variant={'outline'}
+                      onClick={() => handleReject(request.requestId)}
+                    >
                       거절
                     </Button>
                   </>

@@ -26,7 +26,12 @@ import {
   putPurchaseStatusHandler,
 } from './post/postHandlers';
 
-import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
+import {
+  cancelRequestHandler,
+  getRequestsHandler,
+  postRequestHandler,
+  putRequestHandler,
+} from './post/requestHandlers';
 
 export const handlers = [
   verifyEmailHandler,
@@ -47,6 +52,7 @@ export const handlers = [
   getEditProfilesHandler,
   postEditProfilesHandler,
   getRequestsHandler,
+  postRequestHandler,
   getHistoryHandler,
   postMannersHandler,
   getMyPostsHandler,

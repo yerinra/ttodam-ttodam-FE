@@ -1,4 +1,4 @@
-import { PURCHASE_OPTIONS } from '@/constants/options';
+import { PURCHASE_STATUS_OPTIONS } from '@/constants/options';
 import { CATEGORIES, SORT_OPTIONS, STATUS } from '@/lib/data';
 
 export type Category = (typeof CATEGORIES)[number]['type'];
@@ -61,7 +61,8 @@ export type UserRequest = {
   updatedAt: string;
 };
 
-export type PurchaseStatus = (typeof PURCHASE_OPTIONS)[number]['type'];
+export type PurchaseStatus = (typeof PURCHASE_STATUS_OPTIONS)[number]['type'];
+
 export type RequestStatus = 'ACCEPT' | 'REFUSE' | 'WAIT';
 
 export type UserRequestStatus = RequestStatus | 'AUTHOR' | 'NONE';

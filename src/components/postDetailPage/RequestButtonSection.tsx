@@ -4,7 +4,6 @@ import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { cancelRequest, postRequest } from '@/apis/post/request';
 import useRequestIdStore from '@/store/requestIdStore';
-import { useState } from 'react';
 
 type RequestButtonSectionProps = {
   isOpen: boolean;

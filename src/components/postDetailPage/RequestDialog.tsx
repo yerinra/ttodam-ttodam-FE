@@ -15,16 +15,6 @@ type RequestDialogProps = {
 
 export default function RequestDialog({ requestList, terminated }: RequestDialogProps) {
   const { currentPostId } = useCurrentPostIdStore();
-  // const {
-  //   data: requestsData,
-  //   error,
-  //   isLoading,
-  // } = useQuery<Request[]>({
-  //   queryKey: ['request', currentPostId],
-  //   queryFn: () => {
-  //     return getRequests(+currentPostId!);
-  //   },
-  // });
 
   const { mutateAsync } = useChangeRequestStatusMutation(+currentPostId!);
 
@@ -52,9 +42,6 @@ export default function RequestDialog({ requestList, terminated }: RequestDialog
     }
   };
 
-  // if (error) return <div>에러가 발생했습니다.</div>;
-  // if (isLoading) return <div>Loading...</div>;
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -63,7 +50,7 @@ export default function RequestDialog({ requestList, terminated }: RequestDialog
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>요청내역</DialogTitle>
-          <div className="text-red-500">실패한 공구입니다. </div>
+          {terminated && <div className="text-red-500">실패한 공구입니다. </div>}
         </DialogHeader>
         <ul>
           {requestList.map(request => (

@@ -18,12 +18,15 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
+import { deleteNotificationHandler, getAllNotificationsHandler } from './notification/notification';
+
 import {
   getAllPostsHandler,
   getPostByParamHandler,
   deletePostHandler,
   postPostNewHandler,
   putPurchaseStatusHandler,
+  categoryPostsHandler,
 } from './post/postHandlers';
 
 import {
@@ -41,6 +44,7 @@ export const handlers = [
   loginHandler,
   socialLoginHandler,
   getAllPostsHandler,
+  categoryPostsHandler,
   getPostByParamHandler,
   getBookmarksHandler,
   postBookmarkHandler,
@@ -59,4 +63,6 @@ export const handlers = [
   putRequestHandler,
   cancelRequestHandler,
   postPostNewHandler,
+  getAllNotificationsHandler,
+  deleteNotificationHandler,
 ];

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 
 import { Button } from '@/components/ui/button';
 import { Pencil2Icon, SymbolIcon } from '@radix-ui/react-icons';

@@ -46,7 +46,6 @@ const LandingPageData = [
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-
   const { isLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;
@@ -62,18 +61,6 @@ export default function LandingPage() {
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
-
-  const handleSignout = async () => {
-    const confirmed = window.confirm('로그아웃 하시겠습니까?');
-    if (confirmed) {
-      try {
-        await signout();
-        resetIsLoggedIn();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   const content = LandingPageData[currentIndex];
   return (

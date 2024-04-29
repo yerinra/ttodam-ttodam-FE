@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
 import { PostNew, type Post } from '@/types/post';
 import { IoClose } from 'react-icons/io5';
-import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useChangePostEditMutation } from '@/hooks/queries/useChangePostEditMutation';
 import Category from '../postNewPage/Category';
 // import { FaMinus, FaPlus } from 'react-icons/fa';
@@ -70,31 +69,31 @@ export default function Form({ data }: FormProps) {
     setTitle(e.target.value);
   };
 
-  const handleAddProducts = () => {
-    setProducts([
-      ...products,
-      {
-        productName: '',
-        purchaseLink: '',
-        price: 0,
-        count: parseInt(''),
-        postImgUrl: '',
-        participants: parseInt(''),
-        title: '',
-        deadline: '',
-        place: '',
-        content: '',
-        category: 'ALL',
-      },
-    ]);
-  };
+  // const handleAddProducts = () => {
+  //   setProducts([
+  //     ...products,
+  //     {
+  //       productName: '',
+  //       purchaseLink: '',
+  //       price: 0,
+  //       count: parseInt(''),
+  //       postImgUrl: '',
+  //       participants: parseInt(''),
+  //       title: '',
+  //       deadline: '',
+  //       place: '',
+  //       content: '',
+  //       category: 'ALL',
+  //     },
+  //   ]);
+  // };
 
-  // 입력 필드 삭제
-  const handleRemoveProducts = (index: number) => {
-    const newProducts = [...products];
-    newProducts.splice(index, 1);
-    setProducts(newProducts);
-  };
+  // // 입력 필드 삭제
+  // const handleRemoveProducts = (index: number) => {
+  //   const newProducts = [...products];
+  //   newProducts.splice(index, 1);
+  //   setProducts(newProducts);
+  // };
 
   // 상품 이름 변경
   const handleProductNameChange = (index: number, value: string) => {
@@ -261,7 +260,7 @@ export default function Form({ data }: FormProps) {
               onChange={e => handleProductNameChange(index, e.target.value)}
               className="w-full outline-none"
             />
-            {index === products.length - 1 ? (
+            {/* {index === products.length - 1 ? (
               <button type="button" onClick={handleAddProducts}>
                 <FaPlus className="w-3 h-3 mr-1" />
               </button>
@@ -269,7 +268,7 @@ export default function Form({ data }: FormProps) {
               <button type="button" onClick={() => handleRemoveProducts(index)}>
                 <FaMinus className="w-3 h-3 mr-1" />
               </button>
-            )}
+            )} */}
           </div>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input

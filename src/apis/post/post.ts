@@ -115,6 +115,34 @@ export const putPostEdit = async (postId: number, formData: FormData) => {
       url: `/post/${postId}`,
       data: formData,
       headers: {
+        'Content-Type': 'multipart/form-Data',
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPostEdit = async (postId: number) => {
+  try {
+    const res = await axiosAccess({
+      method: 'put',
+      url: `/post/${postId}`,
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const putPostEdit = async (postId: number, formData: FormData) => {
+  try {
+    await axiosAccess({
+      method: 'put',
+      url: `/post/${postId}`,
+      data: formData,
+      headers: {
         'Content-Type': 'multipart/form-data',
       },
     });

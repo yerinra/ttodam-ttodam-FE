@@ -3,7 +3,6 @@ import { useDeleteBookmarkMutation } from '@/hooks/queries/useDeleteBookmarkMuta
 import { cn } from '@/lib/utils';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { BookmarkFilledIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
 
 type BookmarkBtnProps = {
   isBookmarked: boolean;

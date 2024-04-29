@@ -1,11 +1,11 @@
-import { getNotification } from '@/apis/notification/notification';
+import { deleteNotification, getNotification } from '@/apis/notification/notification';
 import H1 from '@/components/atoms/H1';
 import ListItemContainer from '@/components/atoms/ListItemContainer';
 import useRequireLogin from '@/hooks/useRequireLogin';
 import { formatDate } from '@/lib/utils';
 import { Notification } from '@/mocks/mockData/notification/notifications';
 import { Cross1Icon } from '@radix-ui/react-icons';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 export default function NotificationPage() {
@@ -16,9 +16,34 @@ export default function NotificationPage() {
     queryFn: getNotification,
   });
 
+  const useDeleteNotificationMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: (notificationId: number) => deleteNotification(notificationId),
+      onMutate: (toDeleteNotificationId: number) => {
+        const previousData = queryClient.getQueryData<Notification[]>(['notification']);
+
+        queryClient.setQueryData(['bookmarks'], (previousData: Notification[]) => {
+          return previousData?.filter((item: Notification) => item.notificationId !== toDeleteNotificationId) || [];
+        });
+        return { previousData };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['notification'] });
+      },
+      onError: () => {
+        console.log('error!');
+      },
+    });
+  };
+
+  const { mutateAsync } = useDeleteNotificationMutation();
+  const handleDeleteNotification = (id: number) => {
+    mutateAsync(id);
+  };
   if (error) return <div>Error...</div>;
   if (isLoading) return <div>isLoading...</div>;
-
   return (
     <div>
       <H1>알림</H1>
@@ -36,7 +61,7 @@ export default function NotificationPage() {
               {notification.type === 'KEYWORD' && '등록하신 키워드에 대한 새 글이 올라왔어요.'}
             </Link>
 
-            <button className="ml-auto">
+            <button className="ml-auto" onClick={() => handleDeleteNotification(notification.notificationId)}>
               <Cross1Icon />
             </button>
           </div>

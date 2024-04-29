@@ -1,5 +1,5 @@
 import { axiosAccessFn } from '@/apis/apiClient';
-import { RequestStatus } from '@/types/request';
+import { UserRequestStatus } from '@/types/post';
 
 const axiosAccess = axiosAccessFn();
 export const getRequests = async (postId: number) => {
@@ -15,7 +15,7 @@ export const getRequests = async (postId: number) => {
   }
 };
 
-export const putRequest = async (requestId: number, newStatus: RequestStatus) => {
+export const putRequest = async (requestId: number, newStatus: UserRequestStatus) => {
   try {
     await axiosAccess({
       method: 'put',
@@ -39,10 +39,11 @@ export const cancelRequest = async (requestId: number) => {
 
 export const postRequest = async (postId: number) => {
   try {
-    await axiosAccess({
+    const res = await axiosAccess({
       method: 'post',
       url: `/post/${postId}/request`,
     });
+    return res.data.requestId;
   } catch (error) {
     throw error;
   }

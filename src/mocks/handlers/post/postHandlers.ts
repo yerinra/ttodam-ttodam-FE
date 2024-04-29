@@ -1,14 +1,13 @@
 import { http, HttpResponse } from 'msw';
-import type { Post } from '@/types/post';
-import { allPosts } from '@/mocks/mockData/post/allPosts';
+import { allPosts, postMockData } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
 import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
-export const getAllPostsHandler = http.get('/post', () => {
-  return HttpResponse.json(allPosts);
+export const getAllPostsHandler = http.get('/post/list', () => {
+  return HttpResponse.json(allPosts.posts);
 });
 
 export const getPostByParamHandler = http.get('/post/:param', ({ params, request }) => {
@@ -19,14 +18,14 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
 
   if (!isNaN(postId)) {
     // `postId`가 숫자일 경우, 게시글 1개 반환
-    const post = allPosts.find((post: Post) => post.Id === postId);
+    const post = postMockData.find(data => data.post.postId === postId);
     return HttpResponse.json(post);
   } else if (param === 'search') {
     const url = new URL(request.url);
-    const keyword = url.searchParams.get('keyword');
+    const keyword = url.searchParams.get('word');
 
     if (!keyword) return new HttpResponse(null, { status: 404 });
-    const searchResults = allPosts.filter((post: Post) => {
+    const searchResults = allPosts.posts.filter(post => {
       return (
         post.title.toLowerCase().includes(keyword.toLowerCase()) ||
         post.products.some(product => product.productName.toLowerCase().includes(keyword.toLowerCase()))
@@ -37,15 +36,16 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(bookmarksMockData);
   } else if (param === 'activities') {
     return HttpResponse.json(HistoryMockData);
-  } else {
-    // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
-    const filteredPosts = allPosts.filter(
-      (post: Post) => post.category.toLowerCase() === (param as string).toLowerCase(),
-    );
-    return HttpResponse.json(filteredPosts);
   }
 });
-
+export const categoryPostsHandler = http.get('/post/category/:categoryName', ({ params }) => {
+  const { categoryName } = params;
+  // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
+  const filteredPosts = allPosts.posts.filter(
+    post => post.category!.toLowerCase() === (categoryName as string).toLowerCase(),
+  );
+  return HttpResponse.json(filteredPosts);
+});
 export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
   const { param } = params;
   const postId = parseInt(param as string);
@@ -64,6 +64,12 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
   if (!isNaN(postIdNum)) {
     return HttpResponse.json(requestsMockData);
   }
+});
+
+export const putPurchaseStatusHandler = http.put(`/post/:postId/purchase/:purchaseStatus`, () => {
+  return HttpResponse.json({
+    message: '정상적으로 변경되었습니다.',
+  });
 });
 
 export const postPostNewHandler = http.post('/post', () => {

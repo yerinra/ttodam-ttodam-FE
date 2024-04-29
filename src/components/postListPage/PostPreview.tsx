@@ -1,4 +1,4 @@
-import type { Product, Status } from '@/types/post';
+import type { PreviewProduct, Status } from '@/types/post';
 
 import { Link } from 'react-router-dom';
 import { Cross1Icon } from '@radix-ui/react-icons';
@@ -14,7 +14,7 @@ type PostPreviewProps = {
   status: Status;
   title: string;
   content?: string;
-  products: Product[];
+  products: PreviewProduct[];
 };
 
 export default function PostPreview({

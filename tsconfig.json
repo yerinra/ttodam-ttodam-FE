@@ -17,7 +17,8 @@
       ]
     },
     "types": [
-      "kakao.maps.d.ts"
+      "kakao.maps.d.ts",
+      "node"
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",

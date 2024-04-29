@@ -18,6 +18,7 @@ import LandingPage from './pages/LandingPage';
 import MyPostsPage from './pages/MyPostsPage';
 import ChattingList from './pages/ChattingList';
 import ChattingPage from './pages/ChattingPage';
+import LoginLoadingPage from './pages/LoginLoadingPage';
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,8 @@ export default function App() {
 
                 <Route path="/my/posts" element={<MyPostsPage />} />
                 <Route path="/notification" element={<NotificationPage />} />
+
+                <Route path="/login/oauth2/code/:domain" element={<LoginLoadingPage />} />
               </Route>
             </Routes>
           </Router>

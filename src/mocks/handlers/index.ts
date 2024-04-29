@@ -35,6 +35,7 @@ import {
   postRequestHandler,
   putRequestHandler,
 } from './post/requestHandlers';
+import { valuationHandler } from './post/valuations';
 
 export const handlers = [
   verifyEmailHandler,
@@ -62,6 +63,7 @@ export const handlers = [
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
+  valuationHandler,
   postPostNewHandler,
   getAllNotificationsHandler,
   deleteNotificationHandler,

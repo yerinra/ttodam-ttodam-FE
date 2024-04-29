@@ -151,8 +151,8 @@ export const postMockData: PostDetail[] = [
       userProfileImg:
         'https://images.unsplash.com/photo-1712926382189-dacbc6b89a01?q=80&w=2264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       category: 'DAILY',
-      status: 'IN_PROGRESS',
-      purchaseStatus: 'PREPARING',
+      status: 'COMPLETED',
+      purchaseStatus: 'SUCCESS',
       title: '물티슈와 휴지 같이 구매하실 분',
       deadline: '2024-04-16T15:00:00',
       participants: 3,

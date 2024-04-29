@@ -1,5 +1,4 @@
 import { http, HttpResponse } from 'msw';
-import type { Post } from '@/types/post';
 import { allPosts, postMockData } from '@/mocks/mockData/post/allPosts';
 
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
@@ -7,7 +6,7 @@ import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 
-export const getAllPostsHandler = http.get('/post', () => {
+export const getAllPostsHandler = http.get('/post/list', () => {
   return HttpResponse.json(allPosts.posts);
 });
 
@@ -23,7 +22,7 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(post);
   } else if (param === 'search') {
     const url = new URL(request.url);
-    const keyword = url.searchParams.get('keyword');
+    const keyword = url.searchParams.get('word');
 
     if (!keyword) return new HttpResponse(null, { status: 404 });
     const searchResults = allPosts.posts.filter(post => {
@@ -37,15 +36,16 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     return HttpResponse.json(bookmarksMockData);
   } else if (param === 'activities') {
     return HttpResponse.json(HistoryMockData);
-  } else {
-    // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
-    const filteredPosts = allPosts.posts.filter(
-      post => post.category!.toLowerCase() === (param as string).toLowerCase(),
-    );
-    return HttpResponse.json(filteredPosts);
   }
 });
-
+export const categoryPostsHandler = http.get('/post/category/:categoryName', ({ params }) => {
+  const { categoryName } = params;
+  // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
+  const filteredPosts = allPosts.posts.filter(
+    post => post.category!.toLowerCase() === (categoryName as string).toLowerCase(),
+  );
+  return HttpResponse.json(filteredPosts);
+});
 export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
   const { param } = params;
   const postId = parseInt(param as string);

@@ -44,6 +44,24 @@ export default function Form({ data }: FormProps) {
   const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
+  useEffect(() => {
+    setSelectedCategory(data.category);
+    setTotalParticipants(String(data.participants));
+    setSelectedAddress(data.place);
+    setDeadline(new Date(data.deadline));
+    setImagePreview(data.productImgUrl);
+
+    if (data.products && data.products.length > 0) {
+      const initialProducts = data.products.map(product => ({
+        productName: product.productName || '',
+        purchaseLink: product.purchaseLink || '',
+        count: product.count || 0,
+        price: product.price || 0,
+      }));
+      setProducts(initialProducts);
+    }
+  }, [data]);
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };

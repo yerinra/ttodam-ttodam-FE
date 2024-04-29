@@ -1,6 +1,6 @@
 import { loginHandler, socialLoginHandler } from './auth/login';
 import { signoutHandler } from './auth/signout';
-import { signUpHandler, verifyEmailHandler } from './auth/signup';
+import { verifyEmailHandler } from './auth/signup';
 // import { signupHandler } from './auth/signup';
 import { verifyCodeHandler } from './auth/verifyCode';
 
@@ -41,7 +41,7 @@ import { valuationHandler } from './post/valuations';
 export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
-  signUpHandler,
+  // signupHandler,
   signoutHandler,
   loginHandler,
   socialLoginHandler,

@@ -1,8 +1,8 @@
 import { loginHandler, socialLoginHandler } from './auth/login';
 import { signoutHandler } from './auth/signout';
-import { signupHandler } from './auth/signup';
+import { verifyEmailHandler } from './auth/signup';
+// import { signupHandler } from './auth/signup';
 import { verifyCodeHandler } from './auth/verifyCode';
-import { verifyEmailHandler } from './auth/verifyEmail';
 
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 
@@ -39,7 +39,7 @@ import {
 export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
-  signupHandler,
+  // signupHandler,
   signoutHandler,
   loginHandler,
   socialLoginHandler,

@@ -5,6 +5,7 @@ import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenti
 import { signUpFormData } from '@/types/auth';
 import { signUp } from '@/apis/auth/signup';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
 
 interface FormValues {
   email: string;
@@ -27,31 +28,54 @@ const SignUpForm: React.FC = () => {
 
   const [isCodeRequested, setIsCodeRequested] = useState(false);
   const [isCodeVerified, setIsCodeVerified] = useState(false);
+
   const password = watch('password');
 
+  // const onSubmit = async (data: FormValues) => {
+  //   if (isCodeVerified) {
+  //     try {
+  //       const dataToSend: signUpFormData = {
+  //         email: data.email,
+  //         password: data.password,
+  //         nickname: data.nickname,
+  //       };
+  //       await signUp(dataToSend);
+  //       reset();
+  //       alert('가입을 환영합니다.');
+  //       navigate('/login');
+  //     } catch (error) {
+  //       console.error('회원가입 실패:', error);
+  //     }
+  //   } else {
+  //     alert('이메일 인증을 진행해주세요!');
+  //   }
+  // };
   const onSubmit = async (data: FormValues) => {
-    if (isCodeVerified) {
-      try {
-        const dataToSend: signUpFormData = {
-          email: data.email,
-          password: data.password,
-          nickname: data.nickname,
-        };
-        await signUp(dataToSend);
-        reset();
-        alert('가입을 환영합니다.');
-        navigate('/login');
-      } catch (error) {
-        console.error('회원가입 실패:', error);
-      }
-    } else {
+    if (!isCodeVerified) {
       alert('이메일 인증을 진행해주세요!');
+      return; // 인증이 확인되지 않은 경우 회원가입 시도 중지
+    }
+
+    try {
+      const dataToSend: signUpFormData = {
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+      };
+      await signUp(dataToSend);
+      reset();
+      alert('가입을 환영합니다.');
+      navigate('/login');
+    } catch (error) {
+      console.error('회원가입 실패:', error);
     }
   };
 
   const requestAuthenticationCode = async (email: string) => {
     try {
       await sendAuthenticationCode(email);
+      // setEmail(email);
+      console.log(email);
       setIsCodeRequested(true);
     } catch (error) {
       console.error('인증코드 요청에 실패했습니다:', error);
@@ -62,11 +86,12 @@ const SignUpForm: React.FC = () => {
     }
   };
 
-  const verifyCodeAndSignUp = async (code: string) => {
+  const verifyCode = async (email: string, code: string) => {
     try {
-      await verifyAuthenticationCode(code);
+      await verifyAuthenticationCode(email, code);
       setIsCodeVerified(true);
     } catch (error) {
+      setIsCodeVerified(false);
       console.error('인증코드 확인에 실패했습니다:', error);
       setError('authenticationCode', {
         type: 'manual',
@@ -93,14 +118,14 @@ const SignUpForm: React.FC = () => {
           }`}
         />
         {!isCodeRequested && (
-          <button
+          <Button
             type="button"
             className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-2 rounded"
             onClick={() => requestAuthenticationCode(watch('email'))}
             disabled={isCodeRequested}
           >
             이메일 인증
-          </button>
+          </Button>
         )}
       </div>
       {errors && errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
@@ -117,14 +142,14 @@ const SignUpForm: React.FC = () => {
               errors && errors.authenticationCode ? 'border-red-500' : ''
             }`}
           />
-          <button
+          <Button
             type="button"
             className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
-            onClick={() => verifyCodeAndSignUp(watch('authenticationCode'))}
+            onClick={() => verifyCode(watch('email'), watch('authenticationCode'))}
             disabled={isCodeVerified}
           >
             인증
-          </button>
+          </Button>
         </div>
       )}
       {errors && errors.authenticationCode && (
@@ -182,9 +207,13 @@ const SignUpForm: React.FC = () => {
         <span className="text-red-500 text-sm mb-4">{errors.confirmPassword.message}</span>
       )}
 
-      <button type="submit" className="bg-primary text-white px-10 py-4 rounded w-96 mb-3">
+      <Button
+        type="submit"
+        disabled={!isCodeRequested || !isCodeVerified}
+        className="bg-primary text-white px-10 py-4 rounded w-96 mb-3"
+      >
         가입하기
-      </button>
+      </Button>
     </form>
   );
 };

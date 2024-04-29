@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import sendAuthenticationCode from '@/apis/Email_authentication/sendAuthenticationCode';
 import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenticationCode';
@@ -22,34 +22,52 @@ const SignUpForm: React.FC = () => {
     formState: { errors },
     watch,
     setError,
+    clearErrors,
     reset,
   } = useForm<FormValues>();
   const navigate = useNavigate();
+  const CODE_VERIFICATION_TIME = 3 * 60;
+  const [timer, setTimer] = useState(CODE_VERIFICATION_TIME);
+  const [timerActive, setTimerActive] = useState(false);
+  const [timerExpired, setTimerExpired] = useState(false);
+
+  // useEffect(() => {
+  //   let intervalId: NodeJS.Timeout;
+
+  //   if (timerActive) {
+  //     intervalId = setInterval(() => {
+  //       setTimer(prevTimer => {
+  //         if (prevTimer === 0) {
+  //           clearInterval(intervalId);
+  //           setTimerExpired(true);
+  //           return 0;
+  //         } else {
+  //           return prevTimer - 1;
+  //         }
+  //       });
+  //     }, 1000);
+  //   }
+
+  //   return () => clearInterval(intervalId);
+  // }, [timerActive]);
+
+  useEffect(() => {
+    let timeCount: NodeJS.Timeout | undefined;
+    if (timerActive && timer > 0) {
+      timeCount = setInterval(() => setTimer(timer - 1), 1000);
+    }
+    if (timer === 0) {
+      setTimerExpired(true);
+      clearInterval(timeCount);
+    }
+    return () => clearInterval(timeCount);
+  }, [timer, timerActive]);
 
   const [isCodeRequested, setIsCodeRequested] = useState(false);
   const [isCodeVerified, setIsCodeVerified] = useState(false);
 
   const password = watch('password');
 
-  // const onSubmit = async (data: FormValues) => {
-  //   if (isCodeVerified) {
-  //     try {
-  //       const dataToSend: signUpFormData = {
-  //         email: data.email,
-  //         password: data.password,
-  //         nickname: data.nickname,
-  //       };
-  //       await signUp(dataToSend);
-  //       reset();
-  //       alert('가입을 환영합니다.');
-  //       navigate('/login');
-  //     } catch (error) {
-  //       console.error('회원가입 실패:', error);
-  //     }
-  //   } else {
-  //     alert('이메일 인증을 진행해주세요!');
-  //   }
-  // };
   const onSubmit = async (data: FormValues) => {
     if (!isCodeVerified) {
       alert('이메일 인증을 진행해주세요!');
@@ -74,15 +92,19 @@ const SignUpForm: React.FC = () => {
   const requestAuthenticationCode = async (email: string) => {
     try {
       await sendAuthenticationCode(email);
-      // setEmail(email);
-      console.log(email);
+
       setIsCodeRequested(true);
+      setTimer(CODE_VERIFICATION_TIME);
+      setTimerActive(true);
+      setTimerExpired(false);
+      clearErrors('email');
+      clearErrors('authenticationCode');
     } catch (error) {
-      console.error('인증코드 요청에 실패했습니다:', error);
       setError('email', {
         type: 'manual',
         message: '인증코드 요청에 실패했습니다',
       });
+      setTimerActive(false);
     }
   };
 
@@ -90,8 +112,14 @@ const SignUpForm: React.FC = () => {
     try {
       await verifyAuthenticationCode(email, code);
       setIsCodeVerified(true);
+      setTimerActive(false);
+      setTimerExpired(false);
+
+      clearErrors('authenticationCode');
     } catch (error) {
       setIsCodeVerified(false);
+      setTimerActive(false);
+      setTimerExpired(true);
       console.error('인증코드 확인에 실패했습니다:', error);
       setError('authenticationCode', {
         type: 'manual',
@@ -113,7 +141,7 @@ const SignUpForm: React.FC = () => {
               message: '올바른 이메일 형식이 아닙니다.',
             },
           })}
-          className={`border-b border-gray-500 focus:outline-none w-full py-4 pr-16 ${
+          className={`border-b bg-white border-gray-500 focus:outline-none w-full py-4 pr-16 ${
             errors && errors.email ? 'border-red-500' : ''
           }`}
         />
@@ -138,18 +166,35 @@ const SignUpForm: React.FC = () => {
             {...register('authenticationCode', {
               required: '인증코드를 입력하세요.',
             })}
-            className={`border-b border-gray-500 focus:outline-none w-full py-4 pr-16 ${
+            className={`border-b bg-white border-gray-500 focus:outline-none w-full py-4 pr-16 ${
               errors && errors.authenticationCode ? 'border-red-500' : ''
             }`}
           />
-          <Button
-            type="button"
-            className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
-            onClick={() => verifyCode(watch('email'), watch('authenticationCode'))}
-            disabled={isCodeVerified}
-          >
-            인증
-          </Button>
+          <div>
+            {timerActive && (
+              <div className="absolute top-1 right-14  font-bold py-2 px-3 rounded h-[36px] text-sm text-red-500">
+                {`${Math.floor(timer / 60)}:${timer % 60 < 10 ? '0' : ''}${timer % 60}`}
+              </div>
+            )}
+            {!timerExpired ? (
+              <Button
+                type="button"
+                className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
+                onClick={() => verifyCode(watch('email'), watch('authenticationCode'))}
+                disabled={isCodeVerified}
+              >
+                인증
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
+                onClick={() => requestAuthenticationCode(watch('email'))}
+              >
+                재전송
+              </Button>
+            )}
+          </div>
         </div>
       )}
       {errors && errors.authenticationCode && (
@@ -210,9 +255,9 @@ const SignUpForm: React.FC = () => {
       <Button
         type="submit"
         disabled={!isCodeRequested || !isCodeVerified}
-        className="bg-primary text-white px-10 py-4 rounded w-96 mb-3"
+        className="bg-primary text-white px-10 py-4 rounded w-96 mb-3 h-[56px] text-md"
       >
-        가입하기
+        회원가입하기
       </Button>
     </form>
   );

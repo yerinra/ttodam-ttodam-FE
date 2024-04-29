@@ -1,7 +1,13 @@
-import { Product, Status } from '@/types/post';
+import { Status } from '@/types/post';
 
 export type BookmarkResponse = {
   list: BookMark[];
+};
+
+type Product = {
+  productName: string;
+  price: number;
+  count: number;
 };
 
 export type BookMark = {

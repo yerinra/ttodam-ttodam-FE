@@ -31,6 +31,6 @@ export const STATUS = [
 ] as const;
 
 export const SORT_OPTIONS = [
-  { type: 'createAt', name: '최신순' },
+  { type: 'createdAt', name: '최신순' },
   { type: 'title', name: '제목순' },
 ] as const;

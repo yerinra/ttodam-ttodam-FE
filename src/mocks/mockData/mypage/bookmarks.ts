@@ -4,20 +4,15 @@ export const bookmarksMockData: BookmarkResponse = {
   list: [
     {
       id: 1,
-      userId: 1,
-      postId: 2,
-      postTitle: '칫솔과 휴지를 함께 사실 분을 모집합니다!',
-      postStatus: 'in_progress',
+      userId: 4,
+      postId: 60,
+      postTitle: '사과 한 박스씩 사실 분 구합니다.',
+      postStatus: 'IN_PROGRESS',
       products: [
         {
-          productName: '크리오덴티메이트 칫솔',
-          price: 10830,
-          count: 30,
-        },
-        {
-          productName: '하얀티슈 프리미엄',
-          price: 30930,
-          count: 3,
+          productName: '사과',
+          price: 10000,
+          count: 2,
         },
       ],
     },

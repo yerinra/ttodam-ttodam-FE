@@ -1,7 +1,6 @@
-import { allPosts } from '@/mocks/mockData/post/allPosts';
+import { myPostsMockData } from '@/mocks/mockData/post/myPosts';
 import { http, HttpResponse } from 'msw';
 
 export const getMyPostsHandler = http.get('/users/post', () => {
-  const myPosts = allPosts.filter(post => post.user.id == 1);
-  return HttpResponse.json(myPosts);
+  return HttpResponse.json(myPostsMockData);
 });

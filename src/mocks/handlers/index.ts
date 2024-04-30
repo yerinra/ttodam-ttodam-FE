@@ -27,6 +27,7 @@ import {
   postPostNewHandler,
   putPurchaseStatusHandler,
   categoryPostsHandler,
+  putPostEditHandler,
 } from './post/postHandlers';
 
 import {
@@ -67,4 +68,5 @@ export const handlers = [
   postPostNewHandler,
   getAllNotificationsHandler,
   deleteNotificationHandler,
+  putPostEditHandler,
 ];

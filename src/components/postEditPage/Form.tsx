@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaMinus, FaPlus } from 'react-icons/fa';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
-import { PostNew } from '@/types/post';
-import Category from './Category';
+import { PostNew, type PostDetail } from '@/types/post';
 import { IoClose } from 'react-icons/io5';
-import { postPostNew } from '@/apis/post/post';
+import { useChangePostEditMutation } from '@/hooks/queries/useChangePostEditMutation';
+import Category from '../postNewPage/Category';
+// import { FaMinus, FaPlus } from 'react-icons/fa';
+
+type FormProps = {
+  data: PostDetail;
+};
 
 // TODO: 컴포넌트 분리 및 리팩토링하기!
-export default function Form() {
+export default function Form({ data }: FormProps) {
+  const navigate = useNavigate();
+  const { mutateAsync } = useChangePostEditMutation(+data.post.postId);
+
   const [products, setProducts] = useState<PostNew[]>([
     {
       title: '',
@@ -27,59 +34,66 @@ export default function Form() {
     },
   ]);
 
-  const [title, setTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [title, setTitle] = useState(data.post.title);
   const [totalParticipants, setTotalParticipants] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(data.post.content);
   const [selectedAddress, setSelectedAddress] = useState('');
-  const [deadline, setDeadline] = useState<Date>(new Date());
+  const [deadline, setDeadline] = useState<Date>(new Date(data.post.deadline));
   const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    setSelectedCategory(data.post.category);
+    setTotalParticipants(String(data.post.participants));
+    setSelectedAddress(data.post.place);
+    setDeadline(new Date(data.post.deadline));
+    setImagePreview(data.post.imgUrls);
+
+    if (data.post.products && data.post.products.length > 0) {
+      const initialProducts = data.post.products.map(product => ({
+        productName: product.productName || '',
+        purchaseLink: product.purchaseLink || '',
+        count: product.count || 0,
+        price: product.price || 0,
+      }));
+      setProducts(initialProducts);
+    }
+  }, [data]);
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
 
-  /**
-   * 새로운 입력 필드 추가
-   * 새로운 입력 필드가 추가될 때 호출되며, 새로운 상품 객체를 기존 상품 리스트에 추가함.
-   * 새로운 상품 객체의 기본 값은 빈문자열('')로 설정.
-   * price와 count 필드는 parseInt('')를 통해 초기화되며,
-   * 이는 새로운 입력 필드가 추가되었을 때 1이 표시되지 않도록 하기 위함.
-   * postImgUrl 초기값으로 설정.
-   */
-  const handleAddProducts = () => {
-    setProducts([
-      ...products,
-      {
-        productName: '',
-        purchaseLink: '',
-        price: 0,
-        count: parseInt(''),
-        postImgUrl: '',
-        participants: parseInt(''),
-        title: '',
-        deadline: '',
-        place: '',
-        content: '',
-        category: 'ALL',
-      },
-    ]);
-  };
-
-  // 입력 필드 삭제
-  const handleRemoveProducts = (index: number) => {
-    const newProducts = [...products];
-    newProducts.splice(index, 1);
-    setProducts(newProducts);
-  };
-
-  // 게시글 변경
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
+
+  // const handleAddProducts = () => {
+  //   setProducts([
+  //     ...products,
+  //     {
+  //       productName: '',
+  //       purchaseLink: '',
+  //       price: 0,
+  //       count: parseInt(''),
+  //       postImgUrl: '',
+  //       participants: parseInt(''),
+  //       title: '',
+  //       deadline: '',
+  //       place: '',
+  //       content: '',
+  //       category: 'ALL',
+  //     },
+  //   ]);
+  // };
+
+  // // 입력 필드 삭제
+  // const handleRemoveProducts = (index: number) => {
+  //   const newProducts = [...products];
+  //   newProducts.splice(index, 1);
+  //   setProducts(newProducts);
+  // };
 
   // 상품 이름 변경
   const handleProductNameChange = (index: number, value: string) => {
@@ -95,13 +109,7 @@ export default function Form() {
     setProducts(newProducts);
   };
 
-  /**
-   * 상품 수량 변경
-   * @param index 해당 상품의 인덱스
-   * @param value 입력된 값 (문자열)
-   * 문자열인 value를 숫자로 변환하여 상품의 수량을 업데이트
-   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
-   */
+  // 상품 수량 변경
   const handleProductCountChange = (index: number, value: string) => {
     // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
     const newValue = isNaN(parseInt(value)) ? '' : value;
@@ -112,13 +120,7 @@ export default function Form() {
     setProducts(newProducts);
   };
 
-  /**
-   * 상품 기존 가격 변경
-   * @param index 해당 상품의 인덱스
-   * @param value 입력된 값 (문자열)
-   * 문자열인 value를 숫자로 변환하여 상품의 가격을 업데이트
-   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
-   */
+  // 상품 가격 업데이트
   const handleProductPriceChange = (index: number, value: string) => {
     // 입력된 값이 숫자인지 확인하고, 숫자가 아니면 빈 문자열로 설정
     const newValue = value.trim() === '' ? '0' : value.replaceAll(',', '');
@@ -130,34 +132,12 @@ export default function Form() {
     setProducts(newProducts);
   };
 
-  /**
-   * 희망 모집 인원 변경
-   * @param index 해당 상품의 인덱스
-   * @param value 입력된 값 (문자열)
-   * 문자열인 value를 숫자로 변환하여 희망 모집 인원 업데이트
-   * 만약 입력된 값이 숫자가 아닌 경우, 빈 문자열로 설정하여 입력을 유도
-   */
   const handleParticipantsChangeAllProducts = (value: string) => {
     const newProducts = products.map(product => {
       return { ...product, participants: parseInt(value) };
     });
     setProducts(newProducts);
     setTotalParticipants(value);
-  };
-
-  /**
-   * 인당 가격 계산 함수
-   * @param price 원래 가격
-   * @param participants 모집 인원
-   * 참여자 수가 0이면 빈 문자열을 반환
-   * 가격을 참여자 수로 나누어 인당 가격 계산
-   * 인당 가격이 숫자가 아니면 빈 문자열 반환
-   */
-
-  const calculatePerPersonPrice = ({ price, participants }: PostNew): string => {
-    if (participants === 0) return '';
-    const perPersonPrice = price / participants;
-    return isNaN(perPersonPrice) ? '' : perPersonPrice.toLocaleString() + '원';
   };
 
   // 주소 변경
@@ -214,6 +194,7 @@ export default function Form() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const postId = data.post.postId;
 
     const formData = new FormData();
 
@@ -251,20 +232,20 @@ export default function Form() {
     imageFile
       .filter(image => image !== null)
       .forEach((image, index) => {
-        formData.append(`postImages[${index}]`, image!);
+        formData.append(`imageFiles[${index}]`, image!);
       });
 
     // 데이터 확인
     const formDataObject = Object.fromEntries(formData.entries());
-    console.log(formDataObject);
+    console.log('formDataObject', formDataObject);
 
     try {
-      await postPostNew(formData);
-      alert('게시글 등록이 완료되었습니다.');
+      await mutateAsync({ postId, formData });
+      alert('게시글 수정이 완료되었습니다.');
       console.log('요청이 성공적으로 완료되었습니다.');
       navigate('/posts/all');
     } catch (error) {
-      console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
+      console.error('요청을 보내는 중 오류가 발생하였습니다.', error);
     }
 
     imagePreview.forEach(URL.revokeObjectURL);
@@ -280,7 +261,7 @@ export default function Form() {
   }, [imagePreview]);
 
   return (
-    <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
+    <form onSubmit={handleSubmit} method="PUT" encType="multipart/form-data">
       <input
         type="submit"
         value={'등록'}
@@ -290,21 +271,23 @@ export default function Form() {
       <input
         type="text"
         placeholder="게시글 제목을 입력해주세요."
-        value={title}
+        name={title}
+        defaultValue={data.post.title}
         onChange={handleTitleChange}
         className="w-full outline-none py-4 border-b"
       />
-      {products.map((product, index) => (
+      {data.post.products.map((product, index) => (
         <div key={index}>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
               placeholder="상품의 이름을 입력해주세요."
-              value={product.productName}
+              name={product.productName}
+              defaultValue={product.productName}
               onChange={e => handleProductNameChange(index, e.target.value)}
               className="w-full outline-none"
             />
-            {index === products.length - 1 ? (
+            {/* {index === products.length - 1 ? (
               <button type="button" onClick={handleAddProducts}>
                 <FaPlus className="w-3 h-3 mr-1" />
               </button>
@@ -312,13 +295,14 @@ export default function Form() {
               <button type="button" onClick={() => handleRemoveProducts(index)}>
                 <FaMinus className="w-3 h-3 mr-1" />
               </button>
-            )}
+            )} */}
           </div>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
               placeholder="상품의 링크를 입력해주세요."
-              value={product.purchaseLink}
+              name={product.purchaseLink}
+              defaultValue={product.purchaseLink}
               onChange={e => handleProductLinkChange(index, e.target.value)}
               className="w-full outline-none"
             />
@@ -327,7 +311,8 @@ export default function Form() {
             <input
               type="number"
               placeholder="상품의 수량을 입력해주세요."
-              value={product.count === 0 ? '' : String(product.count)}
+              name={product.count === 0 ? '' : String(product.count)}
+              defaultValue={product.count === 0 ? '' : String(product.count)}
               onChange={e => handleProductCountChange(index, e.target.value)}
               className="w-full outline-none"
             />
@@ -336,38 +321,21 @@ export default function Form() {
             <input
               type="text"
               placeholder="상품의 가격을 입력해주세요."
-              value={product.price === 0 ? '' : product.price.toLocaleString()}
+              name={product.price === 0 ? '' : product.price.toLocaleString()}
+              defaultValue={product.price === 0 ? '' : product.price.toLocaleString()}
               onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
               className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             원
           </div>
-          {index === products.length - 1 ? (
-            <input
-              type="text"
-              key={index}
-              placeholder="모집 인원을 입력하시면 자동으로 인당 가격이 계산됩니다."
-              value={calculatePerPersonPrice(product)}
-              readOnly
-              className="w-full outline-none py-4 border-b"
-            />
-          ) : (
-            <input
-              type="text"
-              key={index}
-              placeholder="희망 모집 인원을 입력하시면 자동으로 인당 가격이 보여집니다."
-              value={calculatePerPersonPrice(product)}
-              readOnly
-              className="w-full outline-none py-4 border-b-2 border-stone-300 text-black"
-            />
-          )}
         </div>
       ))}
       <DaumPost onAddressChange={handleAddressChange} />
       <input
         type="number"
         placeholder="희망 모집 인원을 입력해주세요."
-        value={totalParticipants}
+        name={totalParticipants}
+        defaultValue={data.post.participants}
         onChange={e => handleParticipantsChangeAllProducts(e.target.value)}
         className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
@@ -378,8 +346,8 @@ export default function Form() {
         cols={30}
         rows={10}
         placeholder="또담공구의 상세 정보를 입력해주세요."
-        name="content"
-        value={content}
+        name={content}
+        defaultValue={data.post.content}
         onChange={handleContentChange}
         className="w-full outline-none py-4 border-b resize-none"
       />

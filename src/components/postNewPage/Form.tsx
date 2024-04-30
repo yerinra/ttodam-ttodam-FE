@@ -207,29 +207,47 @@ export default function Form() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('category', selectedCategory);
-    formData.append('title', title);
-    formData.append('deadline', format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'));
-    formData.append('participants', totalParticipants);
-    formData.append('place', selectedAddress);
-    formData.append('content', content);
 
-    products.forEach((product, index) => {
-      formData.append(`products[${index}][productName]`, product.productName);
-      formData.append(`products[${index}][price]`, product.price.toString());
-      formData.append(`products[${index}][count]`, product.count.toString());
-      formData.append(`products[${index}][purchaseLink]`, product.purchaseLink);
+    const jsonData = JSON.stringify({
+      category: selectedCategory,
+      title: title,
+      deadline: format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'),
+      participants: totalParticipants,
+      place: selectedAddress,
+      content: content,
+      products: products.map(product => ({
+        productName: product.productName,
+        price: product.price,
+        count: product.count,
+        purchaseLink: product.purchaseLink,
+      })),
     });
+    formData.append('postUpdateDto', jsonData);
+    console.log(jsonData);
 
-    // 데이터 확인
-    const formDataObject = Object.fromEntries(formData.entries());
-    console.log(formDataObject);
+    // formData.append('category', selectedCategory);
+    // formData.append('title', title);
+    // formData.append('deadline', format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'));
+    // formData.append('participants', totalParticipants);
+    // formData.append('place', selectedAddress);
+    // formData.append('content', content);
+
+    // products.forEach((product, index) => {
+    //   formData.append(`products[${index}][productName]`, product.productName);
+    //   formData.append(`products[${index}][price]`, product.price.toString());
+    //   formData.append(`products[${index}][count]`, product.count.toString());
+    //   formData.append(`products[${index}][purchaseLink]`, product.purchaseLink);
+    // });
 
     imageFile
       .filter(image => image !== null)
       .forEach((image, index) => {
         formData.append(`postImages[${index}]`, image!);
       });
+
+    // 데이터 확인
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log(formDataObject);
 
     try {
       await postPostNew(formData);

@@ -8,7 +8,7 @@ export const getNotification = async () => {
       url: `/notifications`,
     });
 
-    return res.data.list;
+    return res.data;
   } catch (error) {
     throw error;
   }

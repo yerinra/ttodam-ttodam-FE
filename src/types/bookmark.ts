@@ -1,9 +1,5 @@
 import { Status } from '@/types/post';
 
-export type BookmarkResponse = {
-  list: BookMark[];
-};
-
 type Product = {
   productName: string;
   price: number;

@@ -8,7 +8,7 @@ export const getBookmarks = async () => {
       method: 'get',
       url: '/post/bookmark',
     });
-    return res.data.list;
+    return res.data;
   } catch (error) {
     throw error;
   }

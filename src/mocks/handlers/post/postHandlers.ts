@@ -74,7 +74,7 @@ export const putPurchaseStatusHandler = http.put(`/post/:postId/purchase/:purcha
   });
 });
 
-export const postPostNewHandler = http.post('/post', () => {
+export const postPostNewHandler = http.post('/post/write', () => {
   return HttpResponse.json({
     message: '게시글이 성공적으로 등록되었습니다.',
   });

@@ -4,17 +4,30 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getPost } from '@/apis/post/post';
-import type { Post } from '@/types/post';
+import type { PostDetail } from '@/types/post';
+import useCurrentPostIdStore from '@/store/currentPostIdStore';
+import { useEffect } from 'react';
 
 export default function PostEditPage() {
   const { postId } = useParams();
 
-  const { data, error, isLoading } = useQuery<Post>({
+  const { data, error, isLoading } = useQuery<PostDetail>({
     queryKey: ['post', postId],
     queryFn: () => {
       return getPost(+postId!);
     },
   });
+
+  const { setCurrentPostId } = useCurrentPostIdStore();
+
+  useEffect(() => {
+    if (postId) {
+      setCurrentPostId(+postId);
+    } else {
+      setCurrentPostId(null);
+    }
+    return () => setCurrentPostId(null);
+  }, [postId, setCurrentPostId]);
 
   if (error) return <div>에러가 발생했습니다.</div>;
   if (isLoading) return <div>Loading...</div>;

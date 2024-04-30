@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
-import { PostNew, type Post } from '@/types/post';
+import { PostNew, type PostDetail } from '@/types/post';
 import { IoClose } from 'react-icons/io5';
 import { useChangePostEditMutation } from '@/hooks/queries/useChangePostEditMutation';
 import Category from '../postNewPage/Category';
 // import { FaMinus, FaPlus } from 'react-icons/fa';
 
 type FormProps = {
-  data: Post;
+  data: PostDetail;
 };
 
 // TODO: 컴포넌트 분리 및 리팩토링하기!
 export default function Form({ data }: FormProps) {
   const navigate = useNavigate();
-  const { mutateAsync } = useChangePostEditMutation(+data.Id);
+  const { mutateAsync } = useChangePostEditMutation(+data.post.postId);
 
   const [products, setProducts] = useState<PostNew[]>([
     {
@@ -35,23 +35,23 @@ export default function Form({ data }: FormProps) {
   ]);
 
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [title, setTitle] = useState(data.title);
+  const [title, setTitle] = useState(data.post.title);
   const [totalParticipants, setTotalParticipants] = useState('');
-  const [content, setContent] = useState(data.content);
+  const [content, setContent] = useState(data.post.content);
   const [selectedAddress, setSelectedAddress] = useState('');
-  const [deadline, setDeadline] = useState<Date>(new Date(data.deadline));
+  const [deadline, setDeadline] = useState<Date>(new Date(data.post.deadline));
   const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
   useEffect(() => {
-    setSelectedCategory(data.category);
-    setTotalParticipants(String(data.participants));
-    setSelectedAddress(data.place);
-    setDeadline(new Date(data.deadline));
-    setImagePreview(data.productImgUrl);
+    setSelectedCategory(data.post.category);
+    setTotalParticipants(String(data.post.participants));
+    setSelectedAddress(data.post.place);
+    setDeadline(new Date(data.post.deadline));
+    setImagePreview(data.post.imgUrls);
 
-    if (data.products && data.products.length > 0) {
-      const initialProducts = data.products.map(product => ({
+    if (data.post.products && data.post.products.length > 0) {
+      const initialProducts = data.post.products.map(product => ({
         productName: product.productName || '',
         purchaseLink: product.purchaseLink || '',
         count: product.count || 0,
@@ -161,7 +161,6 @@ export default function Form({ data }: FormProps) {
     const file = e.target.files?.[0];
     if (file) {
       const maxSize = 1 * 1024 * 1024;
-      console.log(maxSize);
 
       // 이미지 용량 제한
       if (file.size > maxSize) {
@@ -195,7 +194,7 @@ export default function Form({ data }: FormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const postId = data.Id;
+    const postId = data.post.postId;
 
     const formData = new FormData();
     formData.append('category', selectedCategory);
@@ -228,7 +227,7 @@ export default function Form({ data }: FormProps) {
       console.log('요청이 성공적으로 완료되었습니다.');
       navigate('/posts/all');
     } catch (error) {
-      console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
+      console.error('요청을 보내는 중 오류가 발생하였습니다.', error);
     }
 
     imagePreview.forEach(URL.revokeObjectURL);
@@ -255,11 +254,11 @@ export default function Form({ data }: FormProps) {
         type="text"
         placeholder="게시글 제목을 입력해주세요."
         name={title}
-        defaultValue={data.title}
+        defaultValue={data.post.title}
         onChange={handleTitleChange}
         className="w-full outline-none py-4 border-b"
       />
-      {data.products.map((product, index) => (
+      {data.post.products.map((product, index) => (
         <div key={index}>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
@@ -318,7 +317,7 @@ export default function Form({ data }: FormProps) {
         type="number"
         placeholder="희망 모집 인원을 입력해주세요."
         name={totalParticipants}
-        defaultValue={data.participants}
+        defaultValue={data.post.participants}
         onChange={e => handleParticipantsChangeAllProducts(e.target.value)}
         className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
@@ -330,7 +329,7 @@ export default function Form({ data }: FormProps) {
         rows={10}
         placeholder="또담공구의 상세 정보를 입력해주세요."
         name={content}
-        defaultValue={data.content}
+        defaultValue={data.post.content}
         onChange={handleContentChange}
         className="w-full outline-none py-4 border-b resize-none"
       />

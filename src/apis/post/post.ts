@@ -87,7 +87,7 @@ export const postPostNew = async (formData: FormData) => {
       url: `/post/write`,
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-Data',
+        'Content-Type': 'multipart/form-data',
       },
     });
   } catch (error) {

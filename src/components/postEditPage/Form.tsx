@@ -160,6 +160,16 @@ export default function Form({ data }: FormProps) {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const maxSize = 1 * 1024 * 1024;
+      console.log(maxSize);
+
+      // 이미지 용량 제한
+      if (file.size > maxSize) {
+        alert(`1MB 이하의 사진만 등록할 수 있습니다.`);
+        console.error('1MB 미만의 파일만 업로드 가능합니다.');
+        return '';
+      }
+
       const imageUrl = URL.createObjectURL(file);
       setImageFiles(prevFiles => [...prevFiles, file]);
       setImagePreview(prevPreviews => [...prevPreviews, imageUrl]);

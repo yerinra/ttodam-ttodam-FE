@@ -11,7 +11,7 @@ export default function UserInfo({ data }: UserInfoProps) {
   const { post } = data;
   return (
     <div className="flex items-center gap-2">
-      {(post.userProfileImg === '' || post.userProfileImg == null) && (
+      {/* {(post.userProfileImg === '' || post.userProfileImg == null) && (
         <div className="w-10 h-10 text-primary/50 rounded-full">
           <img src={defaultUser} alt="user" />
         </div>
@@ -22,12 +22,14 @@ export default function UserInfo({ data }: UserInfoProps) {
           style={{ backgroundImage: `url(${post.userProfileImg})` }}
           className="w-10 h-10 justify-center bg-no-repeat bg-cover bg-center rounded-full"
         />
-      )}
-
+      )} */}
+      <div className="w-10 h-10 text-primary/50 rounded-full">
+        <img src={defaultUser} alt="user" />
+      </div>
       <div className="flex flex-col items-start gap-1">
-        <div className="font-semibold">{post.userNickname}</div>
+        <div className="font-semibold">{post.authorNickname}</div>
 
-        <Badge variant="primary">{post.userManners * 20}점</Badge>
+        <Badge variant="primary">{post.authorManners * 20}점</Badge>
       </div>
     </div>
   );

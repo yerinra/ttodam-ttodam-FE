@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
-// import { loginUser } from '@/apis/auth/login';
 import { LoginFormData, login } from '@/apis/auth/login';
 import SocialLogin from '@/components/Login/SocialLogin';
 import { useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
 import { QueryClient, useMutation } from '@tanstack/react-query';
-
-// const cookies = new Cookies();
 
 interface FormValues {
   email: string;
@@ -53,29 +50,12 @@ const LoginPage: React.FC = () => {
       reset();
     },
   });
-  const onSubmit = async (data: FormValues) => {
-    // try {
-    //   const token = await loginUser(data);
-    //   if (token) {
-    //     cookies.set('accessToken', token, { path: '/' });
-    //     setIsLoggedIn(true);
-    //     navigate('/home');
-    //   } else {
-    //     alert('로그인 실패. 계정 정보를 확인하세요.');
-    //   }
-    // } catch (error) {
-    //   console.error('로그인 실패:', error);
-    //   alert('로그인에 실패하였습니다.');
-    // }
-    try {
-      loginMutation.mutateAsync(data);
-    } catch (err) {
-      console.error(err);
-    }
+  const onSubmit = (data: FormValues) => {
+    loginMutation.mutate(data);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen my-5">
       {
         <>
           <Link to="/">

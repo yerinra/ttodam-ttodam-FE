@@ -3,19 +3,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import useUserIsLoggedInStore from '@/store/isLoginStore';
 import { useCookies } from 'react-cookie';
+import { signout } from '@/apis/auth/signout';
+import { QueryClient } from '@tanstack/react-query';
 
 export default function Header() {
   const navigate = useNavigate();
   const [, , removeCookie] = useCookies(['AccessToken']);
   const { isLoggedIn, resetIsLoggedIn } = useUserIsLoggedInStore();
-  
-  const logout = () => {
+  const queryClient = new QueryClient();
+
+  const logout = async () => {
     const confirmed = window.confirm('로그아웃 하시겠습니까?');
+
     if (confirmed) {
-      resetIsLoggedIn();
-      removeCookie('AccessToken', { path: '/login/oauth2/code' });
-      removeCookie('AccessToken', { path: '/' });
-      navigate('/');
+      try {
+        await signout();
+        resetIsLoggedIn();
+        removeCookie('AccessToken', { path: '/login/oauth2/code' });
+        removeCookie('AccessToken', { path: '/' });
+        queryClient.invalidateQueries({ queryKey: ['accessToken'] });
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

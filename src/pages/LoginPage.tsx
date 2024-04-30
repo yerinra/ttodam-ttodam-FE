@@ -9,8 +9,6 @@ import { useCookies } from 'react-cookie';
 import useUserIsLogInStore from '../store/isLoginStore';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 
-import useRemainCookie from '@/hooks/useRemainCookie';
-
 // const cookies = new Cookies();
 
 interface FormValues {
@@ -21,7 +19,7 @@ interface FormValues {
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [, setCookie, removeCookie] = useCookies(['AccessToken']);
+  const [, setCookie] = useCookies(['AccessToken']);
 
   const queryClient = new QueryClient();
   const {

@@ -1,8 +1,8 @@
 import { loginHandler, socialLoginHandler } from './auth/login';
 import { signoutHandler } from './auth/signout';
-import { signupHandler } from './auth/signup';
+import { verifyEmailHandler } from './auth/signup';
+// import { signupHandler } from './auth/signup';
 import { verifyCodeHandler } from './auth/verifyCode';
-import { verifyEmailHandler } from './auth/verifyEmail';
 
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 
@@ -18,39 +18,55 @@ import {
   postProfilesHandler,
 } from './myPage/profile';
 
+import { deleteNotificationHandler, getAllNotificationsHandler } from './notification/notification';
+
 import {
   getAllPostsHandler,
   getPostByParamHandler,
   deletePostHandler,
   postPostNewHandler,
+  putPurchaseStatusHandler,
+  categoryPostsHandler,
   putPostEditHandler,
 } from './post/postHandlers';
 
-import { cancelRequestHandler, getRequestsHandler, putRequestHandler } from './post/requestHandlers';
+import {
+  cancelRequestHandler,
+  getRequestsHandler,
+  postRequestHandler,
+  putRequestHandler,
+} from './post/requestHandlers';
+import { valuationHandler } from './post/valuations';
 
 export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
-  signupHandler,
+  // signupHandler,
   signoutHandler,
   loginHandler,
   socialLoginHandler,
   getAllPostsHandler,
+  categoryPostsHandler,
   getPostByParamHandler,
   getBookmarksHandler,
   postBookmarkHandler,
   deleteBookmarkHandler,
   deletePostHandler,
+  putPurchaseStatusHandler,
   getProfilesHandler,
   postProfilesHandler,
   getEditProfilesHandler,
   postEditProfilesHandler,
   getRequestsHandler,
+  postRequestHandler,
   getHistoryHandler,
   postMannersHandler,
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
+  valuationHandler,
   postPostNewHandler,
+  getAllNotificationsHandler,
+  deleteNotificationHandler,
   putPostEditHandler,
 ];

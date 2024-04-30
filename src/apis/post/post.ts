@@ -84,7 +84,7 @@ export const postPostNew = async (formData: FormData) => {
   try {
     await axiosAccess({
       method: 'post',
-      url: `/post`,
+      url: `/post/write`,
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-Data',

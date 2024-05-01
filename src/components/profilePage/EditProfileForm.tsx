@@ -11,7 +11,7 @@ import placeholderImage from '@/assets/placeholderImage.png';
 // TODO: 회원탈퇴 기능 구현하기
 export default function EditProfileForm() {
   const profileImgFileInput = useRef(null);
-  const [profiles, setProfiles] = useState<EditProfile[]>([]);
+  const [, setProfiles] = useState<EditProfile[]>([]);
   const [imageFile, setImageFiles] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState('');
   const [nickname, setNickname] = useState('');
@@ -58,12 +58,12 @@ export default function EditProfileForm() {
     }
 
     // 중복 검사
-    const isNickNameAvailable = !profiles.some(profile => profile.nickname === newNickname);
-    if (!isNickNameAvailable) {
-      setNicknameError('이미 사용 중인 닉네임입니다.');
-    } else {
-      setNicknameError('사용 가능한 닉네임입니다.');
-    }
+    // const isNickNameAvailable = !profiles.some(profile => profile.nickname === newNickname);
+    // if (!isNickNameAvailable) {
+    //   setNicknameError('이미 사용 중인 닉네임입니다.');
+    // } else {
+    //   setNicknameError('사용 가능한 닉네임입니다.');
+    // }
 
     setNickname(newNickname);
   };
@@ -111,6 +111,7 @@ export default function EditProfileForm() {
     }
 
     const formData = new FormData();
+
     formData.append('nickname', nickname);
     formData.append('location', location);
     formData.append('phoneNumber', phoneNumber);
@@ -122,7 +123,7 @@ export default function EditProfileForm() {
     }
 
     try {
-      const response = await axios.post('/users/:userId/profiles/update', formData, {
+      const response = await axios.put('/users/profiles/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -165,7 +166,7 @@ export default function EditProfileForm() {
       />
       {data &&
         data?.editProfile?.map((pf: EditProfile) => (
-          <div key={pf.id}>
+          <div key={pf.nickname}>
             <div className="flex w-full items-center justify-center py-6">
               <div className="w-full flex flex-col items-center justify-center gap-6">
                 <div className="relative w-[100px] h-[100px] flex items-center justify-center">

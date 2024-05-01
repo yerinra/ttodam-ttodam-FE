@@ -4,10 +4,12 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useMap } from './useMap';
 import { IoBookmarkSharp } from 'react-icons/io5';
 import { PlaceType } from '@/types/map';
+import { PostMap } from '@/types/post';
 
 interface MapMarkerProps {
   place: PlaceType;
   showInfo?: boolean;
+  data: PostMap;
 }
 
 export default function MapMarker(props: MapMarkerProps) {
@@ -60,20 +62,21 @@ export default function MapMarker(props: MapMarkerProps) {
 
   return container.current
     ? ReactDOM.createPortal(
-        <div
+        <button
+          key={props.place.id}
           onClick={() => {
             infoWindow.setMap(null);
           }}
           className="absolute bottom-[60px] left-0 ml-[-120px] flex flex-col gap-2 w-[260px] px-7 py-4 border border-black rounded-2xl bg-white"
         >
-          <strong>게시글 제목</strong>
+          <strong>{props.data.postList.title}</strong>
           <p className="text-sm">{props.place.address}</p>
           <p className="text-sm font-bold">
             모집 상태
-            <span className="text-sm ml-1">모집중</span>
+            <span className="text-sm ml-1">{props.data.postList.status}</span>
           </p>
           <IoBookmarkSharp className="absolute top-[-4px] right-[20px] w-8 h-9 text-yellow-300" />
-        </div>,
+        </button>,
         container.current,
       )
     : null;

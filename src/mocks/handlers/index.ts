@@ -3,14 +3,10 @@ import { signoutHandler } from './auth/signout';
 import { verifyEmailHandler } from './auth/signup';
 // import { signupHandler } from './auth/signup';
 import { verifyCodeHandler } from './auth/verifyCode';
-
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
-
 import { getHistoryHandler } from './myPage/history';
 import { postMannersHandler } from './myPage/manners';
-
 import { getMyPostsHandler } from './myPage/myPosts';
-
 import {
   getEditProfilesHandler,
   getProfilesHandler,
@@ -19,18 +15,15 @@ import {
 } from './myPage/profile';
 
 import { deleteNotificationHandler, getAllNotificationsHandler } from './notification/notification';
-
 import {
   getAllPostsHandler,
   getPostByParamHandler,
   deletePostHandler,
   postPostNewHandler,
   putPurchaseStatusHandler,
-  putPostEditHandler,
   categoryPostsHandler,
   putPostEditHandler,
 } from './post/postHandlers';
-
 import {
   cancelRequestHandler,
   getRequestsHandler,
@@ -38,7 +31,6 @@ import {
   putRequestHandler,
 } from './post/requestHandlers';
 import { valuationHandler } from './post/valuations';
-
 export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
@@ -65,4 +57,9 @@ export const handlers = [
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
+  valuationHandler,
+  postPostNewHandler,
+  getAllNotificationsHandler,
+  deleteNotificationHandler,
+  putPostEditHandler,
 ];

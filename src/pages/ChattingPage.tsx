@@ -29,19 +29,17 @@ const ChattingPage: React.FC = () => {
   }, [chatroomId]);
 
   const handleNewMessage = (users: any[]) => {
-    // 채팅방에서 받은 새로운 메시지를 처리합니다.
-    // 이 함수를 메시지 상태를 올바르게 업데이트하도록 수정할 수 있습니다.
     console.log('새로운 메시지가 도착했습니다:', users);
   };
 
   const handleMessageSend = () => {
-    if (newMessage.trim() === '') return; // 빈 메시지 전송 방지
-    if (!chatroomId) return; // 메시지 전송 전에 채팅방 ID가 정의되어 있는지 확인
+    if (newMessage.trim() === '') return;
+    if (!chatroomId) return;
 
     const newChatMessage: ChatMessage = {
       type: 'TALK',
       content: newMessage,
-      isUser: true, // 사용자 메시지 여부를 추가합니다.
+      isUser: true,
     };
 
     sendChatMessage(chatroomId, newChatMessage)
@@ -50,7 +48,6 @@ const ChattingPage: React.FC = () => {
       })
       .catch(error => {
         console.error('메시지 전송 중 오류 발생:', error);
-        // 오류 처리 - 사용자에게 오류 메시지를 표시합니다.
       });
   };
 

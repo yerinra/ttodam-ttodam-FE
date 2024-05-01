@@ -2,10 +2,10 @@ import ReactDOM from 'react-dom';
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useMap } from './useMap';
-import { IoBookmarkSharp } from 'react-icons/io5';
 import { PlaceType } from '@/types/map';
 import Badge from '@/components/atoms/Badge';
 import { PostMap } from '@/types/post';
+import BookmarkBtn from '@/components/homePage/BookmarkBtn';
 
 interface MapMarkerProps {
   place: PlaceType;
@@ -70,7 +70,7 @@ export default function MapMarker(props: MapMarkerProps) {
           onClick={() => {
             infoWindow.setMap(null);
           }}
-          className="absolute bottom-[60px] left-0 ml-[-120px] flex flex-col gap-2 w-[260px] px-7 py-4 border border-black rounded-2xl bg-white"
+          className="absolute bottom-[60px] left-0 ml-[-120px] flex flex-col gap-2 w-[270px] px-7 py-4 border border-black rounded-2xl bg-white"
         >
           {props.mapPosts &&
             props.mapPosts.map(post => (
@@ -78,7 +78,7 @@ export default function MapMarker(props: MapMarkerProps) {
                 <strong>{post.postList.title}</strong>
                 <p className="text-sm">{post.postList.place}</p>
                 <Badge variant={post.postList.status}></Badge>
-                <IoBookmarkSharp className="absolute top-[-4px] right-[20px] w-8 h-9 text-yellow-300" />
+                <BookmarkBtn bookmarkId={post.postList.bookmarkId} isBookmarked={post.postList.bookmarkId} />
               </div>
             ))}
         </button>,

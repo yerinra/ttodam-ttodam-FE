@@ -84,6 +84,9 @@ export default function MapSearchInput(props: MapSearchInputProps) {
     map.setCenter(place.position);
     map.setLevel(4);
     props.onSelect(place.id);
+
+    // 리스트 영역 닫힘
+    setIsSearchInput(false);
   };
 
   return (

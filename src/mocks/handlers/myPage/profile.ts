@@ -2,10 +2,9 @@ import { editProfile, profile } from '@/mocks/mockData/mypage/profile';
 import { http, HttpResponse } from 'msw';
 
 export type Profile = {
-  id: number;
   nickname: string;
-  profileImgUrl: string;
-  manners: number;
+  profileImageUrl: string;
+  mannerScore: number;
 };
 
 export const postProfilesHandler = http.post('/users/:userId/profiles', async () => {

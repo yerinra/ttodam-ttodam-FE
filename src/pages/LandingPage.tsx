@@ -8,6 +8,7 @@ import star from '../assets/star.png';
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useUserIsLogInStore from '@/store/isLoginStore';
 
 const LandingPageData = [
   {
@@ -45,6 +46,7 @@ const LandingPageData = [
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const { isLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;
   //   setCurrentIndex(newIndex);
@@ -67,16 +69,24 @@ export default function LandingPage() {
         <Link to="/">
           <img src={logo} alt="logo" className="w-20 h-20" />
         </Link>
-        <div className="flex gap-5">
-          <Link to="/login">
-            <Button className="text-md p-5">로그인</Button>
-          </Link>
-          <Link to="/signup">
-            <Button variant="outline" className="text-md p-5">
-              회원가입
-            </Button>
-          </Link>
-        </div>
+        {isLoggedIn ? (
+          <div className="flex gap-5">
+            <Link to="/login">
+              <Button className="text-md p-5">홈으로</Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="flex gap-5">
+            <Link to="/login">
+              <Button className="text-md p-5">로그인</Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="outline" className="text-md p-5">
+                회원가입
+              </Button>
+            </Link>
+          </div>
+        )}
       </header>
       <div className="flex flex-col items-center w-full m-auto gap-y-4 justify-center">
         <div className="bg-primary/80 rounded-full mb-10 p-5 ">

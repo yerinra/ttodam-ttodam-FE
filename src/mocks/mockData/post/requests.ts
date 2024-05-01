@@ -1,6 +1,4 @@
-import { RequestResponse } from '@/types/request';
-
-export const requestsMockData: RequestResponse = {
+export const requestsMockData = {
   participationRequests: [
     {
       requestId: 1,

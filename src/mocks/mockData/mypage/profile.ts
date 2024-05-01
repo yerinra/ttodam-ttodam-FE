@@ -3,10 +3,9 @@ import { EditProfile, Profile } from '@/mocks/handlers/myPage/profile';
 export const profile: { profile: Profile[] } = {
   profile: [
     {
-      id: 1,
-      nickname: '또담',
-      profileImgUrl: '',
-      manners: 80,
+      nickname: '플레임',
+      profileImageUrl: '',
+      mannerScore: 5,
     },
   ],
 };
@@ -14,8 +13,7 @@ export const profile: { profile: Profile[] } = {
 export const editProfile: { editProfile: EditProfile[] } = {
   editProfile: [
     {
-      id: 1,
-      nickname: '또담',
+      nickname: '플레임',
       profileImgUrl: '',
       password: null,
       confirmPassword: null,

@@ -9,8 +9,10 @@ import H1 from '@/components/atoms/H1';
 import { type BookMark } from '@/types/bookmark';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import useRequireLogin from '@/hooks/useRequireLogin';
 
 export default function BookMarkPage() {
+  useRequireLogin();
   const { data, error, isLoading } = useQuery<BookMark[]>({
     queryKey: ['bookmarks'],
     queryFn: getBookmarks,
@@ -39,7 +41,6 @@ export default function BookMarkPage() {
 
         queryClient.setQueryData(['bookmarks'], (previousData: BookMark[]) => {
           return previousData.filter((item: BookMark) => item.id !== deletedBookmarkId) || [];
-
         });
         return { previousData };
       },

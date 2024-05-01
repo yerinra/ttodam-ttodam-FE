@@ -1,21 +1,18 @@
-import { Link } from 'react-router-dom';
-
-import type { Post } from '@/types/post';
-import { cn } from '@/lib/utils';
+import type { PostPreview as TPostPreview } from '@/types/post';
 import PostPreview from './PostPreview';
 
 type PostListProps = {
-  currentPosts: Post[];
+  currentPosts: TPostPreview[];
 };
 
 export default function PostList({ currentPosts }: PostListProps) {
   return (
     <section>
       {currentPosts &&
-        currentPosts.map((post: Post) => (
+        currentPosts.map(post => (
           <PostPreview
-            key={post.Id}
-            postId={post.Id}
+            key={post.postId}
+            postId={post.postId}
             status={post.status}
             title={post.title}
             content={post.content}

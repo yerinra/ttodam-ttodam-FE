@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { putRequest } from '@/apis/post/request';
-import { RequestStatus } from '@/types/request';
+import { UserRequestStatus } from '@/types/post';
 
 export const useChangeRequestStatusMutation = (postId: number) => {
   const queryClient = useQueryClient();
-  const handleRequestChange = ({ requestId, newStatus }: { requestId: number; newStatus: RequestStatus }) => {
+  const handleRequestChange = ({ requestId, newStatus }: { requestId: number; newStatus: UserRequestStatus }) => {
     return putRequest(requestId, newStatus);
   };
 

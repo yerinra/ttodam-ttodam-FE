@@ -1,13 +1,13 @@
 import { getProfiles } from '@/apis/myPage/profiles';
+import useRequireLogin from '@/hooks/useRequireLogin';
+
 import { Profile } from '@/mocks/handlers/myPage/profile';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-// profileImgUrl
 export default function ProfilePage() {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  useRequireLogin();
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['profiles'],
@@ -15,18 +15,6 @@ export default function ProfilePage() {
       return getProfiles();
     },
   });
-
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await getProfiles();
-        setProfiles(response.data);
-      } catch (error) {
-        console.error('Error fetching profiles: ', error);
-      }
-    };
-    fetchProfiles();
-  }, []);
 
   if (isLoading) return <div>프로필 정보를 가져오는 중입니다.</div>;
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;
@@ -37,11 +25,11 @@ export default function ProfilePage() {
       <div className="flex items-center flex-col mt-10">
         {data &&
           data?.profile?.map((pf: Profile) => (
-            <div key={pf.id}>
+            <div key={pf.nickname}>
               <div className="relative w-[170px] h-[150px] flex items-center justify-center">
-                {pf.profileImgUrl ? (
+                {pf.profileImageUrl ? (
                   <img
-                    src={pf.profileImgUrl}
+                    src={pf.profileImageUrl}
                     alt="프로필이미지"
                     className="flex items-center justify-center w-36 h-36 border rounded-[50%]"
                   />
@@ -49,7 +37,7 @@ export default function ProfilePage() {
                   <div className="relative w-[170px] h-[150px] flex items-center justify-center">
                     <Link to="/my/edit/Profile">
                       <img
-                        src={pf.profileImgUrl}
+                        src={pf.profileImageUrl}
                         alt=""
                         className="flex items-center justify-center w-36 h-36 bg-slate-400 rounded-[50%]"
                       />
@@ -64,7 +52,7 @@ export default function ProfilePage() {
               </div>
               <div className="flex items-center justify-between mt-8 gap-10">
                 <p className="py-0.5 px-3 border rounded-md text-lg">매너점수</p>
-                <span>{pf.manners}점</span>
+                <span>{pf.mannerScore * 20}점</span>
               </div>
             </div>
           ))}

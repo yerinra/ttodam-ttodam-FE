@@ -2,23 +2,23 @@ import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
 import Map from './Map';
 import { categoryNameKR, formatDate } from '@/lib/utils';
 
-import type { Category, Post } from '@/types/post';
+import type { Category, PostDetail } from '@/types/post';
 
 import { Link } from 'react-router-dom';
 import Badge from '../atoms/Badge';
 
 import MapMarker from './MapMarker';
 
-
 type PostMetaDataSectionProps = {
-  data: Post;
+  data: PostDetail;
 };
 export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) {
+  const { post } = data;
   const metaData = [
-    { desc: '카테고리', content: data?.category },
-    { desc: '모집인원', content: data?.participants },
-    { desc: '마감일', content: data?.deadline },
-    { desc: '만남장소', content: data?.place },
+    { desc: '카테고리', content: post.category },
+    { desc: '모집인원', content: post.participants },
+    { desc: '마감일', content: post.deadline },
+    { desc: '만남장소', content: post.place },
   ];
 
   return (
@@ -29,13 +29,13 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
             <div className="text-dark-gray font-bold w-24 h-10 flex-shrink-0">함께 살 상품</div>
             <div className="flex flex-col gap-2">
               {data &&
-                data.products.map(product => (
+                post.products.map(product => (
                   <Badge variant="secondary" key={product.productId} classNames="hover:bg-opacity-80">
                     <Link to={product.purchaseLink as string} className="flex flex-col">
                       <div>{product.productName}</div>
                       <div>
-                        {Math.ceil(product.price / data.participants).toLocaleString()}원 *{' '}
-                        {product.count / data.participants}
+                        {Math.ceil(product.price / post.participants).toLocaleString()}원 *{' '}
+                        {product.count / post.participants}
                         EA
                       </div>
                     </Link>
@@ -59,8 +59,8 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
         </section>
 
         <KakaoMapScriptLoader>
-          <Map lat={data.pLocationX} lng={data.pLocationY}>
-            <MapMarker lat={data.pLocationX} lng={data.pLocationY} />
+          <Map lat={post.plocationX} lng={post.plocationY}>
+            <MapMarker lat={post.plocationX} lng={post.plocationY} />
           </Map>
         </KakaoMapScriptLoader>
       </div>

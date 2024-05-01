@@ -1,4 +1,4 @@
-import { Product, Status } from './post';
+import { PreviewProduct, Status } from './post';
 
 export type HistoryResponse = {
   list: History[];
@@ -6,11 +6,15 @@ export type HistoryResponse = {
 
 export type History = {
   postId: number;
+  userId: number;
+  userNickname: string;
+  authorId: number;
+  authorNickname: string;
   title: string;
   status: Status;
-  products: Product[];
+  requestStatus: string;
+  purchaseStatus: string;
+  products: PreviewProduct[];
   updatedAt: string;
   createdAt: string;
-  members: [{ membersId: number; nickname: string }];
-  master: number;
 };

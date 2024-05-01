@@ -65,9 +65,4 @@ export const handlers = [
   getMyPostsHandler,
   putRequestHandler,
   cancelRequestHandler,
-  valuationHandler,
-  postPostNewHandler,
-  getAllNotificationsHandler,
-  deleteNotificationHandler,
-  putPostEditHandler,
 ];

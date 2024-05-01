@@ -98,3 +98,30 @@ export type PostNew = {
   postImgUrl: string;
   content: string;
 };
+
+export type PostMapResponse = {
+  list: PostMap[];
+};
+
+export type PostMap = {
+  postList: {
+    postId: number;
+    authorId: number;
+    authorNickname: string;
+    place: string;
+    plocationX: number;
+    plocationY: number;
+    category?: Exclude<Category, 'ALL'>;
+    status: Status;
+    purchaseStatus: PurchaseStatus;
+    title: string;
+    content: string;
+    products: PreviewProduct[];
+    createdAt: string;
+    updatedAt: string;
+    bookmarkId: boolean;
+  };
+  loginUserLocation: string;
+  loginUserLocationX: number;
+  loginUserLocationY: number;
+};

@@ -7,6 +7,7 @@ import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
 import { categoryNameKR } from '@/lib/utils';
 import { Category } from '@/types/post';
+import { mapPosts } from '@/mocks/mockData/post/mapPosts';
 
 export const getAllPostsHandler = http.get('/post/list', () => {
   return HttpResponse.json(allPosts);
@@ -84,4 +85,8 @@ export const putPostEditHandler = http.put('/post/:postId', () => {
   return HttpResponse.json({
     message: '게시글이 성공적으로 수정되었습니다.',
   });
+});
+
+export const getMapPostsHandler = http.get('/post/map/list', () => {
+  return HttpResponse.json(mapPosts);
 });

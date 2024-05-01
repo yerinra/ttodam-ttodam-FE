@@ -23,6 +23,7 @@ import {
   putPurchaseStatusHandler,
   categoryPostsHandler,
   putPostEditHandler,
+  getMapPostsHandler,
 } from './post/postHandlers';
 import {
   cancelRequestHandler,
@@ -62,4 +63,5 @@ export const handlers = [
   getAllNotificationsHandler,
   deleteNotificationHandler,
   putPostEditHandler,
+  getMapPostsHandler,
 ];

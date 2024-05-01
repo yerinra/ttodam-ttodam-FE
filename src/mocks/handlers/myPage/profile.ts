@@ -16,7 +16,6 @@ export const getProfilesHandler = http.get('/users/profiles', () => {
 });
 
 export type EditProfile = {
-  id: number;
   nickname: string;
   profileImgUrl: string;
   password: null;
@@ -25,8 +24,10 @@ export type EditProfile = {
   phoneNumber: string;
 };
 
-export const postEditProfilesHandler = http.post('/users/:userId/profiles/update', async () => {
-  return new HttpResponse(null, { status: 200 });
+export const putEditProfilesHandler = http.put('/users/profiles/update', async () => {
+  return HttpResponse.json({
+    message: '정상적으로 수정되었습니다.',
+  });
 });
 
 export const getEditProfilesHandler = http.get('/users/profiles/update', async () => {

@@ -14,7 +14,7 @@ import { getMyPostsHandler } from './myPage/myPosts';
 import {
   getEditProfilesHandler,
   getProfilesHandler,
-  postEditProfilesHandler,
+  putEditProfilesHandler,
   postProfilesHandler,
 } from './myPage/profile';
 
@@ -56,7 +56,7 @@ export const handlers = [
   getProfilesHandler,
   postProfilesHandler,
   getEditProfilesHandler,
-  postEditProfilesHandler,
+  putEditProfilesHandler,
   getRequestsHandler,
   postRequestHandler,
   getHistoryHandler,

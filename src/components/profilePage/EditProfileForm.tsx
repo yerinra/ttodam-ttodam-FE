@@ -25,7 +25,7 @@ export default function EditProfileForm() {
   const [passwordError, setPasswordError] = useState('');
   const [nicknameError, setNicknameError] = useState('');
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery<EditProfile[]>({
     queryKey: ['profiles/update'],
     queryFn: () => {
       return getEditProfiles();
@@ -168,14 +168,14 @@ export default function EditProfileForm() {
         className="absolute right-0 top-0 py-0.5 px-3 bg-primary rounded-md text-white my-[15px] mr-5"
       />
       {data &&
-        data?.editProfile?.map((pf: EditProfile) => (
-          <div key={pf.nickname}>
+        data.map((profile: EditProfile) => (
+          <div key={profile.nickname}>
             <div className="flex w-full items-center justify-center py-6">
               <div className="w-full flex flex-col items-center justify-center gap-6">
                 <div className="relative w-[100px] h-[100px] flex items-center justify-center">
-                  {pf.profileImgUrl ? (
+                  {profile.profileImgUrl ? (
                     <img
-                      src={pf.profileImgUrl}
+                      src={profile.profileImgUrl}
                       alt="프로필 이미지"
                       className="flex items-center justify-center w-[100px] h-[100px] border rounded-[50%]"
                     />
@@ -213,7 +213,7 @@ export default function EditProfileForm() {
               <input
                 type="text"
                 placeholder="닉네임"
-                defaultValue={pf.nickname}
+                defaultValue={profile.nickname}
                 name={nickname}
                 onChange={handleNicknameChange}
                 className="w-[250px] outline-none py-4 "
@@ -255,7 +255,7 @@ export default function EditProfileForm() {
               <input
                 type="text"
                 placeholder="전화번호 입력"
-                defaultValue={pf.phoneNumber}
+                defaultValue={profile.phoneNumber}
                 name={phoneNumber}
                 onChange={handlePhoneNumberChange}
                 maxLength={11}

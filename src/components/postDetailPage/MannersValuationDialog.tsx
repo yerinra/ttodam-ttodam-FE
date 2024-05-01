@@ -82,6 +82,7 @@ export default function MannersValuationDialog({ requestList }: MannersValuation
           postId: currentPostId as number,
           valuations: valuations.map(valuation => ({ userId: valuation.id, count: valuation.manners })),
         });
+        alert('매너평가가 완료되었습니다.');
       }
     } catch (error) {
       console.error('매너 평가를 처리하는 동안 오류가 발생했습니다:', error);

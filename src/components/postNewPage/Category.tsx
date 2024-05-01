@@ -1,6 +1,6 @@
-import { CATEGORIES } from "@/lib/data";
-import { useState } from "react";
-import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import { CATEGORIES } from '@/lib/data';
+import { useState } from 'react';
+import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 
 interface CategoryProps {
   onSelectCategory: (category: string) => void;
@@ -44,18 +44,18 @@ export default function Category({ onSelectCategory }: CategoryProps) {
         </button>
       )}
       {toggle && (
-        <ul className="w-full absolute left-0 top-[57px] bg-white border-x rounded-b-2xl border-b pb-2.5 z-10">
-          {CATEGORIES.map(category => (
-            <li
+        <div className="w-full absolute left-0 top-[57px] bg-white border-x rounded-b-2xl border-b pb-2.5 z-10">
+          {CATEGORIES.filter(category => category.type !== 'ALL').map(category => (
+            <button
               key={category.type}
               onClick={() => handleCategoryClick(category.name)}
-              className="w-full py-4 px-2.5 hover:bg-slate-100"
+              className="w-full py-4 px-2.5 hover:bg-slate-100 text-left"
             >
-              <button type="submit" className="w-full text-left">{category.name}</button>
-            </li>
+              {category.name}
+            </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
-  )
+  );
 }

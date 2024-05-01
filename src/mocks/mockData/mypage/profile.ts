@@ -13,7 +13,6 @@ export const profile: { profile: Profile[] } = {
 export const editProfile: { editProfile: EditProfile[] } = {
   editProfile: [
     {
-      id: 1,
       nickname: '플레임',
       profileImgUrl: '',
       password: null,

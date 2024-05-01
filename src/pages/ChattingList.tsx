@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
- 
-interface ChatRoom {
-  roomId: string;
-  title: string;
-  productName: string;
-}
+import { Link } from 'react-router-dom';
+import { getChatRoomList, ChatRoom } from '@/apis/chatting/chat';
 
 const ChattingList: React.FC = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
-  const tempChatRooms: ChatRoom[] = [
-    { roomId: '1', title: '게시글 제목', productName: '제품명' },
-    { roomId: '1', title: '게시글 제목', productName: '제품명' },
-
-  ];
-
   useEffect(() => {
-    setChatRooms(tempChatRooms);
+    const fetchChatRooms = async () => {
+      try {
+        const rooms = await getChatRoomList();
+        setChatRooms(rooms);
+      } catch (error) {
+        console.error('Error fetching chat room list:', error);
+      }
+    };
+
+    fetchChatRooms();
   }, []);
 
   return (
@@ -27,15 +25,14 @@ const ChattingList: React.FC = () => {
           <h2 className="text-xl font-sans font-bold">채팅방 목록</h2>
         </div>
         <ul className="mb-6 mt-2">
-          {chatRooms.map((chatRoom) => (
-            <li key={chatRoom.roomId} className="flex justify-between items-center border-b py-10 hover:bg-gray-100">
+          {chatRooms.map(chatRoom => (
+            <li key={chatRoom.id} className="flex justify-between items-center border-b py-10 hover:bg-gray-100">
               <div>
-                <h3 className="text-lg font-semibold">{chatRoom.title}</h3>
-                <p className="text-sm">{chatRoom.productName}</p>
+                <h3 className="text-lg font-semibold">{chatRoom.name}</h3>
+                <p className="text-sm">{chatRoom.description}</p>
               </div>
-              {/* 임시 채팅방 경로 */}
-              <Link to = '/chatting'> 
-              <button className="bg-primary text-white py-2 px-4 rounded mt-4">채팅</button>
+              <Link to={`/chatting/${chatRoom.id}`}>
+                <button className="bg-primary text-white py-2 px-4 rounded mt-4">채팅</button>
               </Link>
             </li>
           ))}

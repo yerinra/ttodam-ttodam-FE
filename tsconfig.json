@@ -2,21 +2,15 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2021",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    // shadcn/ui 
+    // shadcn/ui
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
-    "types": ["kakao.maps.d.ts"],
+    "types": ["kakao.maps.d.ts", "node"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -31,9 +25,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

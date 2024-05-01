@@ -10,7 +10,6 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
   }
 });
 
-
 export const putRequestHandler = http.put('/request/:requestId/:requestStatus', () => {
   // const { requestId, requestStatus } = params;
   return new HttpResponse(null, {
@@ -25,8 +24,12 @@ export const cancelRequestHandler = http.delete('/request/:requestId', () => {
 });
 
 export const postRequestHandler = http.post('/post/:postId/request', () => {
-  return new HttpResponse(null, {
-    status: 200,
+  return HttpResponse.json({
+    requestId: 1,
+    requestUserId: 3,
+    requestUserNickname: '유저3',
+    requestStatus: 'WAIT',
+    createdAt: '2024-04-29T08:14:33.3567228',
+    updatedAt: '2024-04-29T08:14:33.3567228',
   });
 });
-

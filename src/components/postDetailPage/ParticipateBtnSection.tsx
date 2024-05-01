@@ -1,38 +1,52 @@
-import { Button } from '../ui/button';
-import { type Post } from '@/types/post';
+import type { UserRequest, PostDetail } from '@/types/post';
 import RequestDialog from './RequestDialog';
+import PurchaseStatusDialog from './PurchaseStatusDialog';
+import RequestButtonSection from './RequestButtonSection';
+import MannersValuationDialog from './MannersValuationDialog';
 
 // import { useCancelRequestMutation } from '@/hooks/queries/useCancelRequestMutation';
 // import { usePostRequestMutation } from '@/hooks/queries/usePostRequestMutation';
 // import { RequestStatus } from '@/types/request';
 
-
 type ParticipateBtnSectionProps = {
   isUserPost: boolean | null | undefined;
-  data: Post;
+  data: PostDetail;
+  requestList: UserRequest[];
 };
 
-export default function ParticipateBtnSection({ isUserPost, data }: ParticipateBtnSectionProps) {
+export default function ParticipateBtnSection({ isUserPost, data, requestList }: ParticipateBtnSectionProps) {
+  const { post } = data;
 
-  // const stat: RequestStatus = 'wait';
   // const { mutateAsync: postRequestMutateAsync } = usePostRequestMutation(data.Id);
   // const { mutateAsync: cancelRequestMutateAsync } = useCancelRequestMutation(data.Id);
   // const handleParticipate = () => {
   //   if (stat === 'wait') postRequestMutateAsync(data.Id);
   //   else cancelRequestMutateAsync(3);
   // };
+
   return (
     <section className="flex justify-center ml-auto">
-      {isUserPost && <RequestDialog data={data} />}
+      {isUserPost && post.status !== 'COMPLETED' && (
+        <RequestDialog
+          requestList={requestList}
+          terminated={post.status === 'FAILED' || post.purchaseStatus === 'FAILURE'}
+        />
+      )}
+      {isUserPost && post.purchaseStatus === 'FAILURE' && <div>취소된 공구입니다.</div>}
+      {isUserPost &&
+        post.status == 'COMPLETED' &&
+        post.purchaseStatus !== 'FAILURE' &&
+        post.purchaseStatus !== 'SUCCESS' && <PurchaseStatusDialog status={post.purchaseStatus} />}
+      {post.purchaseStatus === 'SUCCESS' &&
+        (data.loginUserRequestStatus == 'AUTHOR' || data.loginUserRequestStatus !== 'ACCEPT') && (
+          <MannersValuationDialog requestList={data.requestList} />
+        )}
       {!isUserPost && (
-        <Button size={'lg'} disabled={data.status !== 'in_progress'} onClick={() => console.log('해야됨')}>
-
-          {data.status == 'in_progress'
-            ? '참여요청 보내기'
-            : data.status == 'completed'
-              ? '모집이 완료되었습니다.'
-              : '모집이 마감되었습니다.'}
-        </Button>
+        <RequestButtonSection
+          isOpen={data.post.status === 'IN_PROGRESS'}
+          postStatus={post.purchaseStatus}
+          userStatus={data.loginUserRequestStatus}
+        />
       )}
     </section>
   );

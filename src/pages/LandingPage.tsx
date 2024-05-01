@@ -9,7 +9,6 @@ import star from '../assets/star.png';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserIsLogInStore from '@/store/isLoginStore';
-import { signout } from '@/apis/auth/signout';
 
 const LandingPageData = [
   {
@@ -47,7 +46,7 @@ const LandingPageData = [
 export default function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { isLoggedIn, resetIsLoggedIn } = useUserIsLogInStore();
+  const { isLoggedIn } = useUserIsLogInStore();
   // const prevSlide = () => {
   //   const newIndex = (currentIndex - 1 + LandingPageData.length) % LandingPageData.length;
   //   setCurrentIndex(newIndex);
@@ -63,18 +62,6 @@ export default function LandingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
-  const handleSignout = async () => {
-    const confirmed = window.confirm('로그아웃 하시겠습니까?');
-    if (confirmed) {
-      try {
-        await signout();
-        resetIsLoggedIn();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   const content = LandingPageData[currentIndex];
   return (
     <div className="flex flex-col mt-5 w-full h-screen px-10">
@@ -87,9 +74,6 @@ export default function LandingPage() {
             <Link to="/login">
               <Button className="text-md p-5">홈으로</Button>
             </Link>
-            <Button variant="outline" className="text-md p-5" onClick={handleSignout}>
-              로그아웃
-            </Button>
           </div>
         ) : (
           <div className="flex gap-5">

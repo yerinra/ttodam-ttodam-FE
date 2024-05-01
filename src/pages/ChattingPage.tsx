@@ -53,19 +53,28 @@ const ChattingPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex items-center p-9 border-b">
-        <div className="flex flex-col">
-          <span className="text-lg font-bold">상품 이름</span>
+      <div className="p-7">
+        <div className="flex items-center justify-between border rounded-md px-4 py-2">
+          <input
+            type="text"
+            className=" border-none rounded-md focus:outline-none w-full"
+            value={newMessage}
+            onChange={e => setNewMessage(e.target.value)}
+          />
+          <button className=" bg-blue-500 text-white px-4 py-2 rounded-md" onClick={handleMessageSend}>
+            전송
+          </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto p-7 ">
+      <div className="flex-1 overflow-auto p-7">
         {messages.map((message, index) => (
           <div key={index} className={`flex my-4 ${message.isUser ? 'justify-end' : 'justify-start'}`}>
             <div className={`flex flex-col items-${message.isUser ? 'end' : 'start'} mr-2`}>
               {!message.isUser && (
                 <div className="flex items-center">
-                  <span className="text-lg font-semibold">상대방 이름</span>
+                  {/* 유저 id 수정 예정 */}
+                  <span className="text-lg font-semibold">유저 123</span>
                 </div>
               )}
               <div
@@ -78,20 +87,6 @@ const ChattingPage: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="p-7">
-        <div className="flex items-center justify-between border rounded-md px-4 py-2">
-          <input
-            type="text"
-            className=" border-none rounded-md focus:outline-none"
-            value={newMessage}
-            onChange={e => setNewMessage(e.target.value)}
-          />
-          <button className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-md" onClick={handleMessageSend}>
-            전송
-          </button>
-        </div>
       </div>
     </div>
   );

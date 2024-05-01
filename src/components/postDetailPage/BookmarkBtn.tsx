@@ -4,10 +4,11 @@ import { cn } from '@/lib/utils';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { BookmarkFilledIcon } from '@radix-ui/react-icons';
 
-import { useState } from 'react';
+type BookmarkBtnProps = {
+  isBookmarked: boolean;
+};
 
-export default function BookmarkBtn() {
-  const [bookmarked] = useState(false);
+export default function BookmarkBtn({ isBookmarked }: BookmarkBtnProps) {
   const { currentPostId } = useCurrentPostIdStore();
 
   const { mutateAsync: mutateDeleteAsync } = useDeleteBookmarkMutation();
@@ -35,7 +36,7 @@ export default function BookmarkBtn() {
   };
 
   const handleBookmarkClick = () => {
-    if (bookmarked) {
+    if (isBookmarked) {
       handleDeleteBookmark();
     } else {
       handleAddBookmark();
@@ -45,7 +46,7 @@ export default function BookmarkBtn() {
   return (
     <button className="absolute top-[55px] right-4" onClick={handleBookmarkClick}>
       <BookmarkFilledIcon
-        className={cn('h-[90px] w-auto ', { 'text-slate-200': !bookmarked }, { 'text-yellow-400': !!bookmarked })}
+        className={cn('h-[90px] w-auto ', { 'text-slate-200': !isBookmarked }, { 'text-yellow-400': !!isBookmarked })}
       />
     </button>
   );

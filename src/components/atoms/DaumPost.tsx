@@ -45,7 +45,7 @@ export default function DaumPost({ onAddressChange }: { onAddressChange: (addres
       <div className="flex items-center justify-between w-full relative border-b">
         <input
           type="text"
-          placeholder="희망 거래 주소"
+          placeholder="희망 거래 주소를 선택해주세요."
           value={address}
           onChange={handleInputChange}
           readOnly

@@ -1,25 +1,23 @@
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import io from 'socket.io-client';
 
-const SOCKET_URL: string = 'http://your-socket-server-url';
+const SOCKET_URL: string = '서버 url';
 
-let stompClient: Stomp.Client;
+let socket: SocketIOClient.Socket;
 
 export const connectToChatRoom = (chatroomId: string, callback: (users: any[]) => void): void => {
-  const socket = new SockJS(`${SOCKET_URL}/ws-chatting`);
-  stompClient = Stomp.over(socket);
-  stompClient.connect({}, () => {
-    stompClient.subscribe(`/chatroom/${chatroomId}`, response => {
-      const users = JSON.parse(response.body);
-      callback(users);
-    });
+  socket = io(`${SOCKET_URL}/ws-chatting`);
+  socket.on('connect', () => {
+    socket.emit('subscribe', `/chatroom/${chatroomId}`);
+  });
+
+  socket.on('message', (response: any) => {
+    const users = JSON.parse(response);
+    callback(users);
   });
 };
 
-export const disconnectFromChatRoom = (callback: (() => void) | null = null): void => {
-  if (stompClient) {
-    if (callback) {
-      stompClient.disconnect(callback);
-    }
+export const disconnectFromChatRoom = (): void => {
+  if (socket) {
+    socket.disconnect();
   }
 };

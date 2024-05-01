@@ -11,7 +11,7 @@ const ChattingList: React.FC = () => {
         const rooms = await getChatRoomList();
         setChatRooms(rooms);
       } catch (error) {
-        console.error('Error fetching chat room list:', error);
+        console.error('페이지 에러', error);
       }
     };
 
@@ -22,7 +22,7 @@ const ChattingList: React.FC = () => {
     <div className="min-h-screen w-full h-full">
       <div className="max-w-screen-lg max-h-screen-lg mx-auto p-20 mt-20">
         <div className="flex justify-center border-b-2 pb-4 mb-4">
-          <h2 className="text-xl font-sans font-bold">채팅방 목록</h2>
+          <h2 className="text-xl font-sans font-bold">채팅 페이지</h2>
         </div>
         <ul className="mb-6 mt-2">
           {chatRooms.map(chatRoom => (

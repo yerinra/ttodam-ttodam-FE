@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
 import DaumPost from '../atoms/DaumPost';
 import { PostNew } from '@/types/post';
 import Category from './Category';
-import axios from 'axios';
+import { IoClose } from 'react-icons/io5';
+import { postPostNew } from '@/apis/post/post';
 
+// TODO: 컴포넌트 분리 및 리팩토링하기!
 export default function Form() {
   const [products, setProducts] = useState<PostNew[]>([
     {
@@ -18,9 +21,8 @@ export default function Form() {
       price: 0,
       count: 0,
       purchaseLink: '',
-      productImgUrl: '',
+      postImgUrl: '',
       content: '',
-
       category: 'ALL',
     },
   ]);
@@ -31,6 +33,10 @@ export default function Form() {
   const [content, setContent] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
   const [deadline, setDeadline] = useState<Date>(new Date());
+  const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
+  const [imagePreview, setImagePreview] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -41,8 +47,8 @@ export default function Form() {
    * 새로운 입력 필드가 추가될 때 호출되며, 새로운 상품 객체를 기존 상품 리스트에 추가함.
    * 새로운 상품 객체의 기본 값은 빈문자열('')로 설정.
    * price와 count 필드는 parseInt('')를 통해 초기화되며,
-   * 이는 새로운 입력 필드가 추가되었을 때 1이 표지되지 않도록 하기 위함.
-   * productImgUrl 초기값으로 설정.
+   * 이는 새로운 입력 필드가 추가되었을 때 1이 표시되지 않도록 하기 위함.
+   * postImgUrl 초기값으로 설정.
    */
   const handleAddProducts = () => {
     setProducts([
@@ -52,13 +58,12 @@ export default function Form() {
         purchaseLink: '',
         price: 0,
         count: parseInt(''),
-        productImgUrl: '',
+        postImgUrl: '',
         participants: parseInt(''),
         title: '',
         deadline: '',
         place: '',
         content: '',
-
         category: 'ALL',
       },
     ]);
@@ -171,19 +176,39 @@ export default function Form() {
     setContent(e.target.value);
   };
 
-  // TODO: 이미지 미리보기 안되는 이유 찾기 (원래는 미리보기가 가능했었음)
-  const [imageFile, setImageFiles] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState('');
-
+  // 이미지 변경
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log('file', file);
-
     if (file) {
-      const productImgUrl = URL.createObjectURL(file);
-      setImageFiles(file);
-      setImagePreview(productImgUrl);
-      console.log('productImgUrl', productImgUrl);
+      const maxSize = 1 * 1024 * 1024;
+
+      // 이미지 용량 제한
+      if (file.size > maxSize) {
+        alert(`1MB 이하의 사진만 등록할 수 있습니다.`);
+        console.error('1MB 미만의 파일만 업로드 가능합니다.');
+        return '';
+      }
+
+      const imageUrl = URL.createObjectURL(file);
+      setImageFiles(prevFiles => [...prevFiles, file]);
+      setImagePreview(prevPreviews => [...prevPreviews, imageUrl]);
+    }
+  };
+
+  // 이미지 삭제
+  const handleRemoveImage = (index: number) => {
+    const newFiles = [...imageFile];
+    newFiles.splice(index, 1);
+    setImageFiles(newFiles);
+
+    const newPreviews = [...imagePreview];
+    const removedPreview = newPreviews.splice(index, 1)[0];
+    URL.revokeObjectURL(removedPreview);
+    setImagePreview(newPreviews);
+
+    const inputElement = document.getElementById('image-input') as HTMLInputElement | null;
+    if (inputElement) {
+      inputElement.value = '';
     }
   };
 
@@ -191,50 +216,67 @@ export default function Form() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('category', selectedCategory);
-    formData.append('title', title);
-    formData.append('deadline', format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'));
-    formData.append('participants', totalParticipants);
-    formData.append('place', selectedAddress);
-    formData.append('content', content);
 
-    products.forEach((product, index) => {
-      if (imageFile) {
-        const productImgUrl = URL.createObjectURL(imageFile);
-        formData.append(`products[${index}][productImgUrl]`, productImgUrl);
-      }
-      formData.append(`products[${index}][productName]`, product.productName);
-      formData.append(`products[${index}][price]`, product.price.toString());
-      formData.append(`products[${index}][count]`, product.count.toString());
-      formData.append(`products[${index}][purchaseLink]`, product.purchaseLink);
-      // formData.append(`products[${index}][productImgUrl]`, product.productImgUrl);
+    const jsonData = JSON.stringify({
+      category: selectedCategory,
+      title: title,
+      deadline: format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'),
+      participants: totalParticipants,
+      place: selectedAddress,
+      content: content,
+      products: products.map(product => ({
+        productName: product.productName,
+        price: product.price,
+        count: product.count,
+        purchaseLink: product.purchaseLink,
+      })),
     });
+    formData.append('postUpdateDto', jsonData);
+    console.log(jsonData);
 
-    try {
-      const response = await axios.post('/post/new', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    // formData.append('category', selectedCategory);
+    // formData.append('title', title);
+    // formData.append('deadline', format(new Date(deadline), 'yyyy-MM-dd HH:mm:ss'));
+    // formData.append('participants', totalParticipants);
+    // formData.append('place', selectedAddress);
+    // formData.append('content', content);
+
+    // products.forEach((product, index) => {
+    //   formData.append(`products[${index}][productName]`, product.productName);
+    //   formData.append(`products[${index}][price]`, product.price.toString());
+    //   formData.append(`products[${index}][count]`, product.count.toString());
+    //   formData.append(`products[${index}][purchaseLink]`, product.purchaseLink);
+    // });
+
+    imageFile
+      .filter(image => image !== null)
+      .forEach((image, index) => {
+        formData.append(`postImages[${index}]`, image!);
       });
 
-      console.log('응답: ', response.data);
+    // 데이터 확인
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log(formDataObject);
+
+    try {
+      await postPostNew(formData);
+      alert('게시글 등록이 완료되었습니다.');
+      console.log('요청이 성공적으로 완료되었습니다.');
+      navigate('/posts/all');
     } catch (error) {
-      console.error('에러 발생: ', error);
+      console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
     }
 
-    if (imageFile) {
-      const productImgUrl = URL.createObjectURL(imageFile);
-      setImageFiles(imageFile);
-      setImagePreview(productImgUrl);
-      console.log('productImgUrl', productImgUrl);
-    }
+    imagePreview.forEach(URL.revokeObjectURL);
+    setImageFiles([]);
+    setImagePreview([]);
   };
 
   // 메모리 누수 방지 - 이미지 업로드 후 Blob URL 해제
   useEffect(() => {
-    if (imagePreview) {
-      return () => URL.revokeObjectURL(imagePreview);
-    }
+    return () => {
+      imagePreview.forEach(URL.revokeObjectURL);
+    };
   }, [imagePreview]);
 
   return (
@@ -247,18 +289,17 @@ export default function Form() {
       <Category onSelectCategory={handleCategorySelect} />
       <input
         type="text"
-        placeholder="게시글 제목"
+        placeholder="게시글 제목을 입력해주세요."
         value={title}
         onChange={handleTitleChange}
         className="w-full outline-none py-4 border-b"
       />
-
       {products.map((product, index) => (
         <div key={index}>
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="상품 이름"
+              placeholder="상품의 이름을 입력해주세요."
               value={product.productName}
               onChange={e => handleProductNameChange(index, e.target.value)}
               className="w-full outline-none"
@@ -276,7 +317,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="상품 링크"
+              placeholder="상품의 링크를 입력해주세요."
               value={product.purchaseLink}
               onChange={e => handleProductLinkChange(index, e.target.value)}
               className="w-full outline-none"
@@ -285,7 +326,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="number"
-              placeholder="수량"
+              placeholder="상품의 수량을 입력해주세요."
               value={product.count === 0 ? '' : String(product.count)}
               onChange={e => handleProductCountChange(index, e.target.value)}
               className="w-full outline-none"
@@ -294,7 +335,7 @@ export default function Form() {
           <div className="flex items-center justify-between py-4 border-b text-black">
             <input
               type="text"
-              placeholder="원래 가격"
+              placeholder="상품의 가격을 입력해주세요."
               value={product.price === 0 ? '' : product.price.toLocaleString()}
               onChange={e => handleProductPriceChange(index, e.target.value.replaceAll(',', ''))}
               className="w-full outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -305,7 +346,7 @@ export default function Form() {
             <input
               type="text"
               key={index}
-              placeholder="인당 가격"
+              placeholder="모집 인원을 입력하시면 자동으로 인당 가격이 계산됩니다."
               value={calculatePerPersonPrice(product)}
               readOnly
               className="w-full outline-none py-4 border-b"
@@ -314,7 +355,7 @@ export default function Form() {
             <input
               type="text"
               key={index}
-              placeholder="인당 가격"
+              placeholder="희망 모집 인원을 입력하시면 자동으로 인당 가격이 보여집니다."
               value={calculatePerPersonPrice(product)}
               readOnly
               className="w-full outline-none py-4 border-b-2 border-stone-300 text-black"
@@ -325,7 +366,7 @@ export default function Form() {
       <DaumPost onAddressChange={handleAddressChange} />
       <input
         type="number"
-        placeholder="희망 모집 인원"
+        placeholder="희망 모집 인원을 입력해주세요."
         value={totalParticipants}
         onChange={e => handleParticipantsChangeAllProducts(e.target.value)}
         className="w-full outline-none py-4 border-b [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -336,37 +377,40 @@ export default function Form() {
       <textarea
         cols={30}
         rows={10}
-        placeholder="상세 정보"
+        placeholder="또담공구의 상세 정보를 입력해주세요."
         name="content"
         value={content}
         onChange={handleContentChange}
         className="w-full outline-none py-4 border-b resize-none"
       />
-      <div className="flex w-full py-4 border-b">
-        <p className="text-[#C4C4C4] font-semibold mr-4">사진</p>
-
-        <div className="flex justify-center mr-3">
-          {products.map((product, index) => (
-            <div key={index}>
-              {product.productImgUrl ? (
-                <img src={imagePreview} alt="Uploaded Preview" className="w-[53px] h-[53px] border" />
-              ) : (
-                <label
-                  htmlFor={`file-upload-${index}`}
-                  className="flex items-center justify-center w-[53px] h-[53px] border bg-gray-300 cursor-pointer"
-                >
-                  +
-                </label>
-              )}
-              <input
-                type="file"
-                id={`file-upload-${index}`}
-                accept="'image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
+      <div className="flex w-full py-4 border-b h-40">
+        <div className="flex justify-center mr-3 gap-3">
+          <div>
+            <div className="flex gap-3">
+              <label
+                htmlFor="post-image"
+                className="w-[90px] h-8 flex items-center justify-center py-0.5 px-3 bg-primary rounded-md text-white cursor-pointer"
+              >
+                사진 추가
+                <input
+                  type="file"
+                  id="post-image"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  multiple
+                  className="hidden"
+                />
+              </label>
+              {imagePreview.map((preview, index) => (
+                <div key={index} className="relative">
+                  <img src={preview} alt={`게시글 사진`} className="w-[100px] h-[100px] border" />
+                  <button type="button" onClick={() => handleRemoveImage(index)} className="absolute right-1 top-1">
+                    <IoClose className="w-5 h-5 bg-slate-300 border border-black" />
+                  </button>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </form>

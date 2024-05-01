@@ -8,6 +8,7 @@ type IsLoggedInStoreActions = {
   setIsLoggedIn: (newIsLoggedIn: boolean) => void;
   resetIsLoggedIn: () => void;
 };
+
 const useUserIsLoggedInStore = create<IsLoggedInStoreState & IsLoggedInStoreActions>()(
   persist(
     set => ({

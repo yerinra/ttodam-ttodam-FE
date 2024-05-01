@@ -115,7 +115,7 @@ export const putPostEdit = async (postId: number, formData: FormData) => {
       url: `/post/${postId}`,
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-Data',
+        'Content-Type': 'multipart/form-data',
       },
     });
   } catch (error) {

@@ -2,9 +2,9 @@ import { axiosPublic } from '../apiClient';
 
 const sendAuthenticationCode = async (email: string) => {
   try {
-    const response = await axiosPublic.post('/users/signup', null, {
+    const response = await axiosPublic.post('/users/signup/sendmail', null, {
       params: {
-        sendEmail: email,
+        email,
       },
     });
 

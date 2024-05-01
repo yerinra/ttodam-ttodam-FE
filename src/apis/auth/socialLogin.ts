@@ -3,7 +3,7 @@ import { axiosPublic } from '../apiClient';
 
 export const kakaoLogin = async (code: string) => {
   try {
-    const res = await axiosPublic.patch(KAKAO_REDIRECT_URI, {
+    const res = await axiosPublic.get(KAKAO_REDIRECT_URI, {
       params: {
         code,
       },
@@ -17,7 +17,7 @@ export const kakaoLogin = async (code: string) => {
 
 export const googleLogin = async (code: string) => {
   try {
-    const res = await axiosPublic.patch(GOOGLE_REDIRECT_URI, {
+    const res = await axiosPublic.get(GOOGLE_REDIRECT_URI, {
       params: {
         code,
       },

@@ -8,6 +8,7 @@ export type OptionType = (typeof SORT_OPTIONS)[number]['type'];
 export type PostPreview = {
   postId: number;
   status: Status;
+  purchaseStatus?: PurchaseStatus;
   category?: Exclude<Category, 'ALL'>;
   authorId: number;
   authorNickname: string;
@@ -27,10 +28,9 @@ export type PreviewProduct = {
 export type PostDetail = {
   post: {
     postId: number;
-    userId: number;
-    userNickname: string;
-    userManners: number;
-    userProfileImg?: string | null;
+    authorId: number;
+    authorNickname: string;
+    authorManners: number;
     category: Exclude<Category, 'ALL'>;
     status: Status;
     purchaseStatus: PurchaseStatus;

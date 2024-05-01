@@ -6,7 +6,7 @@ export const getMyPosts = async () => {
   try {
     const res = await axiosAccess({
       method: 'get',
-      url: '/users/post',
+      url: '/users/post/list',
     });
     return res.data;
   } catch (error) {

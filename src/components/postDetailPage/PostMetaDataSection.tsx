@@ -35,7 +35,7 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
                       <div>{product.productName}</div>
                       <div>
                         {Math.ceil(product.price / post.participants).toLocaleString()}원 *{' '}
-                        {product.count / post.participants}
+                        {(product.count / post.participants).toFixed(2)}
                         EA
                       </div>
                     </Link>

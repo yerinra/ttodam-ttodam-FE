@@ -1,168 +1,110 @@
 import { PostDetail, PostPreview } from '@/types/post';
 
-export const allPosts: { posts: PostPreview[] } = {
-  posts: [
-    {
-      postId: 59,
-      status: 'IN_PROGRESS',
-      category: 'DAILY',
-      authorId: 3,
-      authorNickname: '유저3',
-      title: '물티슈와 휴지 같이 구매하실 분',
-      content: '물티슈와 휴지를 같이 삽시다!!',
-      products: [
-        {
-          productName: '물티슈',
-          price: 12000,
-          count: 10,
-        },
-        {
-          productName: '휴지',
-          price: 3000,
-          count: 2,
-        },
-      ],
-      createdAt: '2024-04-18T07:05:40',
-      updatedAt: '2024-04-26T16:22:11',
-    },
-    {
-      postId: 60,
-      status: 'IN_PROGRESS',
-      category: 'FOOD',
-      authorId: 4,
-      authorNickname: '유저4',
-      title: '사과 한 박스씩 구매해요',
-      content: '사과를 삽시다',
-      products: [
-        {
-          productName: '사과',
-          price: 10000,
-          count: 2,
-        },
-      ],
-      createdAt: '2024-04-19T02:12:09',
-      updatedAt: '2024-04-19T02:12:09',
-    },
-    {
-      postId: 63,
-      status: 'FAILED',
-      category: 'OFFICE',
+export const allPosts: PostPreview[] = [
+  {
+    postId: 59,
+    status: 'IN_PROGRESS',
+    category: 'DAILY',
+    authorId: 3,
+    authorNickname: '유저3',
+    title: '물티슈와 휴지 같이 구매하실 분',
+    content: '물티슈와 휴지를 같이 삽시다!!',
+    products: [
+      {
+        productName: '물티슈',
+        price: 12000,
+        count: 10,
+      },
+      {
+        productName: '휴지',
+        price: 3000,
+        count: 2,
+      },
+    ],
+    createdAt: '2024-04-18T07:05:40',
+    updatedAt: '2024-04-26T16:22:11',
+  },
+  {
+    postId: 60,
+    status: 'IN_PROGRESS',
+    category: 'FOOD',
+    authorId: 4,
+    authorNickname: '유저4',
+    title: '사과 한 박스씩 구매해요',
+    content: '사과를 삽시다',
+    products: [
+      {
+        productName: '사과',
+        price: 10000,
+        count: 2,
+      },
+    ],
+    createdAt: '2024-04-19T02:12:09',
+    updatedAt: '2024-04-19T02:12:09',
+  },
+  {
+    postId: 63,
+    status: 'FAILED',
+    category: 'OFFICE',
 
-      authorId: 5,
-      authorNickname: '유저5',
-      title: '사무용품 같이 사실 분을 구해요',
-      content: '사무사무',
-      products: [
-        {
-          productName: '볼펜',
-          price: 11000,
-          count: 2,
-        },
-        {
-          productName: '펜',
-          price: 24000,
-          count: 4,
-        },
-      ],
-      createdAt: '2024-04-20T13:15:48',
-      updatedAt: '2024-04-21T02:18:09',
-    },
-    // {
-    //   postId: 65,
-    //   status: 'COMPLETED',
-    //   category: 'PET',
-    //   authorId: 6,
-    //   authorNickname: '냥66',
-    //   title: '고양이 간식 같이 사요',
-    //   content: '고양이 간식 같이 사고 나누어 가져요~',
-    //   products: [
-    //     {
-    //       productName: '사료',
-    //       price: 40000,
-    //       count: 2,
-    //     },
-    //   ],
-    //   createdAt: '2024-04-25T17:46:44',
-    //   updatedAt: '2024-04-25T17:46:44',
-    // },
-  ],
-};
-
-// export const lifePosts: { posts: PostPreview[] } = {
-//   posts: [
-//     {
-//       postId: 59,
-//       authorId: 3,
-//       authorNickname: 'test3',
-//       title: '물티슈',
-//       content: 'test content',
-//       products: [
-//         {
-//           productName: 'test product',
-//           price: 10000,
-//           count: 10,
-//         },
-//       ],
-//       createdAt: '2024-04-17T22:05:40',
-//       updatedAt: '2024-04-26T07:22:11',
-//     },
-//     {
-//       postId: 60,
-//       authorId: 3,
-//       authorNickname: 'test3',
-//       title: 'test title4',
-//       content: '물티슈',
-//       products: [
-//         {
-//           productName: 'test product',
-//           price: 10000,
-//           count: 10,
-//         },
-//       ],
-//       createdAt: '2024-04-18T17:12:09',
-//       updatedAt: '2024-04-18T17:12:09',
-//     },
-//     {
-//       postId: 65,
-//       authorId: 5,
-//       authorNickname: '홍길동',
-//       title: '이미지 test',
-//       content: 'test content',
-//       products: [
-//         {
-//           productName: 'test product',
-//           price: 10000,
-//           count: 10,
-//         },
-//       ],
-//       createdAt: '2024-04-25T08:46:44',
-//       updatedAt: '2024-04-25T08:46:44',
-//     },
-//   ],
-// };
+    authorId: 5,
+    authorNickname: '유저5',
+    title: '사무용품 같이 사실 분을 구해요',
+    content: '사무사무',
+    products: [
+      {
+        productName: '볼펜',
+        price: 11000,
+        count: 2,
+      },
+      {
+        productName: '펜',
+        price: 24000,
+        count: 4,
+      },
+    ],
+    createdAt: '2024-04-20T13:15:48',
+    updatedAt: '2024-04-21T02:18:09',
+  },
+  // {
+  //   postId: 65,
+  //   status: 'COMPLETED',
+  //   category: 'PET',
+  //   authorId: 6,
+  //   authorNickname: '냥66',
+  //   title: '고양이 간식 같이 사요',
+  //   content: '고양이 간식 같이 사고 나누어 가져요~',
+  //   products: [
+  //     {
+  //       productName: '사료',
+  //       price: 40000,
+  //       count: 2,
+  //     },
+  //   ],
+  //   createdAt: '2024-04-25T17:46:44',
+  //   updatedAt: '2024-04-25T17:46:44',
+  // },
+];
 
 export const postMockData: PostDetail[] = [
   {
     post: {
       postId: 59,
-      userId: 3,
-      userNickname: '유저3',
-      userManners: 5,
-      userProfileImg:
-        'https://images.unsplash.com/photo-1712926382189-dacbc6b89a01?q=80&w=2264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      authorId: 3,
+      authorNickname: '유저3',
+      authorManners: 5,
+
       category: 'DAILY',
       status: 'COMPLETED',
       purchaseStatus: 'SUCCESS',
       title: '물티슈와 휴지 같이 구매하실 분',
       deadline: '2024-04-16T15:00:00',
       participants: 3,
-      place: '서울특별시 마포구 양화로 지하188',
+      place: '서울특별시 강남구 역삼로 517',
       content: '물티슈와 휴지를 같이 삽시다!!',
       imgUrls: [
-        'https://ttodam-ttodam.s3.ap-northeast-2.amazonaws.com/남은 기존 이미지.jpg',
-        'https://ttodam-ttodam.s3.ap-northeast-2.amazonaws.com/404f0bcf-bed2-41b0-bfc3-7f26b67a9a99new-test-image-1.jpg',
-        'https://ttodam-ttodam.s3.ap-northeast-2.amazonaws.com/2b32a65b-e6e5-4c97-8cc1-8a5a6f29ce41new-test-image-2.jpg',
-        'https://ttodam-ttodam.s3.ap-northeast-2.amazonaws.com/079cd537-2436-4895-9346-81ea315735d8new-test-image-3.jpg',
+        'https://shopping-phinf.pstatic.net/main_3048852/30488526619.20240418092359.jpg?type=f640',
+        'https://shopping-phinf.pstatic.net/main_9830444/9830444614.20220418134740.jpg?type=f640',
       ],
       products: [
         {
@@ -170,7 +112,8 @@ export const postMockData: PostDetail[] = [
           postId: 59,
           productName: '물티슈',
           count: 10,
-          purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
+          purchaseLink:
+            'https://search.shopping.naver.com/catalog/30488526619?cat_id=50005401&frm=NVSCPRO&query=물티슈&NaPm=ct%3Dlvmc8wg8%7Cci%3Dca8a59928cbcc45809d04b258b0f0aa336dd9d15%7Ctr%3Dsls%7Csn%3D95694%7Chk%3Dac5700c527333bf5eaed3166980e9c0255740c83',
           price: 12000,
         },
         {
@@ -178,14 +121,15 @@ export const postMockData: PostDetail[] = [
           postId: 59,
           productName: '휴지',
           count: 2,
-          purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
+          purchaseLink:
+            'https://search.shopping.naver.com/catalog/9830444614?query=휴지&NaPm=ct%3Dlvmc9o88%7Cci%3D1da920b723a946da64fbd34eaa716e4be2e97781%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D96c4c16f1c9bfc49e41e0900b0c5dacbc2a08cd2',
           price: 3000,
         },
       ],
       createdAt: '2024-04-18T07:05:40',
       updatedAt: '2024-04-26T16:22:11',
-      plocationX: 126.977253587649,
-      plocationY: 37.5637650596466,
+      plocationY: 127.059876,
+      plocationX: 37.503681,
     },
     loginUserRequestStatus: 'AUTHOR',
     bookmarkId: 0,
@@ -222,16 +166,16 @@ export const postMockData: PostDetail[] = [
   {
     post: {
       postId: 60,
-      userId: 4,
-      userNickname: '유저4',
-      userManners: 4,
+      authorId: 4,
+      authorNickname: '유저4',
+      authorManners: 4,
       category: 'FOOD',
       status: 'IN_PROGRESS',
       purchaseStatus: 'PREPARING',
       title: '사과 한 박스씩 사실 분 구합니다.',
       deadline: '2024-05-26T15:00:00',
       participants: 3,
-      place: '서울특별시 송파구 문정로 83',
+      place: '서울특별시 강남구 역삼로 541',
       content: '사과를 삽시다',
       imgUrls: [],
       products: [
@@ -240,14 +184,15 @@ export const postMockData: PostDetail[] = [
           postId: 60,
           productName: '사과',
           count: 2,
-          purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
+          purchaseLink:
+            'https://smartstore.naver.com/playxfun/products/9993204920?n_media=11068&n_query=사과&n_rank=2&n_ad_group=grp-a001-02-000000041026872&n_ad=nad-a001-02-000000290467908&n_campaign_type=2&n_mall_id=ncp_1op6th_01&n_mall_pid=9993204920&n_ad_group_type=2&n_match=3&NaPm=ct%3Dlvmcag08%7Cci%3D0Am00005Rx1Aggjj3eZg%7Ctr%3Dpla%7Chk%3Ddfb86fac50b362e04821dae93271357ff5ec6b91',
           price: 10000,
         },
       ],
       createdAt: '2024-04-19T02:12:09',
       updatedAt: '2024-04-19T02:12:09',
-      plocationX: 127.120242,
-      plocationY: 37.482694,
+      plocationY: 127.062149,
+      plocationX: 37.504907,
     },
     // 여기서 테스트
     loginUserRequestStatus: 'NONE',
@@ -285,18 +230,20 @@ export const postMockData: PostDetail[] = [
   {
     post: {
       postId: 63,
-      userId: 5,
-      userNickname: '유저5',
-      userManners: 2,
+      authorId: 5,
+      authorNickname: '유저5',
+      authorManners: 2,
       category: 'OFFICE',
       status: 'FAILED',
       purchaseStatus: 'FAILURE',
       title: '사무용품 같이 사실 분을 구해요',
       deadline: '2024-04-16T15:00:00',
       participants: 3,
-      place: '서울특별시 마포구 양화로 지하188',
+      place: '서울특별시 강남구 테헤란로 521',
       content: '사무사무',
-      imgUrls: ['https://ttodam-ttodam.s3.ap-northeast-2.amazonaws.com/남은 기존 이미지.jpg'],
+      imgUrls: [
+        'https://i.namu.wiki/i/KyJymKseyUy-yZM6L8QqQJrmMy90vPZAvu6FucM2Lx5yks3r1i99Q-2KNxFKRJjrNQhD3CDo5pGltfl5P4y-kA.webp',
+      ],
       products: [
         {
           productId: 38,
@@ -311,14 +258,14 @@ export const postMockData: PostDetail[] = [
           postId: 63,
           productName: '펜',
           count: 4,
-          purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
+          purchaseLink: 'http://www.bestpen.kr/shop/shopbrand.html?xcode=041&type=Y',
           price: 24000,
         },
       ],
       createdAt: '2024-04-20T13:15:48',
       updatedAt: '2024-04-21T02:18:09',
-      plocationX: 126.977253587649,
-      plocationY: 37.5637650596466,
+      plocationY: 127.059527,
+      plocationX: 37.509565,
     },
     loginUserRequestStatus: 'WAIT',
     bookmarkId: 0,

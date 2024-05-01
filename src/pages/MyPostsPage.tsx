@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 export default function MyPostsPage() {
   useRequireLogin();
-  const { data, error, isLoading } = useQuery<{ posts: PostPreview[] }>({
+  const { data, error, isLoading } = useQuery<PostPreview[]>({
     queryKey: ['myPosts'],
     queryFn: getMyPosts,
   });
@@ -47,7 +47,7 @@ export default function MyPostsPage() {
     <div>
       <H1>내가 쓴 글</H1>
       {data &&
-        data.posts.map(post => (
+        data.map(post => (
           <ListItemContainer key={post.postId}>
             <div className="flex items-center justify-between">
               <div>

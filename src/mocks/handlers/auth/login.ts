@@ -19,7 +19,6 @@ export const loginHandler = http.post('/users/signin', async ({ request }) => {
   }
 });
 
-export const socialLoginHandler = http.patch('/login/oauth2/code/:domain', async () => {
+export const socialLoginHandler = http.get('/login/oauth2/code/:domain', async () => {
   return HttpResponse.json({ message: '로그인 성공', accessToken: 'eyJhbGciOiJIUzVCJ9' });
 });
-

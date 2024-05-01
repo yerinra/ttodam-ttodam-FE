@@ -26,6 +26,7 @@ import {
   deletePostHandler,
   postPostNewHandler,
   putPurchaseStatusHandler,
+  putPostEditHandler,
   categoryPostsHandler,
   putPostEditHandler,
 } from './post/postHandlers';

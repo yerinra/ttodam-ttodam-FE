@@ -6,10 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import DaumPost from './DaumPost';
 import placeholderImage from '@/assets/placeholderImage.png';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: 컴포넌트 분리하기
 // TODO: 회원탈퇴 기능 구현하기
 export default function EditProfileForm() {
+  const navigate = useNavigate();
   const profileImgFileInput = useRef(null);
   const [, setProfiles] = useState<EditProfile[]>([]);
   const [imageFile, setImageFiles] = useState<File | null>(null);
@@ -131,6 +133,7 @@ export default function EditProfileForm() {
 
       console.log('응답: ', response.data);
       alert('프로필 수정이 완료되었습니다.');
+      navigate('/my/profile');
     } catch (error) {
       console.error('에러 발생: ', error);
       alert('프로필 수정에 실패하였습니다. 다시 시도해주세요.');

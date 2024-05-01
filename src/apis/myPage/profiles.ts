@@ -27,3 +27,16 @@ export const getEditProfiles = async () => {
     throw error;
   }
 };
+
+export const putEditProfiles = async () => {
+  try {
+    const res = await axiosAccess({
+      method: 'put',
+      url: '/users/profiles/update',
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

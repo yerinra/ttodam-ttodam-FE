@@ -9,6 +9,7 @@ import { categoryNameKR } from '@/lib/utils';
 import { Category } from '@/types/post';
 import { mapPosts } from '@/mocks/mockData/post/mapPosts';
 
+
 export const getAllPostsHandler = http.get('/post/list', () => {
   return HttpResponse.json(allPosts);
 });

@@ -24,8 +24,8 @@ export default function LoginLoadingPage() {
         const res = await kakaoLogin(code as string);
         setCookie('AccessToken', res.accessToken);
         setIsLoggedIn(true);
-        alert('성공!');
-        navigate('/');
+        alert('로그인 성공!');
+        navigate('/home');
       } catch (err) {
         console.error(err);
       }
@@ -36,8 +36,8 @@ export default function LoginLoadingPage() {
         const res = await googleLogin(code as string);
         setCookie('AccessToken', res.accessToken);
         setIsLoggedIn(true);
-        alert('성공!');
-        navigate('/');
+        alert('로그인 성공!');
+        navigate('/home');
       } catch (err) {
         console.error(err);
       }

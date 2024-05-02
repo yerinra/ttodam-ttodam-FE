@@ -25,7 +25,7 @@ const SignUpForm: React.FC = () => {
     reset,
   } = useForm<FormValues>();
   const navigate = useNavigate();
-  const CODE_VERIFICATION_TIME = 3 * 60;
+  const CODE_VERIFICATION_TIME = 5 * 60;
   const [timer, setTimer] = useState(CODE_VERIFICATION_TIME);
   const [timerActive, setTimerActive] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);

@@ -6,12 +6,14 @@ import { useEffect, useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import DaumPost from './DaumPost';
 import placeholderImage from '@/assets/placeholderImage.png';
+import { useNavigate } from 'react-router-dom';
 
 // TODO: 컴포넌트 분리하기
 // TODO: 회원탈퇴 기능 구현하기
 export default function EditProfileForm() {
+  const navigate = useNavigate();
   const profileImgFileInput = useRef(null);
-  const [profiles, setProfiles] = useState<EditProfile[]>([]);
+  const [, setProfiles] = useState<EditProfile[]>([]);
   const [imageFile, setImageFiles] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState('');
   const [nickname, setNickname] = useState('');
@@ -23,7 +25,7 @@ export default function EditProfileForm() {
   const [passwordError, setPasswordError] = useState('');
   const [nicknameError, setNicknameError] = useState('');
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery<EditProfile[]>({
     queryKey: ['profiles/update'],
     queryFn: () => {
       return getEditProfiles();
@@ -58,12 +60,12 @@ export default function EditProfileForm() {
     }
 
     // 중복 검사
-    const isNickNameAvailable = !profiles.some(profile => profile.nickname === newNickname);
-    if (!isNickNameAvailable) {
-      setNicknameError('이미 사용 중인 닉네임입니다.');
-    } else {
-      setNicknameError('사용 가능한 닉네임입니다.');
-    }
+    // const isNickNameAvailable = !profiles.some(profile => profile.nickname === newNickname);
+    // if (!isNickNameAvailable) {
+    //   setNicknameError('이미 사용 중인 닉네임입니다.');
+    // } else {
+    //   setNicknameError('사용 가능한 닉네임입니다.');
+    // }
 
     setNickname(newNickname);
   };
@@ -111,6 +113,7 @@ export default function EditProfileForm() {
     }
 
     const formData = new FormData();
+
     formData.append('nickname', nickname);
     formData.append('location', location);
     formData.append('phoneNumber', phoneNumber);
@@ -122,7 +125,7 @@ export default function EditProfileForm() {
     }
 
     try {
-      const response = await axios.post('/users/:userId/profiles/update', formData, {
+      const response = await axios.put('/users/profiles/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -130,6 +133,7 @@ export default function EditProfileForm() {
 
       console.log('응답: ', response.data);
       alert('프로필 수정이 완료되었습니다.');
+      navigate('/my/profile');
     } catch (error) {
       console.error('에러 발생: ', error);
       alert('프로필 수정에 실패하였습니다. 다시 시도해주세요.');
@@ -164,14 +168,14 @@ export default function EditProfileForm() {
         className="absolute right-0 top-0 py-0.5 px-3 bg-primary rounded-md text-white my-[15px] mr-5"
       />
       {data &&
-        data?.editProfile?.map((pf: EditProfile) => (
-          <div key={pf.id}>
+        data.map((profile: EditProfile) => (
+          <div key={profile.nickname}>
             <div className="flex w-full items-center justify-center py-6">
               <div className="w-full flex flex-col items-center justify-center gap-6">
                 <div className="relative w-[100px] h-[100px] flex items-center justify-center">
-                  {pf.profileImgUrl ? (
+                  {profile.profileImgUrl ? (
                     <img
-                      src={pf.profileImgUrl}
+                      src={profile.profileImgUrl}
                       alt="프로필 이미지"
                       className="flex items-center justify-center w-[100px] h-[100px] border rounded-[50%]"
                     />
@@ -209,7 +213,7 @@ export default function EditProfileForm() {
               <input
                 type="text"
                 placeholder="닉네임"
-                defaultValue={pf.nickname}
+                defaultValue={profile.nickname}
                 name={nickname}
                 onChange={handleNicknameChange}
                 className="w-[250px] outline-none py-4 "
@@ -251,7 +255,7 @@ export default function EditProfileForm() {
               <input
                 type="text"
                 placeholder="전화번호 입력"
-                defaultValue={pf.phoneNumber}
+                defaultValue={profile.phoneNumber}
                 name={phoneNumber}
                 onChange={handlePhoneNumberChange}
                 maxLength={11}

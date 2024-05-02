@@ -31,6 +31,7 @@ export default function NotificationPage() {
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['notification'] });
+        alert('알림이 삭제되었습니다.');
       },
       onError: () => {
         console.log('error!');

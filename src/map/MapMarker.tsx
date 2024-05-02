@@ -2,17 +2,22 @@ import ReactDOM from 'react-dom';
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useMap } from './useMap';
-import { IoBookmarkSharp } from 'react-icons/io5';
 import { PlaceType } from '@/types/map';
+import Badge from '@/components/atoms/Badge';
+import { PostMap } from '@/types/post';
+import BookmarkBtn from '@/components/homePage/BookmarkBtn';
 
 interface MapMarkerProps {
   place: PlaceType;
   showInfo?: boolean;
+  mapPosts: PostMap[];
 }
 
+// TODO: 게시글이 있는 주소의 마커만 생성하기
 export default function MapMarker(props: MapMarkerProps) {
   const map = useMap();
   const container = useRef(document.createElement('div'));
+  // const [mapPosts] = useState<PostMap[]>([]);
 
   const infoWindow = useMemo(() => {
     return new kakao.maps.CustomOverlay({
@@ -29,7 +34,7 @@ export default function MapMarker(props: MapMarkerProps) {
 
     kakao.maps.event.addListener(marker, 'click', function () {
       map.setCenter(props.place.position);
-      map.setLevel(4, {
+      map.setLevel(2, {
         animate: true,
       });
       infoWindow.setMap(map);
@@ -60,20 +65,23 @@ export default function MapMarker(props: MapMarkerProps) {
 
   return container.current
     ? ReactDOM.createPortal(
-        <div
+        <button
+          key={props.place.id}
           onClick={() => {
             infoWindow.setMap(null);
           }}
-          className="absolute bottom-[60px] left-0 ml-[-120px] flex flex-col gap-2 w-[260px] px-7 py-4 border border-black rounded-2xl bg-white"
+          className="absolute bottom-[60px] left-0 ml-[-120px] flex flex-col gap-2 w-[270px] px-7 py-4 border border-black rounded-2xl bg-white"
         >
-          <strong>게시글 제목</strong>
-          <p className="text-sm">{props.place.address}</p>
-          <p className="text-sm font-bold">
-            모집 상태
-            <span className="text-sm ml-1">모집중</span>
-          </p>
-          <IoBookmarkSharp className="absolute top-[-4px] right-[20px] w-8 h-9 text-yellow-300" />
-        </div>,
+          {props.mapPosts &&
+            props.mapPosts.map(post => (
+              <div key={post.postList.postId}>
+                <strong>{post.postList.title}</strong>
+                <p className="text-sm">{post.postList.place}</p>
+                <Badge variant={post.postList.status}></Badge>
+                <BookmarkBtn bookmarkId={post.postList.bookmarkId} isBookmarked={post.postList.bookmarkId} />
+              </div>
+            ))}
+        </button>,
         container.current,
       )
     : null;

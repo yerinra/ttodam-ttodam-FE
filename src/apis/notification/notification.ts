@@ -18,7 +18,10 @@ export const deleteNotification = async (notificationId: number) => {
   try {
     const res = await axiosAccess({
       method: 'delete',
-      url: `/notifications/delete/${notificationId}`,
+      url: `/notifications/delete`,
+      params: {
+        notificationId,
+      },
     });
     return res.data;
   } catch (error) {

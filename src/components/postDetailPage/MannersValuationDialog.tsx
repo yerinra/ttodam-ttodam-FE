@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
 import ListItemContainer from '../atoms/ListItemContainer';
 import { useState } from 'react';
@@ -8,6 +11,7 @@ import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putValuation } from '@/apis/post/valuation';
 import Badge from '../atoms/Badge';
+import { cn } from '@/lib/utils';
 
 type MannersValuationDialogProps = {
   requestList: UserRequest[];
@@ -24,10 +28,11 @@ const VALUATION_OPTIONS = [
 export default function MannersValuationDialog({ requestList }: MannersValuationDialogProps) {
   const { currentPostId } = useCurrentPostIdStore();
   const [valuations, setValuations] = useState<{ id: number; manners: number }[]>([]);
+  const [allValuated, setAllValuated] = useState(false);
+  useEffect(() => {
+    if (valuations.length == membersToValuate.length) setAllValuated(true);
+  }, [valuations]);
 
-  // useEffect(() => {
-  //   console.log(valuations);
-  // }, [valuations]);
 
   const membersToValuate = requestList.filter(member => member.requestStatus === 'ACCEPT');
   // const membersToValuate = requestList;
@@ -69,13 +74,17 @@ export default function MannersValuationDialog({ requestList }: MannersValuation
   const mutatePostValuation = useMannersValuationMutation();
 
   const handleSubmit = async () => {
+    const valuatedData = valuations.map(valuation => ({ userId: valuation.id, count: valuation.manners }));
+    if (valuatedData.length !== membersToValuate.length) alert('모든 참여자를 평가해주세요.');
+    else setAllValuated(true);
     try {
-      const valuatedData = valuations.map(valuation => ({ userId: valuation.id, count: valuation.manners }));
-      if (valuatedData.length !== membersToValuate.length) alert('모든 참여자를 평가해주세요.');
-      await mutatePostValuation.mutateAsync({
-        postId: currentPostId as number,
-        valuations: valuations.map(valuation => ({ userId: valuation.id, count: valuation.manners })),
-      });
+      if (allValuated) {
+        await mutatePostValuation.mutateAsync({
+          postId: currentPostId as number,
+          valuations: valuations.map(valuation => ({ userId: valuation.id, count: valuation.manners })),
+        });
+        alert('매너평가가 완료되었습니다.');
+      }
     } catch (error) {
       console.error('매너 평가를 처리하는 동안 오류가 발생했습니다:', error);
     }
@@ -120,9 +129,17 @@ export default function MannersValuationDialog({ requestList }: MannersValuation
               </ListItemContainer>
             ))}
         </ul>
-        <Button className="flex mx-auto" onClick={handleSubmit}>
-          평가완료
-        </Button>
+        <DialogPrimitive.Close disabled={!allValuated}>
+          <div
+            className={cn('w-fit flex mx-auto bg-primary disabled:bg-primary/50  text-white rounded-md px-4 py-1', {
+              'bg-primary/30': !allValuated,
+            })}
+            onClick={handleSubmit}
+          >
+            평가완료
+          </div>
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
       </DialogContent>
     </Dialog>
   );

@@ -5,9 +5,13 @@ import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 
 import { requestsMockData } from '@/mocks/mockData/post/requests';
 import { HistoryMockData } from '@/mocks/mockData/mypage/history';
+import { categoryNameKR } from '@/lib/utils';
+import { Category } from '@/types/post';
+import { mapPosts } from '@/mocks/mockData/post/mapPosts';
+
 
 export const getAllPostsHandler = http.get('/post/list', () => {
-  return HttpResponse.json(allPosts.posts);
+  return HttpResponse.json(allPosts);
 });
 
 export const getPostByParamHandler = http.get('/post/:param', ({ params, request }) => {
@@ -25,7 +29,7 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
     const keyword = url.searchParams.get('word');
 
     if (!keyword) return new HttpResponse(null, { status: 404 });
-    const searchResults = allPosts.posts.filter(post => {
+    const searchResults = allPosts.filter(post => {
       return (
         post.title.toLowerCase().includes(keyword.toLowerCase()) ||
         post.products.some(product => product.productName.toLowerCase().includes(keyword.toLowerCase()))
@@ -41,11 +45,11 @@ export const getPostByParamHandler = http.get('/post/:param', ({ params, request
 export const categoryPostsHandler = http.get('/post/category/:categoryName', ({ params }) => {
   const { categoryName } = params;
   // `postId`가 숫자가 아닐 경우, 카테고리에 맞는 포스트 목록 반환
-  const filteredPosts = allPosts.posts.filter(
-    post => post.category!.toLowerCase() === (categoryName as string).toLowerCase(),
-  );
+  const filteredPosts =
+    allPosts.filter(post => categoryNameKR(post.category as Exclude<Category, 'ALL'>) === categoryName) || [];
   return HttpResponse.json(filteredPosts);
 });
+
 export const deletePostHandler = http.delete('/post/:param', ({ params }) => {
   const { param } = params;
   const postId = parseInt(param as string);
@@ -82,4 +86,8 @@ export const putPostEditHandler = http.put('/post/:postId', () => {
   return HttpResponse.json({
     message: '게시글이 성공적으로 수정되었습니다.',
   });
+});
+
+export const getMapPostsHandler = http.get('/post/map/list', () => {
+  return HttpResponse.json(mapPosts);
 });

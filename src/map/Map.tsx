@@ -16,7 +16,7 @@ export default function Map(props: MapProps) {
       return;
     }
 
-    const targetPoint = new kakao.maps.LatLng(33.450701, 126.570667);
+    const targetPoint = new kakao.maps.LatLng(37.555573, 126.924748);
     const options = {
       center: targetPoint,
       level: 3,
@@ -26,7 +26,6 @@ export default function Map(props: MapProps) {
   }, []);
 
   return (
-    // <div className="absolute left-[-50%] top-0 translate-x-2/4 w-full h-full border">
     <div className="relative mx-auto w-full h-3/4">
       <div className="static w-full h-full" ref={kakaoMapRef} />
       {map ? (

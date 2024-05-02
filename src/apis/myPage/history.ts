@@ -8,7 +8,7 @@ export const getHistory = async () => {
       method: 'get',
       url: `/users/activities`,
     });
-    return res.data.list;
+    return res.data;
   } catch (error) {
     throw error;
   }

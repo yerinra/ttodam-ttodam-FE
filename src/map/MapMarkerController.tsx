@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import MapMarker from './MapMarker';
 import { useMap } from './useMap';
 import { PlaceType } from '@/types/map';
+import { axiosAccessFn } from '@/apis/apiClient';
+import { PostMap } from '@/types/post';
 
 interface MapMarkerControllerProps {
   places: PlaceType[];
@@ -11,6 +13,24 @@ interface MapMarkerControllerProps {
 
 export default function MapMarkerController(props: MapMarkerControllerProps) {
   const map = useMap();
+
+  const axiosAccess = axiosAccessFn();
+  const [mapPosts, setMapPosts] = useState<PostMap[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosAccess({
+          method: 'get',
+          url: 'post/map/list',
+        });
+        setMapPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (props.places.length < 1) {
@@ -31,7 +51,7 @@ export default function MapMarkerController(props: MapMarkerControllerProps) {
   return (
     <>
       {props.places.map(place => {
-        return <MapMarker key={place.id} place={place} showInfo={props.selectedId === place.id} />;
+        return <MapMarker key={place.id} place={place} showInfo={props.selectedId === place.id} mapPosts={mapPosts} />;
       })}
     </>
   );

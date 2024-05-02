@@ -1,79 +1,64 @@
-import { getProfiles } from '@/apis/myPage/profiles';
+import { getProfile } from '@/apis/myPage/profiles';
 import useRequireLogin from '@/hooks/useRequireLogin';
 
 import { Profile } from '@/mocks/handlers/myPage/profile';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { MdAddAPhoto } from 'react-icons/md';
+// import { MdAddAPhoto } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-
-// profileImgUrl
+import user from '@/assets/user.png';
+import { Button } from '@/components/ui/button';
+import H1 from '@/components/atoms/H1';
 export default function ProfilePage() {
   useRequireLogin();
-  const [, setProfiles] = useState<Profile[]>([]);
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['profiles'],
-    queryFn: () => {
-      return getProfiles();
-    },
+  const {
+    data: profile,
+    error,
+    isLoading,
+  } = useQuery<Profile>({
+    queryKey: ['profile'],
+    queryFn: getProfile,
   });
-
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await getProfiles();
-        setProfiles(response.data);
-      } catch (error) {
-        console.error('Error fetching profiles: ', error);
-      }
-    };
-    fetchProfiles();
-  }, []);
 
   if (isLoading) return <div>프로필 정보를 가져오는 중입니다.</div>;
   if (error) return <div>프로필 정보를 가져오는데 실패하였습니다.</div>;
 
   return (
-    <section className="flex justify-center items-center flex-col mt-8">
-      <h1 className="font-bold text-3xl">프로필</h1>
+    <section className="flex justify-center items-center flex-col">
+      <H1>나의 프로필</H1>
       <div className="flex items-center flex-col mt-10">
-        {data &&
-          data?.profile?.map((pf: Profile) => (
-            <div key={pf.id}>
-              <div className="relative w-[170px] h-[150px] flex items-center justify-center">
-                {pf.profileImgUrl ? (
+        {profile && (
+          <div key={profile.nickname}>
+            <div className="relative w-[170px] h-[150px] flex items-center justify-center">
+              {profile.profileImageUrl ? (
+                <img
+                  src={profile.profileImageUrl}
+                  alt="프로필이미지"
+                  className="flex items-center justify-center w-36 h-36 border rounded-[50%]"
+                />
+              ) : (
+                <div className="relative w-[170px] h-[150px] flex items-center justify-center">
                   <img
-                    src={pf.profileImgUrl}
+                    src={user}
                     alt="프로필이미지"
                     className="flex items-center justify-center w-36 h-36 border rounded-[50%]"
                   />
-                ) : (
-                  <div className="relative w-[170px] h-[150px] flex items-center justify-center">
-                    <Link to="/my/edit/Profile">
-                      <img
-                        src={pf.profileImgUrl}
-                        alt=""
-                        className="flex items-center justify-center w-36 h-36 bg-slate-400 rounded-[50%]"
-                      />
-                      <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white" />
-                    </Link>
-                  </div>
-                )}
-              </div>
-              <div className="flex items-center justify-between mt-8 gap-10">
-                <p className="py-0.5 px-3 border rounded-md text-lg">닉네임</p>
-                <p>{pf.nickname}</p>
-              </div>
-              <div className="flex items-center justify-between mt-8 gap-10">
-                <p className="py-0.5 px-3 border rounded-md text-lg">매너점수</p>
-                <span>{pf.manners}점</span>
-              </div>
+                </div>
+              )}
             </div>
-          ))}
+            <div className="flex items-center justify-between mt-8 gap-10">
+              <p className="py-0.5 px-3 border rounded-md text-lg">닉네임</p>
+              <p>{profile.nickname}</p>
+            </div>
+            <div className="flex items-center justify-between mt-8 gap-10">
+              <p className="py-0.5 px-3 border rounded-md text-lg">매너점수</p>
+              <span>{profile.mannerScore * 20}점</span>
+            </div>
+          </div>
+        )}
         <div className="flex items-center justify-center flex-col mt-8">
-          <Link to="/my/edit/Profile" className="py-0.5 px-3 bg-primary rounded-md text-white">
-            수정하기
+          <Link to="/my/edit/profile">
+            <Button variant="secondary">수정하기</Button>
           </Link>
         </div>
       </div>

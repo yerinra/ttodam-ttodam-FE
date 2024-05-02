@@ -10,7 +10,6 @@ import { Button } from '../ui/button';
 interface FormValues {
   email: string;
   authenticationCode: string;
-  nickname: string;
   password: string;
   confirmPassword: string;
 }
@@ -26,30 +25,10 @@ const SignUpForm: React.FC = () => {
     reset,
   } = useForm<FormValues>();
   const navigate = useNavigate();
-  const CODE_VERIFICATION_TIME = 3 * 60;
+  const CODE_VERIFICATION_TIME = 5 * 60;
   const [timer, setTimer] = useState(CODE_VERIFICATION_TIME);
   const [timerActive, setTimerActive] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
-
-  // useEffect(() => {
-  //   let intervalId: NodeJS.Timeout;
-
-  //   if (timerActive) {
-  //     intervalId = setInterval(() => {
-  //       setTimer(prevTimer => {
-  //         if (prevTimer === 0) {
-  //           clearInterval(intervalId);
-  //           setTimerExpired(true);
-  //           return 0;
-  //         } else {
-  //           return prevTimer - 1;
-  //         }
-  //       });
-  //     }, 1000);
-  //   }
-
-  //   return () => clearInterval(intervalId);
-  // }, [timerActive]);
 
   useEffect(() => {
     let timeCount: NodeJS.Timeout | undefined;
@@ -78,7 +57,7 @@ const SignUpForm: React.FC = () => {
       const dataToSend: signUpFormData = {
         email: data.email,
         password: data.password,
-        nickname: data.nickname,
+        confirmPassword: data.confirmPassword,
       };
       await signUp(dataToSend);
       reset();
@@ -133,7 +112,7 @@ const SignUpForm: React.FC = () => {
       <div className="relative w-96 mb-6">
         <input
           type="email"
-          placeholder="이메일을 입력하세요"
+          placeholder="이메일"
           {...register('email', {
             required: '이메일을 입력하세요.',
             pattern: {
@@ -203,22 +182,8 @@ const SignUpForm: React.FC = () => {
 
       <div className="relative w-96 mb-6">
         <input
-          type="text"
-          placeholder="닉네임을 입력하세요"
-          {...register('nickname', {
-            required: '닉네임을 입력하세요.',
-          })}
-          className={`border-b border-gray-500 focus:outline-none w-full py-4 pr-16 ${
-            errors && errors.nickname ? 'border-red-500' : ''
-          }`}
-        />
-      </div>
-      {errors && errors.nickname && <span className="text-red-500 text-sm">{errors.nickname.message}</span>}
-
-      <div className="relative w-96 mb-6">
-        <input
           type="password"
-          placeholder="비밀번호를 입력하세요"
+          placeholder="비밀번호"
           {...register('password', {
             required: '비밀번호를 입력하세요.',
             minLength: {

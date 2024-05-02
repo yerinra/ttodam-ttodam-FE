@@ -17,7 +17,7 @@ export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
   const { post } = data;
   return (
     <section className="flex flex-col gap-2 border-b border-slate-200 py-6">
-      <BookmarkBtn isBookmarked={data.bookmarkId !== 0} />
+      <BookmarkBtn bookmarkId={data.bookmarkId} isBookmarked={data.bookmarkId !== 0} />
 
       <Badge variant={post.status} size="lg" />
       <h1 className="font-bold text-3xl">{post.title}</h1>

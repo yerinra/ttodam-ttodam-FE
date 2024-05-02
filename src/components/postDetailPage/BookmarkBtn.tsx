@@ -5,18 +5,19 @@ import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { BookmarkFilledIcon } from '@radix-ui/react-icons';
 
 type BookmarkBtnProps = {
+  bookmarkId: number;
   isBookmarked: boolean;
 };
 
-export default function BookmarkBtn({ isBookmarked }: BookmarkBtnProps) {
+export default function BookmarkBtn({ bookmarkId, isBookmarked }: BookmarkBtnProps) {
   const { currentPostId } = useCurrentPostIdStore();
 
-  const { mutateAsync: mutateDeleteAsync } = useDeleteBookmarkMutation();
+  const { mutateAsync: mutateDeleteAsync } = useDeleteBookmarkMutation(true);
 
   const handleDeleteBookmark = async () => {
-    if (currentPostId !== null) {
+    if (bookmarkId !== 0) {
       try {
-        await mutateDeleteAsync(currentPostId);
+        await mutateDeleteAsync(bookmarkId);
       } catch (error) {
         console.error(error);
       }
@@ -41,6 +42,7 @@ export default function BookmarkBtn({ isBookmarked }: BookmarkBtnProps) {
     } else {
       handleAddBookmark();
     }
+    // location.href = `/post/${currentPostId}`;
   };
 
   return (

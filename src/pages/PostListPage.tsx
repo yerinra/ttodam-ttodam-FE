@@ -17,6 +17,7 @@ import SearchForm from '@/components/atoms/SearchForm';
 import usePagination from '@/hooks/usePagination';
 import useRequireLogin from '@/hooks/useRequireLogin';
 import { axiosAccessFn } from '@/apis/apiClient';
+import { categoryNameKR } from '@/lib/utils';
 
 export default function PostListPage() {
   useRequireLogin();
@@ -53,12 +54,15 @@ export default function PostListPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = selectedCategory === 'all' ? '/post/list' : `/post/category/${selectedCategory}`;
+        const apiUrl =
+          selectedCategory === 'all'
+            ? '/post/list'
+            : `/post/category/${categoryNameKR(selectedCategory?.toUpperCase() as Exclude<Category, 'ALL'>)}`;
         const response = await axiosAccess({
           method: 'get',
           url: apiUrl,
         });
-        setData(response.data);
+        setData(response.data || []);
       } catch (error) {
         console.error('Error fetching data: ', error);
       }

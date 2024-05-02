@@ -19,9 +19,9 @@ export function categoryNameKR(category: Exclude<Category, 'ALL'>) {
     KITCHEN: '주방용품',
     FOOD: '식품',
     CLOTHING: '의류/잡화',
-    HEALTH: '헬스/건강',
+    HEALTH: '헬스/건강식품',
     OFFICE: '문구/오피스',
-    PET: '반려동물',
+    PET: '반려동물용품',
     OTHER: '기타',
   };
 

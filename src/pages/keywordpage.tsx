@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import H1 from '@/components/atoms/H1';
 import registerKeyword from '@/apis/keyword/registerKeyword';
 import updateKeyword from '@/apis/keyword/updateKeyword';
@@ -6,7 +6,6 @@ import deleteKeyword from '@/apis/keyword/deleteKeyword';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import getKeywords from '@/apis/keyword/getKeywords';
 import { Keyword } from '@/mocks/mockData/mypage/keywords';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const KeywordPage: React.FC = () => {
@@ -61,6 +60,9 @@ const KeywordPage: React.FC = () => {
       addMutation.mutate(newKeywordName);
     }
   };
+
+  if (isLoading) <div>Loading...</div>;
+  if (error) <div>Error</div>;
 
   return (
     <div className="min-h-screen mx-10">

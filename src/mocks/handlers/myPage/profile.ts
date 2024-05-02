@@ -4,7 +4,7 @@ import { http, HttpResponse } from 'msw';
 export type Profile = {
   nickname: string;
   profileImageUrl: string;
-  mannerScore: number;
+  manners: number;
 };
 
 export type EditProfile = {

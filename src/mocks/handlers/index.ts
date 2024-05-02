@@ -76,4 +76,5 @@ export const handlers = [
   postKeywordHandler,
   deleteKeywordHandler,
   updateKeywordHandler,
+  postPostNewHandler,
 ];

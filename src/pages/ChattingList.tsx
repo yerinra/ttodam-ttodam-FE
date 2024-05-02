@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getChatRoomList, ChatRoom } from '@/apis/chatting/chat';
+import { ChatRoom } from '@/apis/chatting/chat';
 
 const ChattingList: React.FC = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
+  // 채팅방 확인을 위한 임시 데이터
   useEffect(() => {
     const fetchChatRooms = async () => {
       try {
-        const rooms = await getChatRoomList();
+        const rooms: ChatRoom[] = [
+          {
+            id: '1',
+            name: '휴지 공구',
+            description: '휴지',
+          },
+        ];
         setChatRooms(rooms);
       } catch (error) {
         console.error('페이지 에러', error);
@@ -32,7 +39,7 @@ const ChattingList: React.FC = () => {
                 <p className="text-sm">{chatRoom.description}</p>
               </div>
               <Link to={`/chatting/${chatRoom.id}`}>
-                <button className="bg-primary text-white py-2 px-4 rounded mt-4">채팅</button>
+                <button className=" bg-primary text-white py-2 px-4 rounded mt-4">채팅</button>
               </Link>
             </li>
           ))}

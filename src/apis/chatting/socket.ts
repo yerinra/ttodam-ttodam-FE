@@ -1,8 +1,8 @@
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
 const SOCKET_URL: string = '서버 url';
 
-let socket: SocketIOClient.Socket;
+let socket: Socket;
 
 export const connectToChatRoom = (chatroomId: string, callback: (users: any[]) => void): void => {
   socket = io(`${SOCKET_URL}/ws-chatting`);

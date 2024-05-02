@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
 import ListItemContainer from '../atoms/ListItemContainer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserRequest } from '@/types/post';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
@@ -32,7 +32,6 @@ export default function MannersValuationDialog({ requestList }: MannersValuation
   useEffect(() => {
     if (valuations.length == membersToValuate.length) setAllValuated(true);
   }, [valuations]);
-
 
   const membersToValuate = requestList.filter(member => member.requestStatus === 'ACCEPT');
   // const membersToValuate = requestList;

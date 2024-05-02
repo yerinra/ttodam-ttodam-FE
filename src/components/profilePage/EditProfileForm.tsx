@@ -1,30 +1,17 @@
 import { getEditProfiles, putEditProfiles } from '@/apis/myPage/profiles';
 import { EditProfile } from '@/mocks/handlers/myPage/profile';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import user from '@/assets/user.png';
+import { useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import DaumPost from './DaumPost';
 import placeholderImage from '@/assets/placeholderImage.png';
 import { useNavigate } from 'react-router-dom';
 import { EditProfileToSend } from '@/types/profile';
+import { Button } from '../ui/button';
 
 // TODO: 컴포넌트 분리하기
 export default function EditProfileForm() {
-  const navigate = useNavigate();
-  const profileImgFileInput = useRef(null);
-  // const [, setProfiles] = useState<EditProfile[]>([]);
-  const [imageFile, setImageFiles] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [location, setLocation] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
-  const [passwordError, setPasswordError] = useState('');
-  const [nicknameError, setNicknameError] = useState('');
-
   const {
     data: profile,
     error,
@@ -35,6 +22,19 @@ export default function EditProfileForm() {
       return getEditProfiles();
     },
   });
+  const navigate = useNavigate();
+  const profileImgFileInput = useRef(null);
+  // const [, setProfiles] = useState<EditProfile[]>([]);
+  const [imageFile, setImageFiles] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState(profile?.profileImgUrl);
+  const [nickname, setNickname] = useState(profile?.nickname);
+  const [location, setLocation] = useState(profile?.location);
+  const [phoneNumber, setPhoneNumber] = useState(profile?.phoneNumber);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+  const [passwordError, setPasswordError] = useState('');
+  const [nicknameError, setNicknameError] = useState('');
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -131,11 +131,11 @@ export default function EditProfileForm() {
     try {
       // 여기서 data를 구성하여 넘겨줘야 합니다.
       const data: EditProfileToSend = {
-        nickname,
+        nickname: nickname as string,
         password,
         confirmPassword,
-        location,
-        phone: phoneNumber,
+        location: location as string,
+        phone: phoneNumber as string,
       };
       mutate(data);
     } catch (error) {
@@ -154,11 +154,13 @@ export default function EditProfileForm() {
       encType="multipart/form-data"
       className="flex items-center justify-center flex-col"
     >
-      <input
+      <Button
         type="submit"
-        value={'완료'}
+        disabled={!password || !confirmPassword || !passwordMatch}
         className="absolute right-0 top-0 py-0.5 px-3 bg-primary rounded-md text-white my-[15px] mr-5"
-      />
+      >
+        완료
+      </Button>
       {profile && (
         <div key={profile.nickname}>
           <div className="flex w-full items-center justify-center py-6">
@@ -173,12 +175,11 @@ export default function EditProfileForm() {
                 ) : (
                   <>
                     <img
-                      src={imagePreview}
+                      src={user}
                       alt=""
                       onError={null || handleImageError}
-                      className="flex items-center justify-center w-[100px] h-[100px] bg-slate-400 rounded-[50%]"
+                      className="flex items-center justify-center w-[100px] h-[100px] rounded-full"
                     />
-                    <MdAddAPhoto className=" absolute left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-white opacity-70" />
                   </>
                 )}
               </div>

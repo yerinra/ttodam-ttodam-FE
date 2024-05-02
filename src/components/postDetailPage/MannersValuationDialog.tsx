@@ -104,7 +104,7 @@ export default function MannersValuationDialog({ requestList }: MannersValuation
               <ListItemContainer key={user.requestId}>
                 <div className="flex items-center gap-2">
                   <div className="font-semibold">{user.requestUserNickname}</div>
-                  <Badge variant="primary">{user.requestUserManners * 20}점</Badge>
+                  <Badge variant="primary">{user.requestUserManners}점</Badge>
                 </div>
                 <ul className="flex gap-4">
                   {VALUATION_OPTIONS.map(option => (

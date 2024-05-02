@@ -3,7 +3,7 @@ import { EditProfile, Profile } from '@/mocks/handlers/myPage/profile';
 export const profile: Profile = {
   nickname: '플레임',
   profileImageUrl: '',
-  mannerScore: 5,
+  manners: 5,
 };
 
 export const editProfile: EditProfile = {

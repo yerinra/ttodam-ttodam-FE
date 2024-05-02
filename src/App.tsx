@@ -19,6 +19,7 @@ import MyPostsPage from './pages/MyPostsPage';
 import ChattingList from './pages/ChattingList';
 import ChattingPage from './pages/ChattingPage';
 import LoginLoadingPage from './pages/LoginLoadingPage';
+import KeywordPage from './pages/keywordpage';
 
 const queryClient = new QueryClient();
 
@@ -46,7 +47,7 @@ export default function App() {
                 <Route path="/my/profile" element={<ProfilePage />} />
 
                 <Route path="/my/history" element={<HistoryPage />} />
-
+                <Route path="/my/keyword" element={<KeywordPage />} />
                 <Route path="/my/posts" element={<MyPostsPage />} />
                 <Route path="/notification" element={<NotificationPage />} />
 

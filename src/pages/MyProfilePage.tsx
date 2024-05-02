@@ -53,6 +53,7 @@ export default function ProfilePage() {
             <div className="flex items-center justify-between mt-8 gap-10">
               <p className="py-0.5 px-3 border rounded-md text-lg">매너점수</p>
               <span>{profile.manners}점</span>
+
             </div>
           </div>
         )}

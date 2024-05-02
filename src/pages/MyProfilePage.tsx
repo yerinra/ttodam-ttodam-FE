@@ -55,7 +55,7 @@ export default function ProfilePage() {
             </div>
           ))}
         <div className="flex items-center justify-center flex-col mt-8">
-          <Link to="/my/edit/Profile" className="py-0.5 px-3 bg-primary rounded-md text-white">
+          <Link to="/my/edit/profile" className="py-0.5 px-3 bg-primary rounded-md text-white">
             수정하기
           </Link>
         </div>

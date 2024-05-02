@@ -36,15 +36,15 @@ export default function App() {
               <Route path="/post/edit/:postId" element={<PostEditPage />} />
               <Route path="/my/edit/profile" element={<EditProfile />} />
 
+              <Route path="/chatting/:chatroomId" element={<ChattingPage />} />
               <Route element={<Layout />}>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/posts/:selectedCategory" element={<PostListPage />} />
                 <Route path="/post/:postId" element={<PostDetailPage />} />
-
+                <Route path="/chat" element={<ChattingList />} />
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
-                <Route path="/chat" element={<ChattingList />} />
-                <Route path="/chatting" element={<ChattingPage />} />
+
                 <Route path="/my/history" element={<HistoryPage />} />
 
                 <Route path="/my/posts" element={<MyPostsPage />} />

@@ -1,8 +1,9 @@
+import { EditProfileToSend } from '@/types/profile';
 import { axiosAccessFn } from '../apiClient';
 
 const axiosAccess = axiosAccessFn();
 
-export const getProfiles = async () => {
+export const getProfile = async () => {
   try {
     const res = await axiosAccess({
       method: 'get',
@@ -28,13 +29,26 @@ export const getEditProfiles = async () => {
   }
 };
 
-export const putEditProfiles = async () => {
+export const putEditProfiles = async (data: EditProfileToSend) => {
   try {
     const res = await axiosAccess({
       method: 'put',
       url: '/users/profiles/update',
+      data,
     });
 
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteUserAccount = async () => {
+  try {
+    const res = await axiosAccess({
+      method: 'delete',
+      url: '/users/withdraw',
+    });
     return res.data;
   } catch (error) {
     throw error;

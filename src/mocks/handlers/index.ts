@@ -12,7 +12,8 @@ import {
   getEditProfilesHandler,
   getProfilesHandler,
   putEditProfilesHandler,
-  postProfilesHandler,
+  postProfileImageHandler,
+  deleteUserHandler,
 } from './myPage/profile';
 
 import { deleteNotificationHandler, getAllNotificationsHandler } from './notification/notification';
@@ -26,17 +27,23 @@ import {
   putPostEditHandler,
   getMapPostsHandler,
 } from './post/postHandlers';
+
 import {
   cancelRequestHandler,
   getRequestsHandler,
   postRequestHandler,
   putRequestHandler,
 } from './post/requestHandlers';
+
 import { valuationHandler } from './post/valuations';
+
 export const handlers = [
   verifyEmailHandler,
   verifyCodeHandler,
   signUpHandler,
+
+  deleteUserHandler,
+
   signoutHandler,
   loginHandler,
   socialLoginHandler,
@@ -49,7 +56,7 @@ export const handlers = [
   deletePostHandler,
   putPurchaseStatusHandler,
   getProfilesHandler,
-  postProfilesHandler,
+  postProfileImageHandler,
   getEditProfilesHandler,
   putEditProfilesHandler,
   getRequestsHandler,

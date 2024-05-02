@@ -9,7 +9,7 @@ import PostDetailPage from './pages/PostDetailPage';
 import BookMarkPage from './pages/BookMarkPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProfilePage from './pages/MyProfilePage';
-import EditProfile from './components/profilePage/EditProfile';
+import EditProfilePage from './components/profilePage/EditProfilePage';
 import HistoryPage from './pages/HistoryPage';
 import PostEditPage from './pages/PostEditPage';
 import SignUpPage from './pages/SignUpPage';
@@ -35,7 +35,7 @@ export default function App() {
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/post/new" element={<PostNewPage />} />
               <Route path="/post/edit/:postId" element={<PostEditPage />} />
-              <Route path="/my/edit/profile" element={<EditProfile />} />
+              <Route path="/my/edit/profile" element={<EditProfilePage />} />
 
               <Route path="/chatting/:chatroomId" element={<ChattingPage />} />
               <Route element={<Layout />}>
@@ -45,7 +45,6 @@ export default function App() {
                 <Route path="/chat" element={<ChattingList />} />
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
-
                 <Route path="/my/history" element={<HistoryPage />} />
                 <Route path="/my/keyword" element={<KeywordPage />} />
                 <Route path="/my/posts" element={<MyPostsPage />} />

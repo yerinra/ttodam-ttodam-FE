@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { googleLogin, kakaoLogin } from '@/apis/auth/socialLogin';
-import useUserIsLoggedInStore from '@/store/isLoginStore';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
+import { googleLogin, kakaoLogin } from '@/apis/auth/socialLogin';
+import useUserIsLoggedInStore from '@/store/isLoginStore';
 
 export default function LoginLoadingPage() {
   const { domain } = useParams();
@@ -13,15 +12,23 @@ export default function LoginLoadingPage() {
   const { setIsLoggedIn } = useUserIsLoggedInStore();
 
   useEffect(() => {
+    // Redirect to login page if domain is not supported
     if (domain !== 'google' && domain !== 'kakao') {
       navigate('/login');
+      return; // 중복된 코드 제거를 위해 여기서 리턴
     }
-  }, []);
 
-  useEffect(() => {
-    const handleKakaoLogin = async () => {
+    // Login handler function
+    const handleLogin = async () => {
+      let res;
+
       try {
-        const res = await kakaoLogin(code as string);
+        if (domain === 'kakao') {
+          res = await kakaoLogin(code as string);
+        } else if (domain === 'google') {
+          res = await googleLogin(code as string);
+        }
+
         setCookie('AccessToken', res.accessToken);
         setIsLoggedIn(true);
         alert('로그인 성공!');
@@ -31,21 +38,10 @@ export default function LoginLoadingPage() {
       }
     };
 
-    const handleGoogleLogin = async () => {
-      try {
-        const res = await googleLogin(code as string);
-        setCookie('AccessToken', res.accessToken);
-        setIsLoggedIn(true);
-        alert('로그인 성공!');
-        navigate('/home');
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    if (domain == 'kakao') handleKakaoLogin();
-    else if (domain == 'google') handleGoogleLogin();
-  }, []);
+    if (domain === 'kakao' || domain === 'google') {
+      handleLogin();
+    }
+  }, [domain, code, navigate, setCookie, setIsLoggedIn]);
 
   return <div>로그인 진행중입니다. 잠시만 기다려주세요...</div>;
 }

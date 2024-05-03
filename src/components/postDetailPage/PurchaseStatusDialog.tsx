@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
-import { PURCHASE_STATUS_OPTIONS } from '@/constants/options';
+import { PURCHASE_STATUS_OPTIONS } from '@/constants/data';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { useState } from 'react';
 import { PurchaseStatus } from '@/types/post';

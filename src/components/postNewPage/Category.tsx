@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/lib/data';
+import { CATEGORIES } from '@/constants/data';
 import { useState } from 'react';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 

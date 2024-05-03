@@ -1,5 +1,5 @@
-import { PURCHASE_STATUS_OPTIONS } from '@/constants/options';
-import { CATEGORIES, SORT_OPTIONS, STATUS } from '@/lib/data';
+import { PURCHASE_STATUS_OPTIONS } from '@/constants/data';
+import { CATEGORIES, SORT_OPTIONS, STATUS } from '@/constants/data';
 
 export type Category = (typeof CATEGORIES)[number]['type'];
 export type StatusFilter = (typeof STATUS)[number]['type'];

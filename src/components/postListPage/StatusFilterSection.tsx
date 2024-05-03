@@ -1,7 +1,7 @@
-import { STATUS } from '@/lib/data';
 import { StatusFilter } from '@/types/post';
 import { cn } from '@/lib/utils';
 import { DotFilledIcon } from '@radix-ui/react-icons';
+import { STATUS } from '@/constants/data';
 
 type StatusFilterSectionProps = {
   selectedFilter: StatusFilter;

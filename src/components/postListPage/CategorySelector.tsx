@@ -1,7 +1,7 @@
-import { CATEGORIES } from '@/lib/data';
 import { Category } from '@/types/post';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { CATEGORIES } from '@/constants/data';
 
 type CategorySelectorProps = {
   selectedCategory: Category;

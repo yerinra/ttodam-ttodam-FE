@@ -1,7 +1,7 @@
-import { SORT_OPTIONS } from '@/lib/data';
 import { OptionType } from '@/types/post';
 import { cn } from '@/lib/utils';
 import { DotFilledIcon } from '@radix-ui/react-icons';
+import { SORT_OPTIONS } from '@/constants/data';
 
 type SortOptionsProps = {
   selectedSort: OptionType;

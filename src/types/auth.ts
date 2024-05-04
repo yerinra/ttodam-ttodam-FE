@@ -12,3 +12,8 @@ export interface signUpFormData {
   password: string;
   confirmPassword: string;
 }
+
+export type LoginFormValues = {
+  email: string;
+  password: string;
+};

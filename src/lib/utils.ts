@@ -34,3 +34,17 @@ const priceFormat = new Intl.NumberFormat('ko-KR', {
 });
 
 export const toPriceFormat = (value: number) => priceFormat.format(value);
+
+export const isMatchingPath = (path: string, pathname: string) => {
+  if (pathname === '/home') {
+    return pathname === path;
+  } else if (pathname.startsWith('/post')) {
+    return path == '/posts/all';
+  } else if (pathname.startsWith('/my')) {
+    return path.startsWith('/my');
+  } else if (pathname == '/notification') {
+    return path === pathname;
+  } else {
+    return pathname.includes(path);
+  }
+};

@@ -10,6 +10,8 @@ import { type BookMark } from '@/types/bookmark';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import useRequireLogin from '@/hooks/useRequireLogin';
+import Loading from '@/components/atoms/Loading';
+import Error from '@/components/atoms/Error';
 
 export default function BookMarkPage() {
   useRequireLogin();
@@ -66,10 +68,10 @@ export default function BookMarkPage() {
     }
   };
 
-  if (isLoading) return <div>loading...</div>;
-  if (error) return <div>에러가 발생했습니다.</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <Error />;
 
-  if (data?.length == 0)
+  if (data?.length !== 0)
     return (
       <>
         <H1>나의 북마크</H1>

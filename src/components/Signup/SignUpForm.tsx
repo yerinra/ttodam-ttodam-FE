@@ -2,17 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import sendAuthenticationCode from '@/apis/Email_authentication/sendAuthenticationCode';
 import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenticationCode';
-import { signUpFormData } from '@/types/auth';
+import { SignUpFormData, SignUpFormValues } from '@/types/auth';
 import { signUp } from '@/apis/auth/signup';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-
-interface FormValues {
-  email: string;
-  authenticationCode: string;
-  password: string;
-  confirmPassword: string;
-}
 
 const SignUpForm: React.FC = () => {
   const {
@@ -23,7 +16,7 @@ const SignUpForm: React.FC = () => {
     setError,
     clearErrors,
     reset,
-  } = useForm<FormValues>();
+  } = useForm<SignUpFormValues>();
   const navigate = useNavigate();
   const CODE_VERIFICATION_TIME = 5 * 60;
   const [timer, setTimer] = useState(CODE_VERIFICATION_TIME);
@@ -47,14 +40,14 @@ const SignUpForm: React.FC = () => {
 
   const password = watch('password');
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: SignUpFormValues) => {
     if (!isCodeVerified) {
       alert('이메일 인증을 진행해주세요!');
       return; // 인증이 확인되지 않은 경우 회원가입 시도 중지
     }
 
     try {
-      const dataToSend: signUpFormData = {
+      const dataToSend: SignUpFormData = {
         email: data.email,
         password: data.password,
         confirmPassword: data.confirmPassword,

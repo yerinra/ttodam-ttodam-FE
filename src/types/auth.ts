@@ -1,19 +1,17 @@
-export type UserInfo = {
-  id: number;
-  email?: string;
-  profileImgUrl?: string;
-  nickname?: string;
-  location?: string;
-  manners?: number;
-};
-
-export interface signUpFormData {
+export type SignUpFormData = {
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
 export type LoginFormValues = {
   email: string;
   password: string;
+};
+
+export type SignUpFormValues = {
+  email: string;
+  authenticationCode: string;
+  password: string;
+  confirmPassword: string;
 };

@@ -1,25 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 
-import { cn } from '@/lib/utils';
+import { cn, isMatchingPath } from '@/lib/utils';
 import { NAVIGATION } from '@/constants/data';
 
 export default function NavBar() {
   const { pathname } = useLocation();
-  // if (pathname == '/') return null;
-
-  const isMatchingPath = (path: string) => {
-    if (pathname === '/home') {
-      return pathname === path;
-    } else if (pathname.startsWith('/post')) {
-      return path == '/posts/all';
-    } else if (pathname.startsWith('/my')) {
-      return path.startsWith('/my');
-    } else if (pathname == '/notification') {
-      return path === pathname;
-    } else {
-      return pathname.includes(path);
-    }
-  };
 
   return (
     <nav className="w-full h-[60px] fixed max-w-[940px] bottom-0 border border-t-1 border-x-0 border-b-0 bg-slate-200 z-[10]">
@@ -29,7 +14,7 @@ export default function NavBar() {
             <Link
               to={nav.path}
               className={cn('flex flex-col items-center hover:scale-105 hover:font-bold transition-all', {
-                'text-primary font-bold': isMatchingPath(nav.path),
+                'text-primary font-bold': isMatchingPath(nav.path, pathname),
               })}
             >
               <div className="text-2xl">{nav.icon}</div>

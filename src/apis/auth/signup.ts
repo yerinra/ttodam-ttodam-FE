@@ -1,7 +1,7 @@
-import { signUpFormData } from '@/types/auth';
+import { SignUpFormData } from '@/types/auth';
 import { axiosPublic } from '../apiClient';
 
-export const signUp = async (userData: signUpFormData) => {
+export const signUp = async (userData: SignUpFormData) => {
   try {
     const response = await axiosPublic.post('/users/signup', userData);
     return response;

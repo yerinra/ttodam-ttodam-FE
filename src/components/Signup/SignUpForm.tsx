@@ -5,7 +5,12 @@ import verifyAuthenticationCode from '@/apis/Email_authentication/verifyAuthenti
 import { SignUpFormData, SignUpFormValues } from '@/types/auth';
 import { signUp } from '@/apis/auth/signup';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../ui/button';
+import FormErrorMessage from './FormErrorMessage';
+import SignUpBtn from './SignUpBtn';
+import ResendCodeBtn from './ResendCodeBtn';
+import VerifyCodeBtn from './VerifyCodeBtn';
+import Timer from './Timer';
+import VerifyEmailBtn from './VerifyEmailBtn';
 
 const SignUpForm: React.FC = () => {
   const {
@@ -17,8 +22,11 @@ const SignUpForm: React.FC = () => {
     clearErrors,
     reset,
   } = useForm<SignUpFormValues>();
+
   const navigate = useNavigate();
+
   const CODE_VERIFICATION_TIME = 5 * 60;
+
   const [timer, setTimer] = useState(CODE_VERIFICATION_TIME);
   const [timerActive, setTimerActive] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
@@ -43,7 +51,7 @@ const SignUpForm: React.FC = () => {
   const onSubmit = async (data: SignUpFormValues) => {
     if (!isCodeVerified) {
       alert('이메일 인증을 진행해주세요!');
-      return; // 인증이 확인되지 않은 경우 회원가입 시도 중지
+      return;
     }
 
     try {
@@ -118,17 +126,10 @@ const SignUpForm: React.FC = () => {
           }`}
         />
         {!isCodeRequested && (
-          <Button
-            type="button"
-            className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-2 rounded"
-            onClick={() => requestAuthenticationCode(watch('email'))}
-            disabled={isCodeRequested}
-          >
-            이메일 인증
-          </Button>
+          <VerifyEmailBtn onClick={() => requestAuthenticationCode(watch('email'))} disabled={isCodeRequested} />
         )}
       </div>
-      {errors && errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
+      {errors && errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
 
       {isCodeRequested && (
         <div className="relative w-96 mb-6">
@@ -143,35 +144,19 @@ const SignUpForm: React.FC = () => {
             }`}
           />
           <div>
-            {timerActive && (
-              <div className="absolute top-1 right-14  font-bold py-2 px-3 rounded h-[36px] text-sm text-red-500">
-                {`${Math.floor(timer / 60)}:${timer % 60 < 10 ? '0' : ''}${timer % 60}`}
-              </div>
-            )}
+            {timerActive && <Timer timer={timer} />}
             {!timerExpired ? (
-              <Button
-                type="button"
-                className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
+              <VerifyCodeBtn
                 onClick={() => verifyCode(watch('email'), watch('authenticationCode'))}
                 disabled={isCodeVerified}
-              >
-                인증
-              </Button>
+              />
             ) : (
-              <Button
-                type="button"
-                className="absolute top-1 right-0 bg-primary text-white font-bold py-2 px-3 rounded"
-                onClick={() => requestAuthenticationCode(watch('email'))}
-              >
-                재전송
-              </Button>
+              <ResendCodeBtn onClick={() => requestAuthenticationCode(watch('email'))} />
             )}
           </div>
         </div>
       )}
-      {errors && errors.authenticationCode && (
-        <span className="text-red-500 text-sm">{errors.authenticationCode.message}</span>
-      )}
+      {errors && errors.authenticationCode && <FormErrorMessage>{errors.authenticationCode.message}</FormErrorMessage>}
 
       <div className="relative w-96 mb-6">
         <input
@@ -190,7 +175,7 @@ const SignUpForm: React.FC = () => {
         />
       </div>
 
-      {errors && errors.password && <span className="text-red-500 text-sm mb-4">{errors.password.message}</span>}
+      {errors && errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
 
       <div className="relative w-96 mb-6">
         <input
@@ -206,17 +191,9 @@ const SignUpForm: React.FC = () => {
         />
       </div>
 
-      {errors && errors.confirmPassword && (
-        <span className="text-red-500 text-sm mb-4">{errors.confirmPassword.message}</span>
-      )}
+      {errors && errors.confirmPassword && <FormErrorMessage>{errors.confirmPassword.message}</FormErrorMessage>}
 
-      <Button
-        type="submit"
-        disabled={!isCodeRequested || !isCodeVerified}
-        className="bg-primary text-white px-10 py-4 rounded w-96 mb-3 h-[56px] text-md"
-      >
-        회원가입하기
-      </Button>
+      <SignUpBtn disabled={!isCodeRequested || !isCodeVerified} />
     </form>
   );
 };

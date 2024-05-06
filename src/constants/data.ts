@@ -79,3 +79,10 @@ export const SORT_OPTIONS = [
   { type: 'createdAt', name: '최신순' },
   { type: 'title', name: '제목순' },
 ] as const;
+
+export const PROFILE_NAVIGATION_LINKS = [
+  { label: '참여내역', path: '/my/history' },
+  { label: '북마크', path: '/my/bookmark' },
+  { label: '키워드', path: '/my/keyword' },
+  { label: '내가 쓴 글', path: '/my/posts' },
+] as const;

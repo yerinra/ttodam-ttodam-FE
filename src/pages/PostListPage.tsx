@@ -18,15 +18,13 @@ import usePagination from '@/hooks/usePagination';
 import useRequireLogin from '@/hooks/useRequireLogin';
 import { axiosAccessFn } from '@/apis/apiClient';
 import { categoryNameKR } from '@/lib/utils';
+import ListViewOptions from '@/components/postListPage/ListViewOptions';
+import SearchViewHeader from '@/components/postListPage/SearchViewHeader';
 
 export default function PostListPage() {
   useRequireLogin();
   const { selectedCategory } = useParams();
-  // const { data, error, isLoading } = useQuery<PostPreview[]>({
-  //   queryKey: ['posts', selectedCategory],
-  //   queryFn: () => getCategoryPosts(selectedCategory as Category),
-  //   enabled: !!selectedCategory,
-  // });
+
   const [view, setView] = useState<'listView' | 'searchView'>('listView');
   const axiosAccess = axiosAccessFn();
   const [data, setData] = useState<PostPreview[]>([]);
@@ -79,7 +77,6 @@ export default function PostListPage() {
       if (selectedFilter == 'ALL') return v;
       else return v.status == selectedFilter;
     });
-    // const sorted = data;
     if (selectedSort === 'title') {
       sorted.sort((x, y) => {
         if (x.title > y.title) return 1;
@@ -151,40 +148,23 @@ export default function PostListPage() {
         className="mt-4 mb-6 placeholder:text-dark-gray"
       />
       {view === 'searchView' && (
-        <div className="flex items-center justify-between">
-          <div className="flex ml-4">
-            <b className="font-extrabold text-primary">{searchKeyword}</b>에 대한{' '}
-            <p className="ml-1 "> {data.length}</p> 개의 검색결과가 있습니다.
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setSearchKeyword('');
-              setView('listView');
-            }}
-          >
-            <SymbolIcon />
-          </Button>
-        </div>
+        <SearchViewHeader
+          searchKeyword={searchKeyword}
+          onClick={() => {
+            setSearchKeyword('');
+            setView('listView');
+          }}
+          searchResultCount={data.length}
+        />
       )}
       {view === 'listView' && (
-        <>
-          <CategorySelector selectedCategory={selectedCategory as Category} />
-
-          <section className="flex items-center justify-center mt-2 pt-2">
-            <div className="flex flex-col gap-y-1">
-              <StatusFilterSection selectedFilter={selectedFilter} handleFilterSelect={setSelectedFilter} />
-              <SortOptions selectedSort={selectedSort} handleSortOptionClick={handleSortOptionClick} />
-            </div>
-
-            <Link to="/post/new" className="ml-auto">
-              <Button className="gap-1 bg-slate-700 hover:bg-slate-600 transition-all">
-                <Pencil2Icon />
-                <p className="hidden md:inline">글쓰기</p>
-              </Button>
-            </Link>
-          </section>
-        </>
+        <ListViewOptions
+          selectedFilter={selectedFilter}
+          selectedCategory={selectedCategory as Category}
+          selectedSort={selectedSort}
+          setSelectedFilter={setSelectedFilter}
+          handleSortOptionClick={handleSortOptionClick}
+        />
       )}
 
       <main className="mt-5">

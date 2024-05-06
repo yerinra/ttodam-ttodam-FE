@@ -1,21 +1,6 @@
 import { editProfile, profile } from '@/mocks/mockData/mypage/profile';
 import { http, HttpResponse } from 'msw';
 
-export type Profile = {
-  nickname: string;
-  profileImageUrl: string;
-  manners: number;
-};
-
-export type EditProfile = {
-  nickname: string;
-  profileImgUrl: string;
-  password: null;
-  confirmPassword: null;
-  location: string;
-  phoneNumber: string;
-};
-
 // 프로필 조회
 export const getProfilesHandler = http.get('/users/profiles', () => {
   return HttpResponse.json(profile);

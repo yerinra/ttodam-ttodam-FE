@@ -5,3 +5,9 @@ export type EditProfileToSend = {
   location: string;
   phone: string;
 };
+
+export type Profile = {
+  nickname: string;
+  profileImageUrl: string;
+  manners: number;
+};

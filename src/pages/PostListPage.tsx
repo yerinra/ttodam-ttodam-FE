@@ -1,23 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { axiosAccessFn } from '@/apis/apiClient';
 
-import { Button } from '@/components/ui/button';
-import { Pencil2Icon, SymbolIcon } from '@radix-ui/react-icons';
-
-import { PostPreview, type Category, type OptionType, type StatusFilter } from '@/types/post';
-
-import PaginationSection from '../components/postListPage/PaginationSection';
-import CategorySelector from '@/components/postListPage/CategorySelector';
-import PostList from '@/components/postListPage/PostList';
-import StatusFilterSection from '@/components/postListPage/StatusFilterSection';
-import SortOptions from '@/components/postListPage/SortOptions';
-import SearchForm from '@/components/atoms/SearchForm';
-
+import type { PostPreview, Category, OptionType, StatusFilter } from '@/types/post';
 import usePagination from '@/hooks/usePagination';
 import useRequireLogin from '@/hooks/useRequireLogin';
-import { axiosAccessFn } from '@/apis/apiClient';
-import { categoryNameKR } from '@/lib/utils';
+import usePostData from '@/hooks/usePostData';
+
+import PaginationSection from '../components/postListPage/PaginationSection';
+import PostList from '@/components/postListPage/PostList';
+import SearchForm from '@/components/atoms/SearchForm';
 import ListViewOptions from '@/components/postListPage/ListViewOptions';
 import SearchViewHeader from '@/components/postListPage/SearchViewHeader';
 
@@ -27,12 +20,12 @@ export default function PostListPage() {
 
   const [view, setView] = useState<'listView' | 'searchView'>('listView');
   const axiosAccess = axiosAccessFn();
-  const [data, setData] = useState<PostPreview[]>([]);
+
   const [selectedFilter, setSelectedFilter] = useState<StatusFilter>('ALL');
   const [selectedSort, setSelectedSort] = useState<'createdAt' | 'title'>('createdAt');
-  const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState(data);
-  const [tempKeyword, setTempKeyword] = useState('');
-  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const [filteredAndSortedPosts, setFilteredAndSortedPosts] = useState<PostPreview[]>([]);
+
   const {
     startPage,
     setStartPage,
@@ -47,53 +40,21 @@ export default function PostListPage() {
     pagesToShow,
   } = usePagination(filteredAndSortedPosts.length);
 
+  const [tempKeyword, setTempKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+
   const currentPosts = filteredAndSortedPosts.slice(indexOfFirstItem, indexOfLastItem);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl =
-          selectedCategory === 'all'
-            ? '/post/list'
-            : `/post/category/${categoryNameKR(selectedCategory?.toUpperCase() as Exclude<Category, 'ALL'>)}`;
-        const response = await axiosAccess({
-          method: 'get',
-          url: apiUrl,
-        });
-        setData(response.data || []);
-      } catch (error) {
-        console.error('Error fetching data: ', error);
-      }
-    };
-
-    setStartPage(1);
-    setCurrentPage(1);
-    setSelectedFilter('ALL');
-    if (view === 'listView') fetchData();
-  }, [selectedCategory, view]);
-
-  useEffect(() => {
-    const sorted = data.filter(v => {
-      if (selectedFilter == 'ALL') return v;
-      else return v.status == selectedFilter;
-    });
-    if (selectedSort === 'title') {
-      sorted.sort((x, y) => {
-        if (x.title > y.title) return 1;
-        else if (x.title === y.title) return 0;
-        else return -1;
-      });
-    } else {
-      sorted.sort((x, y) => {
-        if (x.createdAt > y.createdAt) return 1;
-        else if (x.createdAt === y.createdAt) return 0;
-        else return -1;
-      });
-    }
-    setFilteredAndSortedPosts(sorted);
-    setCurrentPage(1);
-    setStartPage(1);
-  }, [data, selectedSort, selectedFilter]);
+  const { data, setData } = usePostData({
+    view,
+    selectedCategory: selectedCategory || 'all',
+    selectedFilter,
+    setSelectedFilter,
+    setStartPage,
+    setCurrentPage,
+    selectedSort,
+    setFilteredAndSortedPosts,
+  });
 
   // sort
   const handleSortOptionClick = (type: OptionType) => {
@@ -112,7 +73,6 @@ export default function PostListPage() {
       return;
     } else {
       try {
-        // 검색어를 포함한 URL로 요청을 보냅니다.
         const response = await axiosAccess({
           method: 'get',
           url: 'post/search',
@@ -121,7 +81,6 @@ export default function PostListPage() {
           },
         });
 
-        // 요청 결과로 받은 데이터를 setData로 업데이트합니다.
         setView('searchView');
         setData(response.data);
       } catch (error) {

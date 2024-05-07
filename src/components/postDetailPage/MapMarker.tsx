@@ -1,4 +1,4 @@
-import usePostDetailMapMarker from '../../hooks/usePostDetailMapMarker';
+import usePostDetailMapMarker from '@/hooks/usePostDetailMapMarker';
 
 type MapMarkerProps = {
   lat: number;

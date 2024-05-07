@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.png';
 
-import SignUpForm from '../components/Signup/SignUpForm';
+import SignUpForm from '../components/signupPage/SignUpForm';
 import SocialLogin from '../components/LoginPage/SocialLogin';
 
 const SignUpPage: React.FC = () => {

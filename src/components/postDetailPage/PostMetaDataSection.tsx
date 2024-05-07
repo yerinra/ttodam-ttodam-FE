@@ -12,8 +12,10 @@ import MapMarker from './MapMarker';
 type PostMetaDataSectionProps = {
   data: PostDetail;
 };
+
 export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) {
   const { post } = data;
+
   const metaData = [
     { desc: '카테고리', content: post.category },
     { desc: '모집인원', content: post.participants },
@@ -43,6 +45,7 @@ export default function PostMetaDataSection({ data }: PostMetaDataSectionProps) 
                 ))}
             </div>
           </section>
+
           {data &&
             metaData.map(meta => (
               <li key={meta.desc} className="flex gap-5">

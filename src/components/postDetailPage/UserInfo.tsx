@@ -11,18 +11,6 @@ export default function UserInfo({ data }: UserInfoProps) {
   const { post } = data;
   return (
     <div className="flex items-center gap-2">
-      {/* {(post.userProfileImg === '' || post.userProfileImg == null) && (
-        <div className="w-10 h-10 text-primary/50 rounded-full">
-          <img src={defaultUser} alt="user" />
-        </div>
-      )}
-
-      {post.userProfileImg && post.userProfileImg !== '' && (
-        <div
-          style={{ backgroundImage: `url(${post.userProfileImg})` }}
-          className="w-10 h-10 justify-center bg-no-repeat bg-cover bg-center rounded-full"
-        />
-      )} */}
       <div className="w-10 h-10 text-primary/50 rounded-full">
         <img src={defaultUser} alt="user" />
       </div>

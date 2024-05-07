@@ -9,6 +9,8 @@ import PostHeader from '@/components/postDetailPage/PostHeader';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { useEffect } from 'react';
 import { PostDetail } from '@/types/post';
+import Error from '@/components/atoms/Error';
+import Loading from '@/components/atoms/Loading';
 
 export default function PostDetailPage() {
   const { postId } = useParams();
@@ -31,8 +33,8 @@ export default function PostDetailPage() {
     return () => setCurrentPostId(null);
   }, [postId, setCurrentPostId]);
 
-  if (error) return <div>에러가 발생했습니다.</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (error) return <Error />;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex flex-col">

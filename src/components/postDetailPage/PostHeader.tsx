@@ -26,6 +26,7 @@ export default function PostHeader({ data, isUserPost }: PostHeaderProps) {
         <UserInfo data={data} />
         <HeaderBtn isUserPost={isUserPost} />
       </section>
+
       <div className="flex gap-2 items-center text-slate-600">
         <ClockIcon />
         {formatDate(post.createdAt)}

@@ -42,7 +42,6 @@ export default function BookmarkBtn({ bookmarkId, isBookmarked }: BookmarkBtnPro
     } else {
       handleAddBookmark();
     }
-    // location.href = `/post/${currentPostId}`;
   };
 
   return (

@@ -6,6 +6,15 @@ export type EditProfileToSend = {
   phone: string;
 };
 
+export type EditProfile = {
+  nickname: string;
+  profileImgUrl: string;
+  password: null;
+  confirmPassword: null;
+  location?: string;
+  phonenumber: string;
+};
+
 export type Profile = {
   nickname: string;
   profileImageUrl: string;

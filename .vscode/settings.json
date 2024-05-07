@@ -9,6 +9,8 @@
   "eslint.alwaysShowStatus": true,
   "files.autoSave": "onFocusChange",
   "cSpell.words": [
+    "chatrooms",
+    "chattings",
     "clsx",
     "daum",
     "embla",

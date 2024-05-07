@@ -17,13 +17,6 @@ type ParticipateBtnSectionProps = {
 export default function ParticipateBtnSection({ isUserPost, data, requestList }: ParticipateBtnSectionProps) {
   const { post } = data;
 
-  // const { mutateAsync: postRequestMutateAsync } = usePostRequestMutation(data.Id);
-  // const { mutateAsync: cancelRequestMutateAsync } = useCancelRequestMutation(data.Id);
-  // const handleParticipate = () => {
-  //   if (stat === 'wait') postRequestMutateAsync(data.Id);
-  //   else cancelRequestMutateAsync(3);
-  // };
-
   return (
     <section className="flex justify-center ml-auto">
       {isUserPost && post.status !== 'COMPLETED' && (

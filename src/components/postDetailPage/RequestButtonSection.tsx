@@ -2,8 +2,9 @@ import { PurchaseStatus, UserRequestStatus } from '@/types/post';
 import { Button } from '../ui/button';
 import useCurrentPostIdStore from '@/store/currentPostIdStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { cancelRequest, postRequest } from '@/apis/post/request';
+import { postRequest } from '@/apis/post/request';
 import useRequestIdStore from '@/store/requestIdStore';
+import { useCancelRequestMutation } from '@/hooks/queries/useCancelRequestMutation';
 
 type RequestButtonSectionProps = {
   isOpen: boolean;
@@ -13,9 +14,8 @@ type RequestButtonSectionProps = {
 
 export default function RequestButtonSection({ isOpen, postStatus, userStatus }: RequestButtonSectionProps) {
   const { currentPostId } = useCurrentPostIdStore();
-  const { requestInfos, setRequestId, removeRequestId } = useRequestIdStore();
+  const { requestInfos, setRequestId } = useRequestIdStore();
   const storedRequestId = requestInfos[currentPostId as number]?.requestId;
-  // const [reqId, setReqId] = useState<number | null>();
 
   const usePostRequestMutation = () => {
     const queryClient = useQueryClient();
@@ -23,7 +23,6 @@ export default function RequestButtonSection({ isOpen, postStatus, userStatus }:
     return useMutation({
       mutationFn: () => postRequest(currentPostId as number),
       onSuccess: data => {
-        // console.log(data);
         queryClient.invalidateQueries({ queryKey: ['post', currentPostId] });
         setRequestId(currentPostId as number, data);
       },
@@ -36,31 +35,14 @@ export default function RequestButtonSection({ isOpen, postStatus, userStatus }:
   const { mutateAsync: postMutateAsync } = usePostRequestMutation();
   const handleParticipate = async () => {
     await postMutateAsync();
-    // console.log(requestId);
-    // setReqId(requestId);
-    // setRequestAndPostId(requestId, currentPostId as number);
   };
 
-  const useCancelRequestMutation = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-      mutationFn: () => cancelRequest(storedRequestId as number),
-      onSuccess: () => {
-        removeRequestId(currentPostId as number);
-        queryClient.invalidateQueries({ queryKey: ['post', currentPostId] });
-      },
-      onError: () => {
-        console.log('error!');
-      },
-    });
-  };
-
-  const { mutateAsync } = useCancelRequestMutation();
+  const { mutateAsync } = useCancelRequestMutation(currentPostId as number);
 
   const handleCancel = async () => {
-    await mutateAsync();
+    await mutateAsync(storedRequestId as number);
   };
+
   if (isOpen && postStatus === 'PREPARING') {
     if (userStatus === 'NONE') return <Button onClick={handleParticipate}>참여 요청 보내기</Button>;
     else if (userStatus === 'ACCEPT') return <Button disabled={true}>요청이 승인되었습니다.</Button>;

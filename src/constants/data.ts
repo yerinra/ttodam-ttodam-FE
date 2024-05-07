@@ -86,3 +86,11 @@ export const PROFILE_NAVIGATION_LINKS = [
   { label: '키워드', path: '/my/keyword' },
   { label: '내가 쓴 글', path: '/my/posts' },
 ] as const;
+
+export const VALUATION_OPTIONS = [
+  { label: '매우 별로', count: 1 },
+  { label: '별로', count: 2 },
+  { label: '보통', count: 3 },
+  { label: '좋음', count: 4 },
+  { label: '매우 좋음', count: 5 },
+] as const;

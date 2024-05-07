@@ -3,7 +3,7 @@ import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import { Button } from '../ui/button';
 import { UseFormSetValue } from 'react-hook-form';
-import { editProfileFormValues } from './EditProfileForm';
+import { editProfileFormValues } from '../editProfilePage/EditProfileForm';
 
 type DaumPostProps = {
   setValue: UseFormSetValue<editProfileFormValues>;

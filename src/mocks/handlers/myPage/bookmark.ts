@@ -1,13 +1,6 @@
 import { bookmarksMockData } from '@/mocks/mockData/mypage/bookmarks';
 import { http, HttpResponse } from 'msw';
 
-export type BookMark = {
-  id: number;
-  userId: number;
-  postId: number;
-  title: string;
-};
-
 export const postBookmarkHandler = http.post('/post/:postId/bookmark', async () => {
   return new HttpResponse(null, { status: 201 });
 });

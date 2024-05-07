@@ -3,7 +3,7 @@ import { signoutHandler } from './auth/signout';
 import { signUpHandler, verifyEmailHandler } from './auth/signup';
 
 import { verifyCodeHandler } from './auth/verifyCode';
-import { getChatHistoryHandler, getChatListHandler } from './chat/chat';
+import { getChatHistoryHandler, getChatListHandler, leaveChatRoomHandler } from './chat/chat';
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 import { getHistoryHandler } from './myPage/history';
 import { deleteKeywordHandler, getKeywordsHandler, postKeywordHandler, updateKeywordHandler } from './myPage/keyword';
@@ -78,4 +78,5 @@ export const handlers = [
   postPostNewHandler,
   getChatListHandler,
   getChatHistoryHandler,
+  leaveChatRoomHandler,
 ];

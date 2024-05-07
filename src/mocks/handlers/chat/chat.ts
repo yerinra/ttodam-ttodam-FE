@@ -10,3 +10,7 @@ export const getChatListHandler = http.get('/chatrooms', ({ request }) => {
 export const getChatHistoryHandler = http.get('/chatrooms/:chatroomId/message-list', () => {
   return HttpResponse.json(chatHistoryMockData);
 });
+
+export const leaveChatRoomHandler = http.delete(`/chatrooms/:chatroomId/exit`, () => {
+  return new HttpResponse(null, { status: 200 });
+});

@@ -39,9 +39,7 @@ export default function PurchaseStatusDialog({ status }: PurchaseStatusDialogPro
             <RadioGroup defaultValue="comfortable" key={i} onClick={() => setPurchaseStatus(stat.type)}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value={stat.label} checked={purchaseStatus == stat.type} />
-                {/* value="default" id="r1"  */}
                 <div className="cursor-pointer">{stat.label}</div>
-                {/* <Label htmlFor="r1">Default</Label> */}
               </div>
             </RadioGroup>
           ))}

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 // import { IoBookmarkSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import KakaoMapScriptLoader from '../map/KakaoMapScriptLoader';
-import Map from '../map/Map';
-import MapSearchInput from '../map/MapSearchInput';
+import KakaoMapScriptLoader from '../components/homePage/map/KakaoMapScriptLoader';
+import Map from '../components/homePage/map/Map';
+import MapSearchInput from '../components/homePage/map/MapSearchInput';
 
-import MapMarkerController from '../map/MapMarkerController';
+import MapMarkerController from '../components/homePage/map/MapMarkerController';
 import { PlaceType } from '@/types/map';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 import useRequireLogin from '@/hooks/useRequireLogin';

@@ -1,4 +1,4 @@
-import KakaoMapScriptLoader from '@/map/KakaoMapScriptLoader';
+import KakaoMapScriptLoader from '@/components/homePage/map/KakaoMapScriptLoader';
 import Map from './Map';
 import { categoryNameKR, formatDate } from '@/lib/utils';
 

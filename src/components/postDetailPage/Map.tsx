@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { KakaoMapContext } from '@/map/useMap';
+import { KakaoMapContext } from '@/components/homePage/map/useMap';
 
 interface MapProps {
   lat: number;

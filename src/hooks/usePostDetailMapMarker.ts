@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMap } from '@/map/useMap';
+import { useMap } from '@/components/homePage/map/useMap';
 
 export default function usePostDetailMapMarker(lat: number, lng: number) {
   const map = useMap();

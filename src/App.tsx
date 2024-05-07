@@ -19,7 +19,7 @@ import MyPostsPage from './pages/MyPostsPage';
 import ChattingList from './pages/ChattingList';
 import ChattingPage from './pages/ChattingPage';
 import LoginLoadingPage from './pages/LoginLoadingPage';
-import KeywordPage from './pages/keywordpage';
+import KeywordPage from './pages/KeywordPage';
 
 const queryClient = new QueryClient();
 

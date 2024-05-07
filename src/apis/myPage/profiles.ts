@@ -54,3 +54,18 @@ export const deleteUserAccount = async () => {
     throw error;
   }
 };
+
+export const updateProfileImage = async (data: FormData) => {
+  try {
+    await axiosAccess({
+      method: 'post',
+      url: '/users/profiles/image-update',
+      data,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};

@@ -1,4 +1,4 @@
-import { ChatHistory, ChatList, ChatRoom } from '@/types/chat';
+import { ChatHistory, ChatList, ChatRoom, SingleChatroomResponse } from '@/types/chat';
 
 export const chatListMockData: ChatList[] = [
   {
@@ -40,6 +40,18 @@ export const chatroomMockData: ChatRoom = {
   },
   profiles: [
     { userId: 1, nickname: '유저1', profileImage: '' },
+    { userId: 2, nickname: '유저2', profileImage: '' },
+    { userId: 3, nickname: '유저3', profileImage: '' },
+  ],
+};
+
+export const singleChatroomMockData: SingleChatroomResponse = {
+  chatroomId: 2,
+  hostId: 4,
+  userCount: 2,
+  chatName: '사과 한 박스씩 사실 분 구합니다',
+  createAt: '2024-04-18T07:07:40',
+  profiles: [
     { userId: 2, nickname: '유저2', profileImage: '' },
     { userId: 3, nickname: '유저3', profileImage: '' },
   ],

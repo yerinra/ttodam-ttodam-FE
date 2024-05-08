@@ -64,16 +64,3 @@ export const leaveChatRoom = async (chatroomId: number) => {
     throw error;
   }
 };
-
-export const sendChatMessage = async (chatroomId: string, message: ChatContent) => {
-  try {
-    const res = await axiosAccess({
-      method: 'post',
-      url: `/chattings/${chatroomId}/message`,
-      data: message,
-    });
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getPost } from '@/apis/post/post';
+
 import ProductImg from '@/components/postDetailPage/ProductImg';
 import ContentSection from '@/components/postDetailPage/ContentSection';
 import BackToListBtn from '@/components/postDetailPage/BackToListBtn';

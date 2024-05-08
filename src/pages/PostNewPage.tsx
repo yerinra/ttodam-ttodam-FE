@@ -1,23 +1,24 @@
-import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Form from '@/components/postNewPage/Form';
 import useRequireLogin from '@/hooks/useRequireLogin';
+import { ChevronLeftIcon } from '@radix-ui/react-icons';
+import H1 from '@/components/atoms/H1';
+import PostForm from '@/components/postNewPage/PostForm';
 
 export default function PostNewPage() {
   useRequireLogin();
   return (
-    <section className="px-5 w-full">
-      <div className="flex items-center justify-between border-b border-black h-[60px]">
-        <div className="flex items-center gap-2.5">
-          <Link to="/posts/all">
-            <FaLongArrowAltLeft className="w-5 h-5" />
-          </Link>
-          <h3 className="font-semibold">모집글 쓰기</h3>
-        </div>
+    <>
+      <section className="w-full flex items-center justify-between border-b h-[60px] gap-2.5 px-5 relative">
+        <Link to="/posts/all">
+          <ChevronLeftIcon className="w-5 h-5" />
+        </Link>
+      </section>
+
+      <H1>게시글 작성하기</H1>
+      <div className="w-full px-10 mb-10">
+        <PostForm />
       </div>
-      <div>
-        <Form />
-      </div>
-    </section>
+      {/* <Form /> */}
+    </>
   );
 }

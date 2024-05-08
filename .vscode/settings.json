@@ -26,6 +26,8 @@
     "signin",
     "signout",
     "Signup",
+    "sockjs",
+    "stompjs",
     "tailwindcss",
     "tanstack",
     "zustand"

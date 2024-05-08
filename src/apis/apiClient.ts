@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 
-const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:5174' : 'https://ttodam-ttodam-fr.vercel.app/';
+export const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:5174' : 'https://ttodam-ttodam-fr.vercel.app/';
 
 const cookies = new Cookies();
 

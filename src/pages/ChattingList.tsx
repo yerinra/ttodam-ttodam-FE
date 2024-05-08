@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
 import H1 from '@/components/atoms/H1';
 import { useQuery } from '@tanstack/react-query';
 import { ChatList } from '@/types/chat';

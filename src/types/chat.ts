@@ -65,6 +65,25 @@ export type MakeChatRoom = {
 
 export type ChatContent = {
   type: 'TALK' | 'ENTER';
-  nickname: string;
+  nickname?: string;
   content: string;
+};
+
+export type ChatTemp = {
+  type: 'TALK' | 'ENTER';
+  messageId?: number;
+  senderId?: number;
+  nickname?: string;
+  chatroomId: number;
+  content: string;
+  messageCreateAt: string;
+};
+
+export type SingleChatroomResponse = {
+  chatroomId: number;
+  hostId: number;
+  userCount: 2;
+  chatName: string;
+  createAt: string;
+  profiles: ChatParticipant[];
 };

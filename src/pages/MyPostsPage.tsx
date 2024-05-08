@@ -1,18 +1,13 @@
-import { getMyPosts } from '@/apis/myPage/myPosts';
-import { deletePost } from '@/apis/post/post';
-import Badge from '@/components/atoms/Badge';
-import Error from '@/components/atoms/Error';
-import H1 from '@/components/atoms/H1';
-import ListItemContainer from '@/components/atoms/ListItemContainer';
-import Loading from '@/components/atoms/Loading';
-import MyPostItem from '@/components/myPostPage/MyPostItem';
-import { Button } from '@/components/ui/button';
-import useDeleteMyPostMutation from '@/hooks/queries/useDeleteMyPostMutation';
+import { useQuery } from '@tanstack/react-query';
 import useRequireLogin from '@/hooks/useRequireLogin';
-import { categoryNameKR } from '@/lib/utils';
-import { Category, PostPreview } from '@/types/post';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { getMyPosts } from '@/apis/myPage/myPosts';
+import useDeleteMyPostMutation from '@/hooks/queries/useDeleteMyPostMutation';
+import { type PostPreview } from '@/types/post';
+
+import MyPostItem from '@/components/myPostPage/MyPostItem';
+import H1 from '@/components/atoms/H1';
+import Error from '@/components/atoms/Error';
+import Loading from '@/components/atoms/Loading';
 
 export default function MyPostsPage() {
   useRequireLogin();

@@ -8,6 +8,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 import EditProfileForm from '../components/editProfilePage/EditProfileForm';
 import { Button } from '../components/ui/button';
 import H1 from '@/components/atoms/H1';
+import { ChevronLeftIcon } from '@radix-ui/react-icons';
 
 export default function EditProfilePage() {
   useRequireLogin();
@@ -33,27 +34,15 @@ export default function EditProfilePage() {
 
   return (
     <>
-      <div className="w-full flex items-center justify-between border-b h-[60px]">
-        <div className="flex items-center gap-2.5 mx-5">
-          <Link to="/my/profile">
-            <FaLongArrowAltLeft className="w-5 h-5" />
-          </Link>
-        </div>
-      </div>
-      <div>
-        <H1>프로필 수정</H1>
-        <EditProfileForm />
-        <div className="flex items-center justify-end">
-          <Button
-            variant={'outline'}
-            size={'lg'}
-            className="w-[80px] h-8  py-0.5 px-3 rounded-md mt-28 text-[#9ca3af]"
-            onClick={handleDeleteAccount}
-          >
-            회원탈퇴
-          </Button>
-        </div>
-      </div>
+      <Link to="/my/profile" className="w-full flex items-center justify-between border-b h-[60px] gap-2.5 mx-5">
+        <ChevronLeftIcon className="w-5 h-5 ml-5" />
+      </Link>
+
+      <H1>프로필 수정</H1>
+      <EditProfileForm />
+      <Button variant={'outline'} size={'sm'} className="mt-28 mb-10 mr-5 text-[#9ca3af]" onClick={handleDeleteAccount}>
+        회원탈퇴
+      </Button>
     </>
   );
 }

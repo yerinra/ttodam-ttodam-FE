@@ -363,7 +363,7 @@ export default function Form() {
           )}
         </div>
       ))}
-      <DaumPost onAddressChange={handleAddressChange} />
+      {/* <DaumPost onAddressChange={handleAddressChange} /> */}
       <input
         type="number"
         placeholder="희망 모집 인원을 입력해주세요."

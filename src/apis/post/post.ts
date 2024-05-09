@@ -1,4 +1,4 @@
-import { Category, PurchaseStatus } from '@/types/post';
+import { Category, PostEdit, PurchaseStatus } from '@/types/post';
 import { axiosAccessFn } from '../apiClient';
 
 const axiosAccess = axiosAccessFn();
@@ -95,20 +95,7 @@ export const postPostNew = async (formData: FormData) => {
   }
 };
 
-export const getPostEdit = async (postId: number) => {
-  try {
-    const res = await axiosAccess({
-      method: 'put',
-      url: `/post/${postId}`,
-    });
-
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const putPostEdit = async (postId: number, formData: FormData) => {
+export const putPostEdit = async (postId: number, formData: FormData, data: PostEdit) => {
   try {
     await axiosAccess({
       method: 'put',
@@ -116,6 +103,14 @@ export const putPostEdit = async (postId: number, formData: FormData) => {
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
+      },
+    });
+    await axiosAccess({
+      method: 'put',
+      url: `/post/${postId}`,
+      data: { postUpdateDto: data },
+      headers: {
+        'Content-Type': 'application/json',
       },
     });
   } catch (error) {

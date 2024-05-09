@@ -125,3 +125,13 @@ export type PostMap = {
   loginUserLocationX: number;
   loginUserLocationY: number;
 };
+
+export type PostEdit = {
+  title: string;
+  participants: number;
+  category: Exclude<Category, 'ALL'>;
+  deadline: string;
+  content: string;
+  place: string;
+  products: { productName: string; count: number; purchaseLink: string; price: number }[];
+};

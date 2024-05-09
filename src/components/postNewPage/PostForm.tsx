@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { postPostNew } from '@/apis/post/post';
+import { postPostNew, putPostEdit } from '@/apis/post/post';
 import { CalendarIcon, Cross2Icon, PlusIcon } from '@radix-ui/react-icons';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectTrigger, SelectValue, SelectItem, SelectContent } from '../ui/select';
@@ -17,12 +17,19 @@ import { Calendar } from '../ui/calendar';
 import { cn, formatDate } from '@/lib/utils';
 import { useState } from 'react';
 
+type PostFormProps = {
+  postId: number;
+  defaultValues?: z.infer<typeof formSchema>;
+  isEditing: boolean;
+  imageURL?: string[];
+};
+
 const formSchema = z.object({
   title: z
     .string({ required_error: '제목을 입력해주세요.' })
     .min(2, { message: '제목을 두 글자 이상 입력해주세요.' })
     .max(50, { message: '제목은 50글자를 넘을 수 없습니다.' }),
-  deadline: z.date({
+  deadline: z.string({
     required_error: '모집기한을 입력해주세요.',
   }),
   category: z.enum(['DAILY', 'KITCHEN', 'FOOD', 'PET', 'CLOTHING', 'HEALTH', 'OFFICE', 'OTHER'], {
@@ -64,29 +71,18 @@ const formSchema = z.object({
   ),
 });
 
-export default function PostForm() {
+export default function PostForm({ postId, defaultValues, isEditing, imageURL }: PostFormProps) {
   const navigate = useNavigate();
-  const [productCount, setProductCount] = useState(0);
+  const [productCount, setProductCount] = useState(defaultValues?.products.length || 0);
   const [imageFiles, setImageFiles] = useState<(File | null)[]>([]);
-  const [imagePreview, setImagePreview] = useState<string[]>([]);
-  const { control } = useForm();
+  const [imagePreview, setImagePreview] = useState<string[]>(imageURL || []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      products: [
-        {
-          productName: '',
-          price: 1000,
-          count: 3,
-          purchaseLink: '',
-        },
-      ],
-      title: '',
-    },
+    defaultValues: defaultValues,
   });
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'products' });
+  const { fields, append, remove } = useFieldArray({ control: form.control, name: 'products' });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -105,6 +101,21 @@ export default function PostForm() {
     }
   };
 
+  // const handleRemoveImage = (index: number) => {
+  //   const newFiles = [...imageFiles];
+  //   newFiles.splice(index, 1);
+  //   setImageFiles(newFiles);
+
+  //   const newPreviews = [...imagePreview];
+  //   const removedPreview = newPreviews.splice(index, 1)[0];
+  //   URL.revokeObjectURL(removedPreview);
+  //   setImagePreview(newPreviews);
+
+  //   const inputElement = document.getElementById('image-input') as HTMLInputElement | null;
+  //   if (inputElement) {
+  //     inputElement.value = '';
+  //   }
+  // };
   const handleRemoveImage = (index: number) => {
     const newFiles = [...imageFiles];
     newFiles.splice(index, 1);
@@ -115,13 +126,14 @@ export default function PostForm() {
     URL.revokeObjectURL(removedPreview);
     setImagePreview(newPreviews);
 
+    // 파일 입력 요소를 초기화합니다.
     const inputElement = document.getElementById('image-input') as HTMLInputElement | null;
     if (inputElement) {
-      inputElement.value = '';
+      inputElement.value = ''; // 이전의 값 대신 빈 문자열을 할당합니다.
     }
   };
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     if (productCount == 0) return;
     const formData = new FormData();
 
@@ -142,7 +154,7 @@ export default function PostForm() {
     imageFiles
       .filter(image => image !== null)
       .forEach(image => {
-        formData.append(`postImg`, image!);
+        formData.append(`imageFiles`, image!);
       });
 
     // for (const key of formData.keys()) {
@@ -153,7 +165,34 @@ export default function PostForm() {
       await postPostNew(formData);
       navigate('/posts/all');
     } catch (error) {
-      console.log('요청을 보내는 중 오류가 발생하였습니다.', error);
+      console.error('요청을 보내는 중 오류가 발생하였습니다.', error);
+    }
+  };
+
+  const handleEdit = async (values: z.infer<typeof formSchema>) => {
+    console.log('values', values);
+    const formData = new FormData();
+    imageFiles
+      .filter(image => image !== null)
+      .forEach(image => {
+        formData.append(`imageFiles`, image!);
+      });
+    for (const key of formData.keys()) {
+      console.log(key, ':', formData.get(key));
+    }
+    try {
+      await putPostEdit(postId, formData, values);
+      // navigate('/posts/all')
+    } catch (error) {
+      console.error('수정 오류', error);
+    }
+  };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isEditing) {
+      handleEdit(values); // 편집 모드에서는 handleEdit 함수를 호출합니다.
+    } else {
+      handleSubmit(values); // 새로운 게시물 작성 모드에서는 handleSubmit 함수를 호출합니다.
     }
   };
 
@@ -166,7 +205,7 @@ export default function PostForm() {
           render={({ field }) => {
             return (
               <FormItem>
-                <Select onValueChange={field.onChange}>
+                <Select value={field.value} onValueChange={value => field.onChange(value)}>
                   <div className="font-bold text-md">카테고리</div>
                   <SelectTrigger>
                     <SelectValue />
@@ -188,6 +227,7 @@ export default function PostForm() {
             );
           }}
         />
+
         <FormField
           control={form.control}
           name="title"
@@ -207,7 +247,7 @@ export default function PostForm() {
           render={({ field }) => {
             return (
               <FormItem>
-                <Select onValueChange={field.onChange}>
+                <Select value={String(field.value)} onValueChange={value => field.onChange(value)}>
                   <div className="font-bold text-md">모집인원</div>
                   <SelectTrigger>
                     <SelectValue placeholder="" />
@@ -234,7 +274,7 @@ export default function PostForm() {
             return (
               <FormItem>
                 <div className="font-bold text-md">만남 장소</div>
-                <DaumPost forwardedRef={field.ref} {...field} />
+                <DaumPost forwardedRef={field.ref} {...field} defaultAddress={defaultValues?.place || ''} />
                 <FormMessage />
               </FormItem>
             );
@@ -261,8 +301,10 @@ export default function PostForm() {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
+                    selected={new Date(field.value)}
+                    onSelect={value => {
+                      field.onChange(String(value));
+                    }}
                     disabled={date => date < new Date()}
                     initialFocus
                   />
@@ -281,7 +323,7 @@ export default function PostForm() {
               variant="ghost"
               onClick={() => {
                 remove(index);
-                setProductCount(prev => prev - 1);
+                setProductCount((prev: number) => prev - 1);
               }}
               className="top-0 right-0 absolute"
             >
@@ -347,7 +389,7 @@ export default function PostForm() {
           type="button"
           onClick={() => {
             append({ productName: '', price: 0, count: 0, purchaseLink: '' });
-            setProductCount(prev => prev + 1);
+            setProductCount((prev: number) => prev + 1);
           }}
         >
           <PlusIcon />
@@ -393,7 +435,7 @@ export default function PostForm() {
           </div>
         </FormItem>
         <Button type="submit" size="sm" className="absolute right-0 top-0 m-3">
-          작성 완료
+          {isEditing ? '수정완료 ' : '작성완료'}
         </Button>
       </form>
     </Form>

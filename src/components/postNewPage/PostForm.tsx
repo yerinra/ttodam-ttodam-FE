@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -16,60 +15,14 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Calendar } from '../ui/calendar';
 import { cn, formatDate } from '@/lib/utils';
 import { useState } from 'react';
+import { PostFormSchema, formSchema } from '@/types/post';
 
 type PostFormProps = {
   postId: number;
-  defaultValues?: z.infer<typeof formSchema>;
+  defaultValues?: PostFormSchema;
   isEditing: boolean;
   imageURL?: string[];
 };
-
-const formSchema = z.object({
-  title: z
-    .string({ required_error: '제목을 입력해주세요.' })
-    .min(2, { message: '제목을 두 글자 이상 입력해주세요.' })
-    .max(50, { message: '제목은 50글자를 넘을 수 없습니다.' }),
-  deadline: z.string({
-    required_error: '모집기한을 입력해주세요.',
-  }),
-  category: z.enum(['DAILY', 'KITCHEN', 'FOOD', 'PET', 'CLOTHING', 'HEALTH', 'OFFICE', 'OTHER'], {
-    errorMap: (issue, ctx) => {
-      if (issue.code === z.ZodIssueCode.invalid_type) {
-        return { message: '카테고리를 선택해주세요.' };
-      } else if (issue.code === z.ZodIssueCode.invalid_enum_value) {
-        return { message: '카테고리 중 하나를 선택해주세요.' };
-      } else {
-        return { message: ctx.defaultError };
-      }
-    },
-  }),
-  participants: z.coerce
-    .number({
-      required_error: '희망 모집 인원을 선택해주세요.',
-      invalid_type_error: '희망 모집 인원 수를 입력해주세요.',
-    })
-    .min(1),
-  place: z.string({ required_error: '만남 장소를 입력해주세요.' }),
-  content: z
-    .string({ required_error: '내용을 입력해주세요.' })
-    .min(10, { message: '내용을 열 글자 이상 입력해주세요.' })
-    .max(80, { message: '내용을 80자 이내로 입력해주세요.' }),
-  products: z.array(
-    z.object({
-      productName: z
-        .string({ required_error: '상품의 이름을 입력해주세요.' })
-        .min(2, { message: '상품의 이름은 두 글자 이상이어야 합니다.' })
-        .max(50, { message: '상품의 이름은 50자 이내로 입력해주세요.' }),
-      price: z.coerce
-        .number({ required_error: '상품의 가격을 입력해주세요.', invalid_type_error: '숫자를 입력해주세요.' })
-        .gte(1, { message: '상품은 0원일 수 없습니다.' }),
-      count: z.coerce
-        .number({ required_error: '상품의 개수를 입력해주세요.', invalid_type_error: '숫자를 입력해주세요.' })
-        .gte(1, { message: '1개 이상 입력해주세요.' }),
-      purchaseLink: z.string({ required_error: '상품의 링크를 입력해주세요.' }),
-    }),
-  ),
-});
 
 export default function PostForm({ postId, defaultValues, isEditing, imageURL }: PostFormProps) {
   const navigate = useNavigate();
@@ -77,7 +30,7 @@ export default function PostForm({ postId, defaultValues, isEditing, imageURL }:
   const [imageFiles, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>(imageURL || []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<PostFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
@@ -101,21 +54,6 @@ export default function PostForm({ postId, defaultValues, isEditing, imageURL }:
     }
   };
 
-  // const handleRemoveImage = (index: number) => {
-  //   const newFiles = [...imageFiles];
-  //   newFiles.splice(index, 1);
-  //   setImageFiles(newFiles);
-
-  //   const newPreviews = [...imagePreview];
-  //   const removedPreview = newPreviews.splice(index, 1)[0];
-  //   URL.revokeObjectURL(removedPreview);
-  //   setImagePreview(newPreviews);
-
-  //   const inputElement = document.getElementById('image-input') as HTMLInputElement | null;
-  //   if (inputElement) {
-  //     inputElement.value = '';
-  //   }
-  // };
   const handleRemoveImage = (index: number) => {
     const newFiles = [...imageFiles];
     newFiles.splice(index, 1);
@@ -126,14 +64,13 @@ export default function PostForm({ postId, defaultValues, isEditing, imageURL }:
     URL.revokeObjectURL(removedPreview);
     setImagePreview(newPreviews);
 
-    // 파일 입력 요소를 초기화합니다.
     const inputElement = document.getElementById('image-input') as HTMLInputElement | null;
     if (inputElement) {
-      inputElement.value = ''; // 이전의 값 대신 빈 문자열을 할당합니다.
+      inputElement.value = '';
     }
   };
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: PostFormSchema) => {
     if (productCount == 0) return;
     const formData = new FormData();
 
@@ -169,30 +106,27 @@ export default function PostForm({ postId, defaultValues, isEditing, imageURL }:
     }
   };
 
-  const handleEdit = async (values: z.infer<typeof formSchema>) => {
-    console.log('values', values);
+  const handleEdit = async (values: PostFormSchema) => {
     const formData = new FormData();
     imageFiles
       .filter(image => image !== null)
       .forEach(image => {
         formData.append(`imageFiles`, image!);
       });
-    for (const key of formData.keys()) {
-      console.log(key, ':', formData.get(key));
-    }
+
     try {
       await putPostEdit(postId, formData, values);
-      // navigate('/posts/all')
+      navigate('/posts/all');
     } catch (error) {
       console.error('수정 오류', error);
     }
   };
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: PostFormSchema) => {
     if (isEditing) {
-      handleEdit(values); // 편집 모드에서는 handleEdit 함수를 호출합니다.
+      handleEdit(values);
     } else {
-      handleSubmit(values); // 새로운 게시물 작성 모드에서는 handleSubmit 함수를 호출합니다.
+      handleSubmit(values);
     }
   };
 

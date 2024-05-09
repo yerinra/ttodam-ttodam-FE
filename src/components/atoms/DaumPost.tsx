@@ -5,12 +5,13 @@ import { Button } from '../ui/button';
 
 type DaumPostProps = {
   onChange: (value: string) => void;
+  defaultAddress?: string;
   forwardedRef?: RefObject<HTMLInputElement> | ((instance: HTMLInputElement | null) => void) | null;
 };
 
-const DaumPost = forwardRef<HTMLInputElement, DaumPostProps>(({ onChange }, forwardedRef) => {
+const DaumPost = forwardRef<HTMLInputElement, DaumPostProps>(({ onChange, defaultAddress }, forwardedRef) => {
   // 주소, 모달 열림 여부, 상세 주소 상태 관리
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(defaultAddress);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // 주소 검색 완료 시 호출되는 콜백 함수

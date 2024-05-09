@@ -16,7 +16,7 @@ export default function PostNewPage() {
 
       <H1>게시글 작성하기</H1>
       <div className="w-full px-10 mb-10">
-        <PostForm />
+        <PostForm isEditing={false} />
       </div>
       {/* <Form /> */}
     </>

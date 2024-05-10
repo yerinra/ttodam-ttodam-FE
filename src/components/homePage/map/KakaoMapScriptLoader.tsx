@@ -1,3 +1,4 @@
+import Loading from '@/components/atoms/Loading';
 import { ReactNode, useEffect, useState } from 'react';
 
 // 카카오 지도 API 연동
@@ -34,5 +35,5 @@ export default function KakaoMapScriptLoader(props: KakaoMapScriptLoaderProps) {
     document.getElementById('root')?.appendChild(script);
   }, []);
 
-  return <>{mapScriptLoaded ? props.children : <div>지도를 가져오는 중입니다.</div>}</>;
+  return <>{mapScriptLoaded ? props.children : <Loading />}</>;
 }

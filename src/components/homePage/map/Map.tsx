@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { KakaoMapContext } from './useMap';
+import Error from '@/components/atoms/Error';
 
 interface MapProps {
   children: ReactNode;
@@ -28,11 +29,7 @@ export default function Map(props: MapProps) {
   return (
     <div className="relative mx-auto w-full h-3/4">
       <div className="static w-full h-full" ref={kakaoMapRef} />
-      {map ? (
-        <KakaoMapContext.Provider value={map}>{props.children}</KakaoMapContext.Provider>
-      ) : (
-        <div>지도 정보를 가져오는데 실패하였습니다.</div>
-      )}
+      {map ? <KakaoMapContext.Provider value={map}>{props.children}</KakaoMapContext.Provider> : <Error />}
     </div>
   );
 }

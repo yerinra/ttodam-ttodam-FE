@@ -1,9 +1,9 @@
-import { Notification } from '@/mocks/mockData/notification/notifications';
 import ListItemContainer from '../atoms/ListItemContainer';
 import { useDeleteNotificationMutation } from '@/hooks/queries/useDeleteNotificationMutation';
 import { Link } from 'react-router-dom';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { formatDate } from '@/lib/utils';
+import { Notification } from '@/types/notification';
 
 type NotificationItemProps = {
   notification: Notification;

@@ -46,10 +46,9 @@ export default function App() {
                 <Route path="/my/bookmark" element={<BookMarkPage />} />
                 <Route path="/my/profile" element={<ProfilePage />} />
                 <Route path="/my/history" element={<HistoryPage />} />
-                <Route path="/my/keyword" element={<KeywordPage />} />
                 <Route path="/my/posts" element={<MyPostsPage />} />
                 <Route path="/notification" element={<NotificationPage />} />
-
+                <Route path="/my/keyword" element={<KeywordPage />} />
                 <Route path="/login/oauth2/code/:domain" element={<LoginLoadingPage />} />
               </Route>
             </Routes>

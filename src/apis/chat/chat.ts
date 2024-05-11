@@ -1,4 +1,3 @@
-import { ChatContent } from '@/types/chat';
 import { axiosAccessFn } from '../apiClient';
 
 const axiosAccess = axiosAccessFn();

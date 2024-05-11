@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { LoginFormValues } from '@/types/auth';
 import useLogin from '@/hooks/queries/useLogin';
 import SignUpLink from './SignUpLink';
+import { Button } from '../ui/button';
 
 export default function LoginForm() {
   const {
@@ -22,7 +23,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-full">
       <input
         type="email"
         placeholder="이메일을 입력하세요"
@@ -33,7 +34,7 @@ export default function LoginForm() {
             message: '이메일 형식이 올바르지 않습니다.',
           },
         })}
-        className={`border-b border-gray-500 focus:outline-none w-96 py-4 mb-6 ${errors.email ? 'border-red-500' : ''}`}
+        className={`border-b placeholder:text-dark-gray focus:outline-none w-full py-4 mb-6 ${errors.email ? 'border-red-500' : 'border-dark-gray'}`}
       />
       {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
 
@@ -47,17 +48,17 @@ export default function LoginForm() {
             message: '비밀번호는 최소 8자 이상이어야 합니다.',
           },
         })}
-        className={`border-b border-gray-500 focus:outline-none w-96 py-4 mb-6 ${
-          errors.password ? 'border-red-500' : ''
+        className={`border-b placeholder:text-dark-gray focus:outline-none w-full py-4 mb-6 ${
+          errors.password ? 'border-red-500' : 'border-dark-gray'
         }`}
       />
       {errors.password && <span className="text-red-500 text-sm mb-4">{errors.password.message}</span>}
 
       <SignUpLink />
 
-      <button type="submit" className="bg-primary text-white px-10 py-4 rounded w-96 mb-3">
+      <Button type="submit" className="px-10 py-6 rounded w-full">
         로그인
-      </button>
+      </Button>
     </form>
   );
 }

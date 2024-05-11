@@ -17,9 +17,9 @@ const LoginPage = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center w-4/5 h-screen max-w-md">
       <Logo />
-      <h1 className="text-4xl font-bold mb-8">로그인</h1>
+      <h1 className="text-3xl font-bold mb-8">로그인</h1>
       <LoginForm />
       <SocialLogin />
     </div>

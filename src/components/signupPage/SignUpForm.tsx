@@ -109,8 +109,8 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
-      <div className="relative w-96 mb-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-full max-w-md">
+      <div className="w-full relative">
         <input
           type="email"
           placeholder="이메일"
@@ -121,8 +121,8 @@ const SignUpForm: React.FC = () => {
               message: '올바른 이메일 형식이 아닙니다.',
             },
           })}
-          className={`border-b bg-white border-gray-500 focus:outline-none w-full py-4 pr-16 ${
-            errors && errors.email ? 'border-red-500' : ''
+          className={`border-b bg-white placeholder:text-dark-gray focus:outline-none w-full py-4 pr-16 ${
+            errors && errors.email ? 'border-red-500' : 'border-dark-gray'
           }`}
         />
         {!isCodeRequested && (
@@ -132,15 +132,15 @@ const SignUpForm: React.FC = () => {
       {errors && errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
 
       {isCodeRequested && (
-        <div className="relative w-96 mb-6">
+        <div className="relative w-full">
           <input
             type="text"
             placeholder="인증코드를 입력하세요"
             {...register('authenticationCode', {
               required: '인증코드를 입력하세요.',
             })}
-            className={`border-b bg-white border-gray-500 focus:outline-none w-full py-4 pr-16 ${
-              errors && errors.authenticationCode ? 'border-red-500' : ''
+            className={`border-b bg-white placeholder:text-dark-gray focus:outline-none w-full py-4 pr-16 ${
+              errors && errors.authenticationCode ? 'border-red-500' : 'border-dark-gray'
             }`}
           />
           <div>
@@ -158,38 +158,34 @@ const SignUpForm: React.FC = () => {
       )}
       {errors && errors.authenticationCode && <FormErrorMessage>{errors.authenticationCode.message}</FormErrorMessage>}
 
-      <div className="relative w-96 mb-6">
-        <input
-          type="password"
-          placeholder="비밀번호"
-          {...register('password', {
-            required: '비밀번호를 입력하세요.',
-            minLength: {
-              value: 8,
-              message: '비밀번호는 최소 8자 이상이어야 합니다.',
-            },
-          })}
-          className={`border-b border-gray-500 focus:outline-none w-full py-4 pr-16 ${
-            errors && errors.password ? 'border-red-500' : ''
-          }`}
-        />
-      </div>
+      <input
+        type="password"
+        placeholder="비밀번호"
+        {...register('password', {
+          required: '비밀번호를 입력하세요.',
+          minLength: {
+            value: 8,
+            message: '비밀번호는 최소 8자 이상이어야 합니다.',
+          },
+        })}
+        className={`border-b placeholder:text-dark-gray focus:outline-none w-full py-4 pr-16 ${
+          errors && errors.password ? 'border-red-500' : 'border-dark-gray'
+        }`}
+      />
 
       {errors && errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
 
-      <div className="relative w-96 mb-6">
-        <input
-          type="password"
-          placeholder="비밀번호 확인"
-          {...register('confirmPassword', {
-            required: '비밀번호 확인을 입력하세요.',
-            validate: value => value === '' || value === password || '비밀번호가 일치하지 않습니다.',
-          })}
-          className={`border-b border-gray-500 focus:outline-none w-full py-4 pr-16 ${
-            errors && errors.confirmPassword ? 'border-red-500' : ''
-          }`}
-        />
-      </div>
+      <input
+        type="password"
+        placeholder="비밀번호 확인"
+        {...register('confirmPassword', {
+          required: '비밀번호 확인을 입력하세요.',
+          validate: value => value === '' || value === password || '비밀번호가 일치하지 않습니다.',
+        })}
+        className={`border-b placeholder:text-dark-gray focus:outline-none w-full py-4 pr-16 ${
+          errors && errors.confirmPassword ? 'border-red-500' : 'border-dark-gray'
+        }`}
+      />
 
       {errors && errors.confirmPassword && <FormErrorMessage>{errors.confirmPassword.message}</FormErrorMessage>}
 

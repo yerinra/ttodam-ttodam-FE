@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import useRequireLogin from '@/hooks/useRequireLogin';
 import { getNotification } from '@/apis/notification/notification';
-import { Notification } from '@/mocks/mockData/notification/notifications';
 
 import H1 from '@/components/atoms/H1';
 import NoNotification from '@/components/notificationPage/NoNotification';
@@ -11,6 +10,7 @@ import NotificationSummary from '@/components/notificationPage/NotificationSumma
 
 import Loading from '@/components/atoms/Loading';
 import Error from '@/components/atoms/Error';
+import { Notification } from '@/types/notification';
 
 export default function NotificationPage() {
   useRequireLogin();

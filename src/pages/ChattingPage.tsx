@@ -116,6 +116,7 @@ const ChattingPage = () => {
     else {
       try {
         await leaveMutateAsync();
+        client.current?.disconnect();
       } catch (error) {
         console.error(error);
       }

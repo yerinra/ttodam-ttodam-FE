@@ -1,17 +1,13 @@
-import { leaveChatRoom, sendChatMessage } from '@/apis/chat/chat';
-import { disconnectFromChatRoom } from '@/apis/chat/socket';
-import { ChatContent } from '@/types/chat';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { leaveChatRoom } from '@/apis/chat/chat';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export default function useChatRoom(chatRoomId: number) {
-  const queryClient = new QueryClient();
   const navigate = useNavigate();
 
   const leaveChatRoomMutation = useMutation({
     mutationFn: () => leaveChatRoom(chatRoomId),
     onSuccess: () => {
-      disconnectFromChatRoom();
       navigate('/chat');
     },
     onError: error => {

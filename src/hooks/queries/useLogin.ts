@@ -25,7 +25,6 @@ export default function useLogin() {
     onError: err => {
       alert('로그인에 실패하였습니다.');
       console.error('로그인 api 실패', err);
-      reset();
     },
   });
 }

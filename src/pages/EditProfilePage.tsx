@@ -4,7 +4,6 @@ import { QueryClient } from '@tanstack/react-query';
 import { deleteUserAccount } from '@/apis/myPage/profiles';
 import { useCookies } from 'react-cookie';
 import useUserIsLoggedInStore from '@/store/isLoginStore';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
 import EditProfileForm from '../components/editProfilePage/EditProfileForm';
 import { Button } from '../components/ui/button';
 import H1 from '@/components/atoms/H1';

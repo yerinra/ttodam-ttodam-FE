@@ -51,13 +51,13 @@ export default function Form({ data }: FormProps) {
     setImagePreview(data.post.imgUrls);
 
     if (data.post.products && data.post.products.length > 0) {
-      const initialProducts = data.post.products.map(product => ({
-        productName: product.productName || '',
-        purchaseLink: product.purchaseLink || '',
-        count: product.count || 0,
-        price: product.price || 0,
-      }));
-      setProducts(initialProducts);
+      // const initialProducts = data.post.products.map(product => ({
+      //   productName: product.productName || '',
+      //   purchaseLink: product.purchaseLink || '',
+      //   count: product.count || 0,
+      //   price: product.price || 0,
+      // }));
+      // setProducts(initialProducts);
     }
   }, [data]);
 
@@ -330,7 +330,7 @@ export default function Form({ data }: FormProps) {
           </div>
         </div>
       ))}
-      <DaumPost onAddressChange={handleAddressChange} />
+      {/* <DaumPost onAddressChange={handleAddressChange} /> */}
       <input
         type="number"
         placeholder="희망 모집 인원을 입력해주세요."

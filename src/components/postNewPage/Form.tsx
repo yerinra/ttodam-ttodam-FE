@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { DatePicker } from '../atoms/DatePicker';
 import { format } from 'date-fns';
-import DaumPost from '../atoms/DaumPost';
+// import DaumPost from '../atoms/DaumPost';
 import { PostNew } from '@/types/post';
 import Category from './Category';
 import { IoClose } from 'react-icons/io5';
@@ -161,9 +161,9 @@ export default function Form() {
   };
 
   // 주소 변경
-  const handleAddressChange = (address: string) => {
-    setSelectedAddress(address);
-  };
+  // const handleAddressChange = (address: string) => {
+  //   setSelectedAddress(address);
+  // };
 
   // 날짜 선택
   const handleDateSelect = (selectedDate: Date) => {

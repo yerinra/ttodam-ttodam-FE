@@ -116,7 +116,8 @@ export default function PostForm({ postId, defaultValues, isEditing, imageURL }:
 
     try {
       if (postId) {
-        await putPostEdit(postId, formData, values);
+        await putPostEdit(postId, formData);
+        await putPostEdit(postId, values);
         navigate('/posts/all');
       }
     } catch (error) {

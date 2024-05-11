@@ -95,7 +95,7 @@ export const postPostNew = async (formData: FormData) => {
   }
 };
 
-export const putPostEdit = async (postId: number, formData: FormData, data: PostEdit) => {
+export const putPostEdit = async (postId: number, formData: FormData | PostEdit) => {
   try {
     await axiosAccess({
       method: 'put',
@@ -108,7 +108,7 @@ export const putPostEdit = async (postId: number, formData: FormData, data: Post
     await axiosAccess({
       method: 'put',
       url: `/post/${postId}`,
-      data: { postUpdateDto: data },
+      data: { postUpdateDto: formData },
       headers: {
         'Content-Type': 'application/json',
       },

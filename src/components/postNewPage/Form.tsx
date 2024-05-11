@@ -31,7 +31,7 @@ export default function Form() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [totalParticipants, setTotalParticipants] = useState('');
   const [content, setContent] = useState('');
-  const [selectedAddress, setSelectedAddress] = useState('');
+  const [selectedAddress] = useState('');
   const [deadline, setDeadline] = useState<Date>(new Date());
   const [imageFile, setImageFiles] = useState<(File | null)[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);

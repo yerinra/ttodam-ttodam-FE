@@ -11,7 +11,6 @@ export const getRequestsHandler = http.get('/post/:postId/request', ({ params })
 });
 
 export const putRequestHandler = http.put('/request/:requestId/:requestStatus', () => {
-  // const { requestId, requestStatus } = params;
   return new HttpResponse(null, {
     status: 200,
   });

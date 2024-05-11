@@ -1,9 +1,10 @@
 import { loginHandler, socialLoginHandler } from './auth/login';
 import { signoutHandler } from './auth/signout';
 import { signUpHandler, verifyEmailHandler } from './auth/signup';
-
 import { verifyCodeHandler } from './auth/verifyCode';
+
 import { createChatroomHandler, getChatHistoryHandler, getChatListHandler, leaveChatRoomHandler } from './chat/chat';
+
 import { deleteBookmarkHandler, getBookmarksHandler, postBookmarkHandler } from './myPage/bookmark';
 import { getHistoryHandler } from './myPage/history';
 import { deleteKeywordHandler, getKeywordsHandler, postKeywordHandler, updateKeywordHandler } from './myPage/keyword';
@@ -28,14 +29,12 @@ import {
   putPostEditHandler,
   getMapPostsHandler,
 } from './post/postHandlers';
-
 import {
   cancelRequestHandler,
   getRequestsHandler,
   postRequestHandler,
   putRequestHandler,
 } from './post/requestHandlers';
-
 import { valuationHandler } from './post/valuations';
 
 export const handlers = [

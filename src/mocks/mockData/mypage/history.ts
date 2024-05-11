@@ -1,3 +1,5 @@
+import { History } from '@/types/history';
+
 export const HistoryMockData: History[] = [
   {
     postId: 59,
@@ -13,19 +15,13 @@ export const HistoryMockData: History[] = [
     purchaseStatus: 'SUCCESS',
     products: [
       {
-        // productId: 38,
-        // postId: 59,
         productName: '물티슈',
         count: 10,
-        // purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
         price: 12000,
       },
       {
-        // productId: 39,
-        // postId: 59,
         productName: '휴지',
         count: 2,
-        // purchaseLink: 'https://smartstore.naver.com/sskorea777/products/6364217638',
         price: 3000,
       },
     ],

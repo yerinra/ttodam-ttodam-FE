@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { PostFormSchema, formSchema } from '@/types/post';
 
 type PostFormProps = {
-  postId: number;
+  postId?: number;
   defaultValues?: PostFormSchema;
   isEditing: boolean;
   imageURL?: string[];

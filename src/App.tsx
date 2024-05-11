@@ -28,7 +28,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <div className="bg-secondary font-PretendardRegular">
         <main className="flex flex-col items-center max-w-[940px] mx-auto bg-white relative">
-          <Router>
+          <Router basename="/">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />

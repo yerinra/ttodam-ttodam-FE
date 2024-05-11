@@ -18,7 +18,7 @@ export const enterChatRoom = async (chatroomId: number) => {
   try {
     const res = await axiosAccess({
       method: 'get',
-      url: `/chatrooms`,
+      url: `/chatroom`,
       params: { chatroomId },
     });
     return res.data;

@@ -12,13 +12,11 @@ export default function LoginLoadingPage() {
   const { setIsLoggedIn } = useUserIsLoggedInStore();
 
   useEffect(() => {
-    // Redirect to login page if domain is not supported
     if (domain !== 'google' && domain !== 'kakao') {
       navigate('/login');
-      return; // 중복된 코드 제거를 위해 여기서 리턴
+      return;
     }
 
-    // Login handler function
     const handleLogin = async () => {
       let res;
 

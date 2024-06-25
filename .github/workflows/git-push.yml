@@ -14,13 +14,17 @@ jobs:
         run: apk add ruby && gem install mustache
       - name: creates output
         run: sh ./build.sh
+      - name: Override output directory to 'dist'
+        run: |
+          mkdir -p dist
+          cp -r ./output/* ./dist/
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.YERIN_GITHUB_KEY }}
         with:
-          source-directory: 'output'
+          source-directory: 'dist'
           destination-github-username: 'yerinra'
           destination-repository-name: 'ttodam-ttodam-FE'
           user-email: ${{ secrets.YERIN_ACCOUNT_EMAIL }}

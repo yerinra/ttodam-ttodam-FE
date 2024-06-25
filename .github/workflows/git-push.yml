@@ -1,5 +1,3 @@
-name: git push into another repo to deploy to vercel
-
 on:
   push:
     branches: [main]
@@ -14,10 +12,6 @@ jobs:
         run: apk add ruby && gem install mustache
       - name: creates output
         run: sh ./build.sh
-      - name: Override output directory to 'dist'
-        run: |
-          mkdir -p dist
-          cp -r ./output/* ./dist/
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
